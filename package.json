@@ -2,7 +2,7 @@
   "name": "test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "react-booter start --config config.js",
     "build": "react-booter build --config config.js"
@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react-booter": "^1.0.18"
+    "react-booter": "^1.0.18",
+    "react-loadable": "^5.5.0"
   },
   "devDependencies": {
     "eslint": "^5.15.1",

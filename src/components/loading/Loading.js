@@ -1,18 +1,19 @@
-import React from 'react';
+import { Component } from 'react';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
-export default function Loading(props) {
-  if (props.isLoading) {
-    if (props.timedOut) {
-      return <div>Loader timed out!</div>;
-    } else if (props.pastDelay) {
-      return <div>Loading...</div>;
-    } else {
-      return null;
-    }
-  } else if (props.error) {
-    console.error(props.error);
-    return <div>Error! Component failed to load</div>;
-  } else {
-    return null;
+class Loading extends Component {
+  componentWillMount() {
+    NProgress.start();
+  }
+  
+  componentDidMount() {
+    NProgress.done();
+  }
+  
+  render() {
+    return (null);
   }
 }
+
+export default Loading;

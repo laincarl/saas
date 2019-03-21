@@ -43,39 +43,39 @@ function parseQueryToMenuType(search) {
 @inject('AppState', 'MenuStore', 'HeaderStore')
 @observer
 class Home extends Component {
-  componentWillMount() {
-    this.initMenuType(this.props);
-  }
+  // componentWillMount() {
+  //   this.initMenuType(this.props);
+  // }
 
-  componentDidMount() {
-    this.initFavicon();
-  }
+  // componentDidMount() {
+  //   // this.initFavicon();
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    this.initMenuType(nextProps);
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.initMenuType(nextProps);
+  // }
 
 
-  initFavicon() {
-    AppState.loadSiteInfo().then((data) => {
-      const link = document.createElement('link');
-      const linkDom = document.getElementsByTagName('link');
-      if (linkDom) {
-        for (let i = 0; i < linkDom.length; i += 1) {
-          if (linkDom[i].getAttribute('rel') === 'shortcut icon') document.head.removeChild(linkDom[i]);
-        }
-      }
-      link.id = 'dynamic-favicon';
-      link.rel = 'shortcut icon';
-      link.href = data.favicon || 'favicon.ico';
-      document.head.appendChild(link);
-      data.defaultTitle = document.getElementsByTagName('title')[0].innerText;
-      if (data.systemTitle) {
-        document.getElementsByTagName('title')[0].innerText = data.systemTitle;
-      }
-      AppState.setSiteInfo(data);
-    });
-  }
+  // initFavicon() {
+  //   AppState.loadSiteInfo().then((data) => {
+  //     const link = document.createElement('link');
+  //     const linkDom = document.getElementsByTagName('link');
+  //     if (linkDom) {
+  //       for (let i = 0; i < linkDom.length; i += 1) {
+  //         if (linkDom[i].getAttribute('rel') === 'shortcut icon') document.head.removeChild(linkDom[i]);
+  //       }
+  //     }
+  //     link.id = 'dynamic-favicon';
+  //     link.rel = 'shortcut icon';
+  //     link.href = data.favicon || 'favicon.ico';
+  //     document.head.appendChild(link);
+  //     data.defaultTitle = document.getElementsByTagName('title')[0].innerText;
+  //     if (data.systemTitle) {
+  //       document.getElementsByTagName('title')[0].innerText = data.systemTitle;
+  //     }
+  //     AppState.setSiteInfo(data);
+  //   });
+  // }
 
 
   initMenuType(props) {

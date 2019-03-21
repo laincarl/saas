@@ -10,9 +10,9 @@ function getDefaultLanguage() {
 }
 
 class AppState {
-  @observable menuType = null; // 一个菜单对象 {id:'',name:'',type:''}
+  @observable menuType = { type: 'project' }; // 一个菜单对象 {id:'',name:'',type:''}
 
-  @observable expanded = true;
+  @observable expanded = false;
 
   @observable guideExpanded = false;
 

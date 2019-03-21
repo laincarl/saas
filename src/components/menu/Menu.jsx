@@ -12,7 +12,7 @@ const { SubMenu, Item } = Menu;
 @withRouter
 @inject('AppState', 'MenuStore')
 @observer
-export default class CommonMenu extends Component {
+class CommonMenu extends Component {
   savedOpenKeys = [];
 
   componentWillMount() {
@@ -23,48 +23,30 @@ export default class CommonMenu extends Component {
     this.loadMenu(nextProps);
   }
 
-  loadMenu(props) {
-    const { location, AppState, MenuStore } = props;
-    const { type: currentType, isUser: currentIsUser, id: currentId, selected, collapsed } = MenuStore;
-    const { pathname } = location;
-    const { type, id } = AppState.currentMenuType;
-    if (type) {
-      MenuStore.loadMenuData().then((menus) => {
-        const isUser = AppState.isTypeUser;
-        if (pathname === '/') {
-          MenuStore.setActiveMenu(null);
-          MenuStore.setSelected(selected ? menus.find(({ code }) => code === selected.code) || menus[0] : menus[0]);
-          MenuStore.setType(type);
-          MenuStore.setId(id);
-          MenuStore.setIsUser(isUser);
-          MenuStore.setOpenKeys([]);
-        } else {
-          MenuStore.treeReduce({ subMenus: menus }, (menu, parents) => {
-            if (menu.route === pathname || pathname.indexOf(`${menu.route}/`) === 0) {
-              const nCode = parents.length && parents[parents.length - 1].code;
-              const oCode = selected && selected.code;
-              if (
-                oCode !== nCode
-                || currentType !== type
-                || isUser !== currentIsUser
-                || currentId !== id
-              ) {
-                MenuStore.setOpenKeys(collapsed ? [] : [menu, ...parents].map(({ code }) => code));
-                this.savedOpenKeys = [menu, ...parents].map(({ code }) => code);
-              }
-              MenuStore.setActiveMenu(menu);
-              MenuStore.setSelected(parents[0]);
-              MenuStore.setType(type);
-              MenuStore.setId(id);
-              MenuStore.setIsUser(isUser);
-              return true;
-            }
-            return false;
-          });
+  getMenuLink(route) {
+    const { AppState } = this.props;
+    const {
+      id, name, type, organizationId,
+    } = AppState.currentMenuType;
+    let search = '';
+    switch (type) {
+      case 'site':
+        if (AppState.isTypeUser) {
+          search = '?type=site';
         }
-      });
+        break;
+      case 'organization':
+      case 'project':
+        // search = `?type=${type}&id=${id}&name=${encodeURIComponent(name)}`;
+        if (organizationId) {
+          search += `&organizationId=${organizationId}`;
+        }
+        break;
+      default:
     }
+    return `${route}${search}`;
   }
+
 
   getMenuSingle(data, num) {
     if (!data.subMenus) {
@@ -115,55 +97,19 @@ export default class CommonMenu extends Component {
     }
   }
 
-  TooltipMenu(reactNode, code) {
-    const { AppState } = this.props;
-    if (AppState.getDebugger) {
-      return (
-        <Tooltip defaultVisible="true" trigger="hover" placement="right">
-          {reactNode}
-        </Tooltip>
-      );
+  toggleRightMenu = () => {
+    const { MenuStore } = this.props;
+    const { collapsed, openKeys } = MenuStore;
+    if (collapsed) {
+      MenuStore.setCollapsed(false);
+      MenuStore.setOpenKeys(this.savedOpenKeys);
     } else {
-      return reactNode;
+      this.savedOpenKeys = openKeys;
+      MenuStore.setCollapsed(true);
+      MenuStore.setOpenKeys([]);
     }
-  }
+  };
 
-  getMenuLink(route) {
-    const { AppState } = this.props;
-    const { id, name, type, organizationId } = AppState.currentMenuType;
-    let search = '';
-    switch (type) {
-      case 'site':
-        if (AppState.isTypeUser) {
-          search = '?type=site';
-        }
-        break;
-      case 'organization':
-      case 'project':
-        search = `?type=${type}&id=${id}&name=${encodeURIComponent(name)}`;
-        if (organizationId) {
-          search += `&organizationId=${organizationId}`;
-        }
-        break;
-      default:
-    }
-    return `${route}${search}`;
-  }
-
-  findSelectedMenuByCode(child, code) {
-    let selected = false;
-    child.forEach((item) => {
-      if (selected) {
-        return;
-      }
-      if (item.code === code) {
-        selected = item;
-      } else if (item.subMenus) {
-        selected = this.findSelectedMenuByCode(item.subMenus, code);
-      }
-    });
-    return selected;
-  }
 
   handleClick = (e) => {
     const { MenuStore } = this.props;
@@ -203,18 +149,80 @@ export default class CommonMenu extends Component {
     AppState.setMenuExpanded(false);
   };
 
-  toggleRightMenu = () => {
-    const { MenuStore } = this.props;
-    const { collapsed, openKeys } = MenuStore;
-    if (collapsed) {
-      MenuStore.setCollapsed(false);
-      MenuStore.setOpenKeys(this.savedOpenKeys);
+  findSelectedMenuByCode(child, code) {
+    let selected = false;
+    child.forEach((item) => {
+      if (selected) {
+        return;
+      }
+      if (item.code === code) {
+        selected = item;
+      } else if (item.subMenus) {
+        selected = this.findSelectedMenuByCode(item.subMenus, code);
+      }
+    });
+    return selected;
+  }
+
+  TooltipMenu(reactNode, code) {
+    const { AppState } = this.props;
+    if (AppState.getDebugger) {
+      return (
+        <Tooltip defaultVisible="true" trigger="hover" placement="right">
+          {reactNode}
+        </Tooltip>
+      );
     } else {
-      this.savedOpenKeys = openKeys;
-      MenuStore.setCollapsed(true);
-      MenuStore.setOpenKeys([]);
+      return reactNode;
     }
-  };
+  }
+
+  loadMenu(props) {
+    const { location, AppState, MenuStore } = props;
+    const {
+      type: currentType, isUser: currentIsUser, id: currentId, selected, collapsed,
+    } = MenuStore;
+    const { pathname } = location;
+    const { type, id } = AppState.currentMenuType;
+    if (type) {
+      MenuStore.loadMenuData().then((menus) => {
+        const isUser = AppState.isTypeUser;
+        if (pathname === '/') {
+          MenuStore.setActiveMenu(null);
+          MenuStore.setSelected(selected 
+            ? menus.find(({ code }) => code === selected.code) || menus[0] 
+            : menus[0]);
+          MenuStore.setType(type);
+          MenuStore.setId(id);
+          MenuStore.setIsUser(isUser);
+          MenuStore.setOpenKeys([]);
+        } else {
+          MenuStore.treeReduce({ subMenus: menus }, (menu, parents) => {
+            if (menu.route === pathname || pathname.indexOf(`${menu.route}/`) === 0) {
+              const nCode = parents.length && parents[parents.length - 1].code;
+              const oCode = selected && selected.code;
+              if (
+                oCode !== nCode
+                || currentType !== type
+                || isUser !== currentIsUser
+                || currentId !== id
+              ) {
+                MenuStore.setOpenKeys(collapsed ? [] : [menu, ...parents].map(({ code }) => code));
+                this.savedOpenKeys = [menu, ...parents].map(({ code }) => code);
+              }
+              MenuStore.setActiveMenu(menu);
+              MenuStore.setSelected(parents[0]);
+              MenuStore.setType(type);
+              MenuStore.setId(id);
+              MenuStore.setIsUser(isUser);
+              return true;
+            }
+            return false;
+          });
+        }
+      });
+    }
+  }
 
   renderLeftMenu(child, selected, expanded) {
     if (child.length > 0) {
@@ -226,7 +234,10 @@ export default class CommonMenu extends Component {
             className="common-menu-left-header"
             role="none"
           >
-            <Link to="/" onClick={this.collapseMenu}><Icon type="home" /><span>主页</span></Link>
+            <Link to="/" onClick={this.collapseMenu}>
+              <Icon type="home" />
+              <span>主页</span>
+            </Link>
           </div>
           <div className="common-menu-right-content">
             <Menu
@@ -241,6 +252,8 @@ export default class CommonMenu extends Component {
           </div>
         </div>
       );
+    } else {
+      return null;
     }
   }
 
@@ -269,7 +282,12 @@ export default class CommonMenu extends Component {
           onTitleClick={this.handleClick}
           key={item.code}
           className="common-menu-right-popup"
-          title={<span>{icon}{text}</span>}
+          title={(
+            <span>
+              {icon}
+              {text}
+            </span>
+          )}
         >
           {
             item.subMenus.map(two => (
@@ -305,7 +323,7 @@ export default class CommonMenu extends Component {
             {menu.subMenus.map(two => this.getMenuSingle(two, 0))}
           </Menu>
         </div>
-        <div className="common-menu-right-footer" onClick={this.toggleRightMenu}>
+        <div role="none" className="common-menu-right-footer" onClick={this.toggleRightMenu}>
           <Icon type="first_page" />
         </div>
       </div>
@@ -340,3 +358,4 @@ export default class CommonMenu extends Component {
     }
   }
 }
+export default CommonMenu;

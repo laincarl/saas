@@ -4,7 +4,7 @@ module.exports = {
   webpack: {
     resolve: {    
       alias: {
-        Loading: path.resolve(__dirname, './src/components/loading'),
+        Loading: path.resolve(__dirname, './src/components/loading'),      
         api: path.resolve(__dirname, './src/api'),
         assets: path.resolve(__dirname, './src/assets'),
         components: path.resolve(__dirname, './src/components'),
@@ -17,6 +17,7 @@ module.exports = {
       port: 3030,
     },
   },
+  theme: './theme.less',
   // envs: {
   //   API: 'http://localhost',
   // },  

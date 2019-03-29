@@ -1,8 +1,3 @@
-import Loadable from 'react-loadable';
-import Loading from 'Loading';
+import AgileIndex from './AgileIndex';
 
-const Agile = Loadable({
-  loader: () => import('./Agile'),
-  loading: Loading,
-});
-export default Agile;
+export default AgileIndex;

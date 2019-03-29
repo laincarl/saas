@@ -12,10 +12,11 @@
   "dependencies": {
     "choerodon-ui": "^0.5.2",
     "classnames": "^2.2.6",
+    "mockjs": "^1.0.1-beta3",
     "nprogress": "^0.2.0",
     "object.omit": "^3.0.0",
     "query-string": "^6.4.0",
-    "react-booter": "1.0.19",
+    "react-booter": "1.0.20",
     "react-intl": "^2.8.0",
     "react-loadable": "^5.5.0",
     "universal-cookie": "^3.0.7"

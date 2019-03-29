@@ -8,9 +8,9 @@ import queryString from 'query-string';
 import Header from 'components/Header';
 import Menu from 'components/menu';
 import Agile from 'pages/Agile';
+// import TestManager from 'pages/testManager/containers/TestManagerIndex';
 import AppState from 'stores/AppState';
-import findFirstLeafMenu from 'components/util/findFirstLeafMenu';
-import { dashboard, historyReplaceMenu } from '../../common';
+import nomatch from 'nomatch';
 
 function parseQueryToMenuType(search) {
   const menuType = {};
@@ -43,17 +43,17 @@ function parseQueryToMenuType(search) {
 @inject('AppState', 'MenuStore', 'HeaderStore')
 @observer
 class Home extends Component {
-  // componentWillMount() {
-  //   this.initMenuType(this.props);
-  // }
+  componentWillMount() {
+    this.initMenuType(this.props);
+  }
 
-  // componentDidMount() {
-  //   // this.initFavicon();
-  // }
+  componentDidMount() {
+    // this.initFavicon();
+  }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.initMenuType(nextProps);
-  // }
+  componentWillReceiveProps(nextProps) {
+    this.initMenuType(nextProps);
+  }
 
 
   // initFavicon() {
@@ -84,31 +84,14 @@ class Home extends Component {
     } = props;
     const { pathname, search } = location;
     let isUser = false;
-    let needLoad = false;
-    let menuType = parseQueryToMenuType(search);
-    if (pathname === '/') {
-      if (true) {
-        const recent = HeaderStore.getRecentItem;
-        if (recent.length && !sessionStorage.home_first_redirect) {
-          const {
-            id, name, type, organizationId,
-          } = recent[0];
-          menuType = {
-            id, name, type, organizationId,
-          };
-          needLoad = true;
-        } else {
-          menuType = {};
-        }
-        sessionStorage.home_first_redirect = 'yes';
-      }
-    } else if (menuType.type === 'site') {
+    const needLoad = false;
+    const menuType = parseQueryToMenuType(search);
+    console.log(menuType);
+    if (menuType.type === 'site') {
       isUser = true;
-    } else if (!menuType.type) {
-      menuType.type = 'site';
     }
     AppState.setTypeUser(isUser);
-    AppState.changeMenuType(menuType);
+    AppState.changeMenuType(menuType, isUser);
     // if (needLoad) {
     //   MenuStore.loadMenuData().then((menus) => {
     //     if (menus.length) {
@@ -134,6 +117,8 @@ class Home extends Component {
           <Menu />
           <Switch>
             <Route path="/agile" component={Agile} />
+            {/* <Route path="/testManager" component={TestManager} /> */}
+            <Route path="*" component={nomatch} />
             {/* <Redirect from={`${match.url}`} to={`${match.url}/main`} />   */}
             {/* 其他重定向到 404 */}
             {/* <Redirect from="*" to="/404" /> */}

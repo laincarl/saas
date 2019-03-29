@@ -95,13 +95,9 @@ class MenuStore {
     if (menu.length) {
       return Promise.resolve(menu);
     }
-    // return axios.get(`/iam/v1/menus?level=${type}&source_id=${id}`).then(action((data) => {
-    //   const child = filterEmptyMenus(data);
-    //   this.setMenuData(child, type, id);
-    //   return child;
-    // }));
+  
     return new Promise((resolve) => {
-      const child = filterEmptyMenus(menuData);
+      const child = filterEmptyMenus(menuData[type]);
       this.setMenuData(child, type, id);
       resolve(child);
     });

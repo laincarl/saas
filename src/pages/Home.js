@@ -11,6 +11,7 @@ import Agile from 'pages/Agile';
 // import TestManager from 'pages/testManager/containers/TestManagerIndex';
 import AppState from 'stores/AppState';
 import nomatch from 'nomatch';
+import './Home.scss';
 
 function parseQueryToMenuType(search) {
   const menuType = {};

@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Home } from 'pages';
 import AppState from 'stores/AppState';
 import MenuStore from 'stores/MenuStore';
-import HeaderStore from 'stores/MenuStore';
+import HeaderStore from 'stores/HeaderStore';
 import RouterContainer from './RouterContainer';
 import './index.scss';
 

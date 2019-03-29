@@ -86,8 +86,7 @@ class Home extends Component {
     const { pathname, search } = location;
     let isUser = false;
     const needLoad = false;
-    const menuType = parseQueryToMenuType(search);
-    console.log(menuType);
+    const menuType = parseQueryToMenuType(search);   
     if (menuType.type === 'site') {
       isUser = true;
     }

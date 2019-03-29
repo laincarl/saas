@@ -5,7 +5,7 @@ import { Menu, Popover, Icon } from 'choerodon-ui';
 import Avatar from './Avatar';
 import findFirstLeafMenu from '../util/findFirstLeafMenu';
 import { getMessage, historyPushMenu, logout } from '../../common';
-const PREFIX_CLS = 'c7n';
+import { PREFIX_CLS } from '../../common/constants';
 
 const MenuItem = Menu.Item;
 const prefixCls = `${PREFIX_CLS}-boot-header-user`;

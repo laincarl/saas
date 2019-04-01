@@ -4,33 +4,54 @@ import {
   Button, Spin, message, Icon,
 } from 'choerodon-ui';
 import Page from 'components/Page';
-import IssueItem from 'components/IssueItem';
-import { loadIssues } from '@/api/AgileApi';
+import { IssueList } from './components';
+import { getIssues } from '@/api/AgileApi';
 
 const { Header, Content } = Page;
 class BackLog extends Component {
-  state={
+  state = {
     data: [],
     selectedIssue: null,
+    pagination: {
+      page: 0,
+      size: 10,
+      total: 0,
+    },
   }
 
   componentDidMount() {
-    loadIssues().then((res) => {
+    this.loadIssues();
+  }
+
+  loadIssues = () => {
+    getIssues().then((res) => {
+      const {
+        content, number, totalElements, size,
+      } = res;
       this.setState({
-        data: res.content,
+        data: content,
+        pagination: {
+          current: number + 1,
+          total: totalElements,
+          pageSize: size,
+        },
       });
       console.log(res);
     });
   }
 
-  handleIssueClick=(issue) => {
+  handlePaginationChange = (current, size) => {
+
+  }
+
+  handleIssueSelect = (issue) => {
     this.setState({
       selectedIssue: issue,
     });
   }
 
   render() {
-    const { data, selectedIssue } = this.state;
+    const { data, selectedIssue, pagination } = this.state;
     return (
       <Page>
         <Header title="待办事项">
@@ -46,7 +67,14 @@ class BackLog extends Component {
         </Header>
         <Content style={{ padding: 0 }}>
           <div>
-            {data.map(issue => <IssueItem data={issue} onClick={this.handleIssueClick} selected={selectedIssue && selectedIssue.issueId === issue.issueId} />)}
+            <IssueList
+              dataSource={data}
+              pagination={pagination}
+              selectedIssue={selectedIssue}
+              onSelect={this.handleIssueSelect}
+              onChange={this.handlePaginationChange}
+            />
+
           </div>
         </Content>
       </Page>

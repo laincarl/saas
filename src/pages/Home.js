@@ -75,7 +75,7 @@ class Home extends Component {
     if (menuType.type === 'site') {
       isUser = true;
     }
-    console.log(menuType);
+    // console.log(menuType);
     AppState.setTypeUser(isUser);
     AppState.changeMenuType(menuType, isUser);
     // if (needLoad) {

@@ -1,8 +1,9 @@
-// export { default as Page } from './page';
+import Page from 'components/Page';
 
-// export { default as Content } from './page/Content';
+const { Header, Content } = Page;
 
-// export { default as Header } from './page/Header';
+export { Page, Content, Header };
+
 
 // export { default as LoadingBar } from './loading-bar';
 

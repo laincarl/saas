@@ -14,27 +14,15 @@ import nomatch from 'nomatch';
 import './Home.scss';
 
 function parseQueryToMenuType(search) {
-  const menuType = {};
+  const menuType = {
+    type: 'project',
+  };
   if (search) {
     const {
       type, name, id, organizationId,
     } = queryString.parse(search);
     if (type) {
       menuType.type = type;
-    }
-    if (name) {
-      menuType.name = name;
-    }
-    if (id) {
-      menuType.id = id;
-      if (type === 'project') {
-        menuType.projectId = id;
-      } else if (type === 'organization') {
-        menuType.organizationId = id;
-      }
-    }
-    if (type === 'project' && organizationId) {
-      menuType.organizationId = organizationId;
     }
   }
 
@@ -48,9 +36,6 @@ class Home extends Component {
     this.initMenuType(this.props);
   }
 
-  componentDidMount() {
-    // this.initFavicon();
-  }
 
   componentWillReceiveProps(nextProps) {
     this.initMenuType(nextProps);
@@ -90,6 +75,7 @@ class Home extends Component {
     if (menuType.type === 'site') {
       isUser = true;
     }
+    console.log(menuType);
     AppState.setTypeUser(isUser);
     AppState.changeMenuType(menuType, isUser);
     // if (needLoad) {
@@ -113,7 +99,7 @@ class Home extends Component {
     return (
       <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Header />
-        <div style={{ display: 'flex', flex: 1 }}>
+        <div style={{ display: 'flex', flex: 1, position: 'relative' }}>
           <Menu />
           <Switch>
             <Route path="/agile" component={Agile} />

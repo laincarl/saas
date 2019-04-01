@@ -41,8 +41,8 @@ export default class Logo extends Component {
         }
         {
           pathname === '/' && !search
-            ? <div className={classnames(`${prefixCls}`, systemName ? null : `${prefixCls}-default-logo`)}>{systemName}</div>
-            : <Link to={homePath} className={classnames(`${prefixCls}`, systemName ? null : `${prefixCls}-default-logo`)} style={{ textDecoration: 'none' }}>{systemName}</Link>
+            ? <div className={prefixCls}>{systemName}</div>
+            : <Link to={homePath} className={prefixCls} style={{ textDecoration: 'none' }}>{systemName}MinuteF</Link>
         }
       </div>
     );

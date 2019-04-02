@@ -69,5 +69,7 @@
       }
     ]
   },
-  "globals": {}
+  "globals": {
+    "Choerodon": true
+  }
 }

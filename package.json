@@ -17,8 +17,10 @@
     "object.omit": "^3.0.0",
     "query-string": "^6.4.0",
     "react-booter": "1.0.20",
+    "react-fast-compare": "^2.0.4",
     "react-intl": "^2.8.0",
     "react-loadable": "^5.5.0",
+    "rxjs": "^6.4.0",
     "timeago-react": "2.0.0",
     "universal-cookie": "^3.0.7"
   },

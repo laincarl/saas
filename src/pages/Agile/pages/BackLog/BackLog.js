@@ -4,14 +4,14 @@ import {
   Button, Spin, message, Icon,
 } from 'choerodon-ui';
 import Page from 'components/Page';
-import { IssueList } from './components';
+import { IssueList, IssueSide } from './components';
 import { getIssues } from '@/api/AgileApi';
 
 const { Header, Content } = Page;
 class BackLog extends Component {
   state = {
     data: [],
-    selectedIssue: null,
+    selectedIssue: {},
     pagination: {
       page: 0,
       size: 10,
@@ -65,8 +65,8 @@ class BackLog extends Component {
             刷新
           </Button>
         </Header>
-        <Content style={{ padding: 0 }}>
-          <div>
+        <Content style={{ padding: 0, display: 'flex' }}>
+          <div style={{ flex: 1, height: '100%', overflow: 'auto' }}>
             <IssueList
               dataSource={data}
               pagination={pagination}
@@ -74,8 +74,13 @@ class BackLog extends Component {
               onSelect={this.handleIssueSelect}
               onChange={this.handlePaginationChange}
             />
-
           </div>
+          {selectedIssue.issueId && (
+            <IssueSide
+              issueId={selectedIssue.issueId}
+              key={selectedIssue.issueId}
+            />
+          )}
         </Content>
       </Page>
     );

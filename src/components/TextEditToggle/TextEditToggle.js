@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Form, Icon } from 'choerodon-ui';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
 import './TextEditToggle.scss';
 // 防止提交前变回原值
 const Text = props => (typeof (props.children) === 'function' ? props.children(props.newData || props.originData) : props.children);
@@ -21,7 +20,7 @@ function contains(root, n) {
 
   return false;
 }
-@observer
+
 class TextEditToggle extends Component {
   static defaultProps = {
 
@@ -67,8 +66,8 @@ class TextEditToggle extends Component {
   }
 
   handleDocumentClick = (event) => {
-    const target = event.target;
-    const root = findDOMNode(this); 
+    const { target } = event;
+    const root = findDOMNode(this);
     // 如果点击不在当前元素内，就调用submit提交数据
     if (!this.PortalMouseDown && !contains(root, target)) {
       // console.log(target);
@@ -148,8 +147,8 @@ class TextEditToggle extends Component {
     const { editing } = this.state;
     const { children } = this.props;
     return editing
-      ? children.filter(child => child.type === Edit)
-      : children.filter(child => child.type === Text);
+      ? children.filter(child => child.type.displayName === 'Edit')
+      : children.filter(child => child.type.displayName === 'Text');
   }
 
   renderFormItemChild(children) {
@@ -169,7 +168,7 @@ class TextEditToggle extends Component {
     // console.log(childrenArray);
     return childrenArray.map((child) => {
       if (!child.props.getPopupContainer) {
-        return React.cloneElement(child, {        
+        return React.cloneElement(child, {
           getPopupContainer: () => findDOMNode(this),
         });
       } else {
@@ -180,7 +179,6 @@ class TextEditToggle extends Component {
 
   renderTextChild = (children) => {
     const childrenArray = React.Children.toArray(children);
-    // console.log(childrenArray);
     return childrenArray.map(child => React.cloneElement(child, {
       newData: this.state.newData,
       originData: this.props.originData,
@@ -191,7 +189,7 @@ class TextEditToggle extends Component {
     const { editing, newData } = this.state;
     const { disabled, simpleMode, noButton } = this.props;
     const {
-      originData, formKey, rules, fieldProps, 
+      originData, formKey, rules, fieldProps,
     } = this.props;
     const { getFieldDecorator } = this.props.form;
     // 拿到不同模式下对应的子元素

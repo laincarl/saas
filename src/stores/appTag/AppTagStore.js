@@ -1,9 +1,9 @@
 import { observable, action, computed } from 'mobx';
-import { axios,store } from 'choerodon-front-boot';
+import { axios, store } from 'choerodon-front-boot';
 import { handleProptError } from 'pages/devops/utils';
 import DevPipelineStore from '../devPipeline/DevPipelineStore';
 
-@store("AppTagStore")
+@store('AppTagStore')
 class AppTagStore {
   @observable tagData = [];
 
@@ -53,12 +53,14 @@ class AppTagStore {
   queryTagData = (projectId, page = 0, sizes = 10, postData = { searchParam: {}, param: '' }) => {
     this.setLoading(true);
     if (DevPipelineStore.selectedApp) {
-      axios.post(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/tags_list_options?page=${page}&size=${sizes}`, JSON.stringify(postData))
+      axios.post(`/devops/v1/projects/${1}/apps/${DevPipelineStore.selectedApp}/git/tags_list_options?page=${page}&size=${sizes}`, JSON.stringify(postData))
         .then((data) => {
           this.setLoading(false);
           const result = handleProptError(data);
           if (result) {
-            const { content, totalElements, number, size } = result;
+            const {
+              content, totalElements, number, size, 
+            } = result;
             this.setTagData(content);
             this.setPageInfo({ current: number + 1, pageSize: size, total: totalElements });
           }
@@ -80,8 +82,10 @@ class AppTagStore {
    * @param appId
    * @returns {Promise<T>}
    */
-  queryBranchData = ({ projectId, sorter = { field: 'createDate', order: 'asc' }, postData = { searchParam: {}, param: '' }, size = 3 }) => {
-    axios.post(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/branches?page=0&size=${size}`, JSON.stringify(postData)).then((data) => {
+  queryBranchData = ({
+    projectId, sorter = { field: 'createDate', order: 'asc' }, postData = { searchParam: {}, param: '' }, size = 3, 
+  }) => {
+    axios.post(`/devops/v1/projects/${1}/apps/${DevPipelineStore.selectedApp}/git/branches?page=0&size=${size}`, JSON.stringify(postData)).then((data) => {
       const result = handleProptError(data);
       if (result) {
         this.setBranchData(result);

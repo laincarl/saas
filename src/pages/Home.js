@@ -14,6 +14,8 @@ import Devops from 'pages/devops';
 import AppState from 'stores/AppState';
 import nomatch from 'nomatch';
 import './Home.scss';
+import '@/mock/DevopsMock';
+import '@/mock/IamMock';
 
 function parseQueryToMenuType(search) {
   const menuType = {

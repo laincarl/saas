@@ -23,7 +23,7 @@ class DEVOPSIndex extends React.Component {
           <Route path={`${match.url}/branch`} component={Branch} />
           <Route path={`${match.url}/merge-request`} component={MergeRequest} />
           <Route path={`${match.url}/tag`} component={AppTag} />
-          <Route path={`${match.url}/repository`} component={Repository} />         
+          <Route path={`${match.url}/repository`} component={Repository} />
           <Route path="*" component={nomatch} />
         </Switch>
       </IntlProviderAsync>

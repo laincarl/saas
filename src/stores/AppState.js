@@ -10,14 +10,14 @@ function getDefaultLanguage() {
 }
 
 class AppState {
-  @observable menuType = { type: 'project' }; // 一个菜单对象 {id:'',name:'',type:''}
+  @observable menuType = { type: 'project', id: 1 }; // 一个菜单对象 {id:'',name:'',type:''}
 
   @observable expanded = false;
 
   @observable guideExpanded = false;
 
   @observable userInfo = {
-    id: 7631, 
+    id: 7631,
     organizationId: 2,
     organizationName: '上海汉得信息技术股份有限公司',
     organizationCode: 'hand',

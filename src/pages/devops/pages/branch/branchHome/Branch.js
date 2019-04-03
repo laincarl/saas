@@ -5,7 +5,7 @@ import {
   Button, Tooltip, Modal, Table, Popover, Select, Icon, 
 } from 'choerodon-ui';
 import {
-  Content, Header, Page, Permission, stores, 
+  Content, Header, Page, stores, 
 } from 'choerodon-front-boot';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import _ from 'lodash';
@@ -180,13 +180,13 @@ class Branch extends Component {
                 <React.Fragment>
                   {record.createUserName ? (
                     <div>
-            <div className="branch-user-img">{record.createUserRealName && record.createUserRealName.slice(0, 1).toUpperCase()}</div>
-            <div style={{ display: 'inline-block' }}>
-                      <span style={{ paddingRight: 5 }}>{record.createUserName}</span>
-                      {record.createUserName !== record.createUserRealName
+                      <div className="branch-user-img">{record.createUserRealName && record.createUserRealName.slice(0, 1).toUpperCase()}</div>
+                      <div style={{ display: 'inline-block' }}>
+                        <span style={{ paddingRight: 5 }}>{record.createUserName}</span>
+                        {record.createUserName !== record.createUserRealName
                   && <span>{record.createUserRealName}</span>}
+                      </div>
                     </div>
-          </div>
                   ) : null}
                 </React.Fragment>
               ) }
@@ -211,17 +211,15 @@ class Branch extends Component {
           <div>
             {record.branchName !== 'master'
               ? (
-                <React.Fragment>
-                  <Permission projectId={this.state.projectId} organizationId={orgId} type={type} service={['devops-service.devops-git.update']}>
-                    <Tooltip
-                      placement="bottom"
-                      title={<FormattedMessage id="branch.edit" />}
-                    >
-                      <Button size="small" shape="circle" onClick={this.handleEdit.bind(this, record.branchName)}>
-                        <i className="icon icon-mode_edit" />
-                      </Button>
-                    </Tooltip>
-                  </Permission>
+                <React.Fragment>                
+                  <Tooltip
+                    placement="bottom"
+                    title={<FormattedMessage id="branch.edit" />}
+                  >
+                    <Button size="small" shape="circle" onClick={this.handleEdit.bind(this, record.branchName)}>
+                      <i className="icon icon-mode_edit" />
+                    </Button>
+                  </Tooltip>                 
                   <Tooltip
                     placement="bottom"
                     title={<FormattedMessage id="branch.request" />}
@@ -231,17 +229,15 @@ class Branch extends Component {
                         <i className="icon icon-merge_request" />
                       </Button>
                     </a>
-                  </Tooltip>
-                  <Permission projectId={this.state.projectId} organizationId={orgId} type={type} service={['devops-service.devops-git.delete']}>
-                    <Tooltip
-                      placement="bottom"
-                      title={<FormattedMessage id="delete" />}
-                    >
-                      <Button size="small" shape="circle" onClick={this.openRemove.bind(this, record.branchName)}>
-                        <i className="icon icon-delete_forever" />
-                      </Button>
-                    </Tooltip>
-                  </Permission>
+                  </Tooltip>                 
+                  <Tooltip
+                    placement="bottom"
+                    title={<FormattedMessage id="delete" />}
+                  >
+                    <Button size="small" shape="circle" onClick={this.openRemove.bind(this, record.branchName)}>
+                      <i className="icon icon-delete_forever" />
+                    </Button>
+                  </Tooltip>              
                 </React.Fragment>
               )
               : null
@@ -520,17 +516,13 @@ class Branch extends Component {
               }
                 </OptGroup>
               </Select>
-              {BranchStore.getBranchList.length && DevPipelineStore.selectedApp ? (
-                <Permission
-                  service={['devops-service.devops-git.createBranch']}
+              {BranchStore.getBranchList.length && DevPipelineStore.selectedApp ? (                
+                <Button
+                  onClick={this.showSidebar}
+                  icon="playlist_add"
                 >
-                  <Button
-                    onClick={this.showSidebar}
-                    icon="playlist_add"
-                  >
-                    <FormattedMessage id="branch.create" />
-                  </Button>
-                </Permission>
+                  <FormattedMessage id="branch.create" />
+                </Button>               
               ) : null}
               <Button
                 onClick={this.handleRefresh}

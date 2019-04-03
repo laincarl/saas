@@ -173,7 +173,7 @@ class CreateBranch extends Component {
                     this.setState({
                       branchsInput: input,
                     });
-                    axios.post(`/devops/v1/projects/${AppState.currentMenuType.id}/apps/${form.getFieldValue('app')}/git/branches?page=0&size=5`, {
+                    axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/branches?page=0&size=5`, {
                       searchParam: {
                         branchName: [input],
                       },
@@ -188,7 +188,7 @@ class CreateBranch extends Component {
                           branchLoading: false,
                         });
                       });
-                    axios.post(`/devops/v1/projects/${AppState.currentMenuType.id}/apps/${form.getFieldValue('app')}/git/tags_list_options?page=0&size=5`, {
+                    axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/tags_list_options?page=0&size=5`, {
                       searchParam: {
                         tagName: [input],
                       },
@@ -223,7 +223,7 @@ class CreateBranch extends Component {
                             }}
                             onClick={(e) => {
                               e.stopPropagation();
-                              axios.post(`/devops/v1/projects/${AppState.currentMenuType.id}/apps/${form.getFieldValue('app')}/git/branches?page=0&size=${branchsSize + 5}`, {
+                              axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/branches?page=0&size=${branchsSize + 5}`, {
                                 searchParam: {
                                   branchName: [branchsInput],
                                 },
@@ -264,7 +264,7 @@ class CreateBranch extends Component {
                             }}
                             onClick={(e) => {
                               e.stopPropagation();
-                              axios.post(`/devops/v1/projects/${AppState.currentMenuType.id}/apps/${form.getFieldValue('app')}/git/tags_list_options?page=0&size=${tagsSize + 5}`, {
+                              axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/tags_list_options?page=0&size=${tagsSize + 5}`, {
                                 searchParam: {
                                   tagName: [branchsInput],
                                 },

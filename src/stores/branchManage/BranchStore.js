@@ -125,7 +125,7 @@ class BranchStore {
 
   loadIssue = (proId = AppState.currentMenuType.id, search = '', onlyActiveSprint, issueId = '', issueNum = '') => {
     this.setIssueLoading(true);
-    return axios.get(`/agile/v1/projects/${proId}/issues/summary?issueId=${issueId}&onlyActiveSprint=${onlyActiveSprint}&self=true&issueNum=${issueNum}&content=${search}`)
+    return axios.get(`/agile/v1/projects/${1}/issues/summary?issueId=${issueId}&onlyActiveSprint=${onlyActiveSprint}&self=true&issueNum=${issueNum}&content=${search}`)
       .then((data) => {
         this.setIssueLoading(false);
         const res = handleProptError(data);
@@ -165,9 +165,13 @@ class BranchStore {
    * @param sort
    * @param postData
    */
-  loadBranchData = ({ projectId, page = 0, size = this.pageInfo.pageSize, sort = { field: 'creationDate', order: 'asc' }, postData = { searchParam: {},
-    param: '' } }) => {
-    axios.post(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/branches?page=${page}&size=${size}&sort=${sort.field},${sort.order}`, JSON.stringify(postData))
+  loadBranchData = ({
+    projectId, page = 0, size = this.pageInfo.pageSize, sort = { field: 'creationDate', order: 'asc' }, postData = {
+      searchParam: {},
+      param: '', 
+    }, 
+  }) => {
+    axios.post(`/devops/v1/projects/${1}/apps/${DevPipelineStore.selectedApp}/git/branches?page=${page}&size=${size}&sort=${sort.field},${sort.order}`, JSON.stringify(postData))
       .then((data) => {
         const res = handleProptError(data);
         if (res) {
@@ -184,11 +188,15 @@ class BranchStore {
    * @param sort
    * @param postData
    */
-  loadBranchList = ({ projectId, page = 0, size = this.pageInfo.pageSize, sort = { field: 'creationDate', order: 'asc' }, postData = { searchParam: {},
-    param: '' } }) => {
+  loadBranchList = ({
+    projectId, page = 0, size = this.pageInfo.pageSize, sort = { field: 'creationDate', order: 'asc' }, postData = {
+      searchParam: {},
+      param: '', 
+    }, 
+  }) => {
     if (DevPipelineStore.selectedApp) {
       this.changeLoading(true);
-      axios.post(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/branches?page=${page}&size=${size}&sort=${sort.field},${sort.order}`, JSON.stringify(postData))
+      axios.post(`/devops/v1/projects/${1}/apps/${DevPipelineStore.selectedApp}/git/branches?page=${page}&size=${size}&sort=${sort.field},${sort.order}`, JSON.stringify(postData))
         .then((data) => {
           this.changeLoading(false);
           const res = handleProptError(data);
@@ -201,7 +209,7 @@ class BranchStore {
     }
   };
 
-  loadTagData = (projectId, page = 0, sizes = 10, postData = { searchParam: {}, param: '' }) => axios.post(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/tags_list_options?page=0&size=${sizes}`, JSON.stringify(postData))
+  loadTagData = (projectId, page = 0, sizes = 10, postData = { searchParam: {}, param: '' }) => axios.post(`/devops/v1/projects/${1}/apps/${DevPipelineStore.selectedApp}/git/tags_list_options?page=0&size=${sizes}`, JSON.stringify(postData))
     .then((data) => {
       const res = handleProptError(data);
       if (res) {

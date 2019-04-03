@@ -1,5 +1,5 @@
 import { observable, action, computed } from 'mobx';
-import {axios, store, stores} from 'choerodon-front-boot';
+import { axios, store, stores } from 'choerodon-front-boot';
 import { handleProptError } from 'pages/devops/utils';
 
 const orderMapping = {
@@ -55,7 +55,7 @@ class RepositoryStore {
   queryRepoData = (projectId, page, pageSize = this.pageInfo.pageSize, sorter, search) => {
     this.setLoading(true);
     const order = sorter.order ? orderMapping[sorter.order] : 'desc';
-    axios.post(`/devops/v1/projects/${projectId}/apps/list_code_repository?page=${page}&size=${pageSize}&sort=${sorter.field || 'id'},${order}`, JSON.stringify(search))
+    axios.post(`/devops/v1/projects/${1}/apps/list_code_repository?page=${page}&size=${pageSize}&sort=${sorter.field || 'id'},${order}`, JSON.stringify(search))
       .then((data) => {
         const res = handleProptError(data);
         if (res) {

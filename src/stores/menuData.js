@@ -38,8 +38,6 @@ const data = {
     zhName: null,
     enName: null,
     subMenus: [{
-      id: 497, code: 'choerodon.code.development-pipeline.development-console', name: '开发控制台', level: 'project', parentId: 57, type: 'menu', sort: 1, icon: 'develop_console', route: '/devops/dev-console', objectVersionNumber: 5, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
-    }, {
       id: 82, code: 'choerodon.code.development-pipeline.repository', name: '代码仓库', level: 'project', parentId: 57, type: 'menu', sort: 2, icon: 'account_balance', route: '/devops/repository', objectVersionNumber: 7, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
       id: 80, code: 'choerodon.code.development-pipeline.branch', name: '分支', level: 'project', parentId: 57, type: 'menu', sort: 3, icon: 'branch', route: '/devops/branch', objectVersionNumber: 7, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
@@ -47,8 +45,6 @@ const data = {
       id: 83, code: 'choerodon.code.development-pipeline.tag', name: '标记', level: 'project', parentId: 57, type: 'menu', sort: 4, icon: 'local_offer', route: '/devops/tag', objectVersionNumber: 7, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
       id: 81, code: 'choerodon.code.development-pipeline.merge-request', name: '合并请求', level: 'project', parentId: 57, type: 'menu', sort: 5, icon: 'merge_request', route: '/devops/merge-request', objectVersionNumber: 7, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
-    }, {
-      id: 60, code: 'choerodon.code.development-pipeline.continuous-integration', name: '持续集成', level: 'project', parentId: 57, type: 'menu', sort: 6, icon: 'CI', route: '/devops/ci-pipeline', objectVersionNumber: 8, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }],
     default: true,
   }, {

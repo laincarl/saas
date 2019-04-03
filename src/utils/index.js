@@ -60,7 +60,7 @@ export {
 
 export { default as axios } from 'components/axios';
 
-// export { default as store } from './store';
+export { default as store } from './store';
 
 // export { default as noaccess } from './error-pages/403';
 

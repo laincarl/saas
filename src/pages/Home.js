@@ -9,6 +9,7 @@ import Header from 'components/Header';
 import Menu from 'components/menu';
 import Agile from 'pages/Agile';
 import Iam from 'pages/Iam';
+import Devops from 'pages/devops';
 // import TestManager from 'pages/testManager/containers/TestManagerIndex';
 import AppState from 'stores/AppState';
 import nomatch from 'nomatch';
@@ -105,6 +106,7 @@ class Home extends Component {
           <Switch>
             <Route path="/agile" component={Agile} />
             <Route path="/iam" component={Iam} />
+            <Route path="/devops" component={Devops} />
             {/* <Route path="/testManager" component={TestManager} /> */}
             <Route path="*" component={nomatch} />
             {/* <Redirect from={`${match.url}`} to={`${match.url}/main`} />   */}

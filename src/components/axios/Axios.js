@@ -10,7 +10,7 @@ const regTokenExpired = /(PERMISSION_ACCESS_TOKEN_NULL|PERMISSION_ACCESS_TOKEN_E
 
 // axios 配置
 axios.defaults.timeout = 30000;
-axios.defaults.baseURL = 'http://api.alpha.saas.hand-china.com';
+axios.defaults.baseURL = 'http://zongwei.site:8080';
 
 // history.go(0);
 // http request 拦截器);
@@ -23,7 +23,7 @@ axios.interceptors.request.use(
     newConfig.headers.Accept = 'application/json';
     const accessToken = getAccessToken();
     if (accessToken) {
-      newConfig.headers.Authorization = accessToken;
+      newConfig.headers.Jwt_Token = accessToken;
     }
     return newConfig;
   },

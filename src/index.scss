@@ -1,3 +1,8 @@
+input:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  border: 0px solid #CCC !important;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -15,4 +20,9 @@
 ul {
   padding: 0;
   margin: 0;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
 }

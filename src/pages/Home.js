@@ -108,7 +108,7 @@ class Home extends Component {
           <Switch>
             <Route path="/agile" component={Agile} />
             <Route path="/iam" component={Iam} />
-            <Route path="/devops" component={Devops} />
+            <Route path="/devops" component={Devops} />            
             {/* <Route path="/testManager" component={TestManager} /> */}
             <Route path="*" component={nomatch} />
             {/* <Redirect from={`${match.url}`} to={`${match.url}/main`} />   */}

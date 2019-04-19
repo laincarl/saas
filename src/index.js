@@ -9,12 +9,14 @@ import {
   addLocaleData,
 } from 'react-intl';
 import { Home } from 'pages';
+import Login from 'pages/Login';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import AppState from 'stores/AppState';
 import MenuStore from 'stores/MenuStore';
 import HeaderStore from 'stores/HeaderStore';
 import RouterContainer from './RouterContainer';
+
 import './index.scss';
 
 addLocaleData([...en, ...zh]);
@@ -25,16 +27,14 @@ const stores = {
 };
 
 class App extends Component {
-  render() {
-    const language = 'zh_CN';
-    // const IntlProviderAsync = asyncLocaleProvider(language, () => import(`react-intl/locale-data/${language.split('_')[0]}`));
+  render() {    
     return (
       <IntlProvider>
         <Provider {...stores}>
           <Router history={createBrowserHistory}>
             <RouterContainer>
               <Switch>
-                <Route path="/test" component={() => <div>test</div>} />
+                <Route path="/login" component={Login} />
                 <Route path="/" component={Home} />
                 {/* 其他重定向到 404 */}
                 {/* <Redirect from="*" to="/404" /> */}

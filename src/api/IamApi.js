@@ -1,4 +1,8 @@
 import { axios } from 'choerodon-front-boot';
+
+export function login(data) {
+  return axios.post('/oauth/v1/login', data);
+}
 /**
  *获取当前用户
  *
@@ -6,8 +10,9 @@ import { axios } from 'choerodon-front-boot';
  * @returns
  */
 export function getSelf() {
-  return axios.get('/iam/v1/users/self');
+  return axios.get('/oauth/v1/user/detail');
 }
+
 /**
  *获取指定用户
  *
@@ -27,7 +32,7 @@ export function getUser(userId) {
  */
 export function getUsers(param) {
   if (param) {
-    return axios.get(`/iam/v1/projects/${1}/users?size=40&param=${param}`);
+    return axios.get(`/oauth/v1/list/all?size=40&page=0&param=${param}`);
   }
-  return axios.get(`/iam/v1/projects/${1}/users?size=40`);
+  return axios.get('/oauth/v1/list/all?size=40&page=0');
 }

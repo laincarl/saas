@@ -4,19 +4,29 @@ import { withRouter } from 'react-router-dom';
 import {
   Form, Icon, Input, Button, Checkbox,
 } from 'choerodon-ui';
-import { login } from 'api/OauthApi';
+import { login } from 'api/IamApi';
+import { setAccessToken, removeAccessToken } from '@/common/accessToken';
 import './Login.scss';
 
 @withRouter
 class Login extends React.Component {
-  state={
+  state = {
     loading: false,
   }
 
-  login=(data) => {
-    const { history } = this.props;   
-    
+  componentDidMount() {
+    removeAccessToken();
+  }
+  
+  login = (data) => {
+    const { history } = this.props;
+
     login(data).then((res) => {
+      const { access_token, expires_in, token_type } = res;
+      if (access_token) {
+        setAccessToken(access_token, 'bearer', expires_in);
+        history.goBack();
+      }
       this.setState({
         loading: false,
       });
@@ -34,7 +44,7 @@ class Login extends React.Component {
       if (!err) {
         const { name, password, isRememberMe } = values;
         this.login({
-          name, 
+          name,
           password,
           isRememberMe,
         });
@@ -70,7 +80,7 @@ class Login extends React.Component {
               initialValue: true,
             })(
               <Checkbox>记住我</Checkbox>,
-            )}         
+            )}
             <Button
               loading={loading}
               type="primary"
@@ -78,7 +88,7 @@ class Login extends React.Component {
               htmlType="submit"
               className="login-form-button"
             >
-            登录
+              登录
             </Button>
           </Form.Item>
         </Form>

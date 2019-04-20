@@ -10,12 +10,13 @@ import Menu from 'components/menu';
 import Agile from 'pages/Agile';
 import Iam from 'pages/Iam';
 import Devops from 'pages/devops';
+import { getSelf } from 'api/IamApi';
 // import TestManager from 'pages/testManager/containers/TestManagerIndex';
-import AppState from 'stores/AppState';
 import nomatch from 'nomatch';
 import './Home.scss';
 import '@/mock/DevopsMock';
 import '@/mock/IamMock';
+import { from } from 'rxjs';
 
 function parseQueryToMenuType(search) {
   const menuType = {
@@ -38,6 +39,7 @@ function parseQueryToMenuType(search) {
 class Home extends Component {
   componentWillMount() {
     this.initMenuType(this.props);
+    this.getSelf();
   }
 
 
@@ -45,6 +47,12 @@ class Home extends Component {
     this.initMenuType(nextProps);
   }
 
+  getSelf() {
+    const { AppState } = this.props;
+    getSelf().then((res) => {
+      AppState.setUserInfo(res);
+    });
+  }
 
   // initFavicon() {
   //   AppState.loadSiteInfo().then((data) => {
@@ -70,7 +78,7 @@ class Home extends Component {
 
   initMenuType(props) {
     const {
-      location, MenuStore, HeaderStore, history,
+      location, MenuStore, HeaderStore, history, AppState,
     } = props;
     const { pathname, search } = location;
     let isUser = false;

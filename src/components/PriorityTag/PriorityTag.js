@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import './PriorityTag.scss';
 
 const PRIORITY_MAP = {
-  medium: {
+  2: {
     color: '#3575df',
     bgColor: 'rgba(77, 144, 254, 0.2)',
     name: '中',
   },
-  high: {
+  3: {
     color: '#f44336',
     bgColor: 'rgba(244, 67, 54, 0.2)',
     name: '高',
   },
-  low: {
+  1: {
     color: 'rgba(0, 0, 0, 0.36)',
     bgColor: 'rgba(0, 0, 0, 0.08)',
     name: '低',
@@ -25,17 +25,9 @@ const PRIORITY_MAP = {
 };
 
 class PriorityTag extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.priority
-      && this.props.priority
-      && nextProps.priority.id === this.props.priority.id) {
-      return false;
-    }
-    return true;
-  }
-
   render() {
     const { priority, style } = this.props;
+    const data = PRIORITY_MAP[priority];
     return (
       <div
         style={style}
@@ -44,11 +36,11 @@ class PriorityTag extends Component {
         <div
           className="c7n-priorityTag"
           style={{
-            backgroundColor: `${priority ? priority.colour : '#FFFFFF'}1F`,
-            color: priority ? priority.colour : '#FFFFFF',
+            background: data ? data.bgColor : '#FFFFFF',
+            color: data ? data.color : '#FFFFFF',
           }}
         >
-          {priority ? priority.name : ''}
+          {data ? data.name : ''}
         </div>
       </div>
     );

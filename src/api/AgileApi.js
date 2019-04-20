@@ -1,12 +1,11 @@
 import { axios } from 'choerodon-front-boot';
 import '../mock/AgileMock';
 
-export function getIssues(page = 0, size = 10, searchDTO, orderField, orderType) {  
-  return axios.post(`/agile/v1/projects/${1}/issues/include_sub?page=${page}&size=${size}`, searchDTO, {
-    params: {
-      sort: `${orderField && orderType ? `${orderField},${orderType}` : ''}`,
-    },
-  });
+export function getIssues(page = 0, size = 10) {  
+  return axios.get(`/agile/v1/issue/list/all?page=${page}&size=${size}`);
+}
+export function createIssue(data) {
+  return axios.post('/agile/v1/issue', data);
 }
 /**
  *获取单个用例详细信息
@@ -16,8 +15,12 @@ export function getIssues(page = 0, size = 10, searchDTO, orderField, orderType)
  * @returns
  */
 export function loadIssue(issueId) {
-  return axios.get(`/agile/v1/projects/${1}/issues/${1}`);
+  return axios.get(`/agile/v1/issue/${issueId}`);
 }
+export function updateIssue(data) {
+  return axios.put('/agile/v1/issue', data);
+}
+
 /**
  *获取当前组织的issue优先级
  *

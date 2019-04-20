@@ -31,11 +31,11 @@ class IssueItem extends Component {
             className={classnames('c7n-backlog-IssueCard-left')}
           >
             <TypeTag
-              data={data.issueTypeDTO}
+              type={0}
             />
             <div className="c7n-backlog-IssueCard-left-summaryContainer">
               <div className="c7n-backlog-IssueCard-left-issueNum" style={{ textDecoration: data.statusMapDTO && data.statusMapDTO.code === 'complete' ? 'line-through' : 'none' }}>
-                {`${data.issueNum}`}
+                {`${data.name}`}
               </div>
               <Tooltip title={data.summary} placement="topLeft">
                 <div className="c7n-backlog-IssueCard-left-issueSummary">{data.summary}</div>
@@ -45,21 +45,7 @@ class IssueItem extends Component {
           <div
             className={classnames('c7n-backlog-IssueCard-right')}
           >
-            <div className={classnames('line-two-left')}>
-              {!_.isNull(data.epicName) ? (
-                <Tooltip title={`史诗: ${data.epicName}`}>
-                  <span
-                    label="sprintIssue"
-                    className="c7n-backlog-IssueCard-right-epic container"
-                    style={{
-                      color: data.color || data.epicColor,
-                      border: `1px solid ${data.color || data.epicColor}`,
-                    }}
-                  >
-                    {data.epicName}
-                  </span>
-                </Tooltip>
-              ) : ''}
+            <div className={classnames('line-two-left')}>              
               {data.assigneeId && (
               <UserHead
                 user={{
@@ -71,16 +57,14 @@ class IssueItem extends Component {
               />
               )}
             </div>
-            <div className={classnames('line-two-right')}>
-              <Tooltip title={`状态: ${data.statusMapDTO ? data.statusMapDTO.name : ''}`}>
-                <div className="c7n-backlog-IssueCard-right-status">
-                  <StatusTag
-                    data={data.statusMapDTO}
-                  />
-                </div>
-              </Tooltip>
-              <Tooltip title={`优先级: ${data.priorityDTO ? data.priorityDTO.name : ''}`}>
-                <PriorityTag priority={data.priorityDTO} />
+            <div className={classnames('line-two-right')}>              
+              <div className="c7n-backlog-IssueCard-right-status">
+                <StatusTag
+                  status={data.statusId}
+                />
+              </div>        
+              <Tooltip title={`优先级: ${data.priority ? data.priority.name : ''}`}>
+                <PriorityTag priority={data.priorityId} />
               </Tooltip>
               <Tooltip title={`故事点: ${data.storyPoints}`}>
                 <div

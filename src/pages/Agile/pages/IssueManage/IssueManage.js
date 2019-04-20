@@ -10,8 +10,8 @@ class IssueManage extends Component {
     loading: false,
     data: [],    
     pagination: {
-      page: 0,
-      size: 10,
+      current: 1,
+      pageSize: 10,
       total: 0,
     },
   }
@@ -28,7 +28,8 @@ class IssueManage extends Component {
     this.setState({
       loading: true,
     });
-    getIssues().then((res) => {
+    const { current, pageSize } = pagination;  
+    getIssues(current - 1, pageSize).then((res) => {
       const {
         content, number, totalElements, size,
       } = res;
@@ -41,7 +42,6 @@ class IssueManage extends Component {
           pageSize: size,
         },
       });
-      console.log(res);
     });
   }
 

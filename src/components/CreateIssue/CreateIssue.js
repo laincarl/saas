@@ -3,20 +3,21 @@ import PropTypes from 'prop-types';
 import {
   Form, Input, Select, Modal, Radio, Button, Icon,
 } from 'choerodon-ui';
-import { Content } from 'choerodon-front-boot';
+import { Content, stores } from 'choerodon-front-boot';
 import { find } from 'lodash';
 import SelectFocusLoad from '../SelectFocusLoad';
-import WYSIWYGEditor from '../WYSIWYGEditor';
-import FullEditor from '../FullEditor';
-import UploadControl from '../UploadControl';
+// import WYSIWYGEditor from '../WYSIWYGEditor';
+// import FullEditor from '../FullEditor';
+// import UploadControl from '../UploadControl';
 import SelectNumber from '../SelectNumber';
 import {
-  createIssue, loadPriorities,
-} from '../../api/NewIssueApi';
-import { handleFileUpload, getProjectId, beforeTextUpload } from '../../common/utils';
+  createIssue, getPrioritys,
+} from '@/api/AgileApi';
+// import { handleFileUpload, getProjectId, beforeTextUpload } from '../../common/utils';
 
 const FormItem = Form.Item;
 const { Sidebar } = Modal;
+const { Option } = Select;
 const RadioGroup = Radio.Group;
 const defaultProps = {
 
@@ -28,92 +29,33 @@ const propTypes = {
   onCancel: PropTypes.func.isRequired,
   onCreate: PropTypes.func,
 };
-const radioStyle = {
-  display: 'block',
-  height: '30px',
-  lineHeight: '30px',
-};
+const { AppState } = stores;
 @Form.create()
 class CreateIssue extends Component {
-  state = {
-    fullEditorVisible: false,
-    defaultPriority: null,
-  }
-
-  componentDidMount() {
-    loadPriorities().then((res) => {
-      this.setState({
-        defaultPriority: res.find(item => item.default) || res[0],
-      });
-    });
-  }
-  
-  
-  handleModalCancel = () => {
-    this.setState({
-      fullEditorVisible: false,
-    });
-  }
-
-  handleModalOk = () => {
-    this.setState({
-      fullEditorVisible: false,
-    });
-  }
-
-  handleShowFullEditor=() => {
-    this.setState({
-      fullEditorVisible: true,
-    });
-  }
-
   handleOk = () => {
     const { form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const {
-          issueTypeId, storyPoints, epicId, summary,
-          fileList,
-          description,
+          type, name, priorityId, statusId, handlerId,
         } = values;
-        const { defaultPriority } = this.state;
-        const issueObj = {
-          projectId: getProjectId(),
-          programId: getProjectId(),
-          issueTypeId,
-          typeCode: 'feature',
-          summary,
-          priorityId: defaultPriority.id,
-          priorityCode: `priority-${defaultPriority.id}`,
-          epicId: epicId || 0,
-          parentIssueId: 0,
-          storyPoints,         
-        };       
-        if (description) {
-          beforeTextUpload(description, issueObj, this.handleCreateFeature);
-        } else {
-          issueObj.description = '';
-          this.handleCreateFeature(issueObj, fileList);
-        }
-        // onSubmit(values);
+       
+        const issueObj = {          
+          type,     
+          name,
+          priorityId,
+          statusId,
+          handlerId,
+          reporterId: AppState.userInfo.id,
+        }; 
+        this.handleCreateIssue(issueObj);        
       }
     });
   }
 
-  handleCreateFeature = (issueObj, fileList) => {
+  handleCreateIssue = (issueObj) => {
     const { onCreate } = this.props;
-    createIssue(issueObj, 'program').then((res) => {
-      if (fileList && fileList.length > 0) {
-        const config = {
-          issueType: res.statusId,
-          issueId: res.issueId,
-          fileName: fileList[0].name,
-          projectId: getProjectId(),
-        };
-        if (fileList.some(one => !one.url)) {
-          handleFileUpload(fileList, () => {}, config);
-        }
-      }     
+    createIssue(issueObj).then((res) => {        
       if (onCreate) {
         onCreate();
       }
@@ -132,7 +74,6 @@ class CreateIssue extends Component {
     const {
       visible, onCancel, loading, form, 
     } = this.props;
-    const { fullEditorVisible } = this.state;
     const { getFieldDecorator } = form;
     return (
       <Sidebar
@@ -151,85 +92,61 @@ class CreateIssue extends Component {
           description="请在下面输入问题的详细信息，包含详细描述等等。您可以通过丰富的问题描述帮助相关人员更快更全面的理解任务，同时更好的把控问题进度。"
         >
           <Form>
-            {/* <FormItem>
-              {getFieldDecorator('issueTypeId', {                
+            <FormItem>
+              {getFieldDecorator('type', {
                 rules: [{
-                  required: true, message: '请选择类型!',
+                  required: true, message: '请选择类型',
                 }],
               })(
-                <SelectFocusLoad loadWhenMount type="issue_type_program" label="问题类型" style={{ width: 500 }} />,
+                <Select label="类型" style={{ width: 500 }}>
+                  <Option value={0}>敏捷</Option>
+                  <Option value={1}>测试</Option>                 
+                </Select>,
               )}
-            </FormItem> */}
+            </FormItem>         
             <FormItem>
-              {getFieldDecorator('featureType', {
+              {getFieldDecorator('name', {
                 rules: [{
-                  required: true, message: '请选择特性类型!',
-                }],
-                initialValue: 'business',
-              })(
-                <RadioGroup label="特性类型">
-                  <Radio value="business" style={radioStyle}>业务</Radio>
-                  <Radio value="enabler" style={radioStyle}>使能</Radio>
-                </RadioGroup>,
-              )}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator('summary', {
-                rules: [{
-                  required: true, message: '请输入特性名称',
-                }, {
-                  validator: this.handleCheckStatusRepeat,
+                  required: true, message: '请选择名称',
                 }],
               })(
-                <Input style={{ width: 500 }} maxLength={30} label="特性名称" />,
-              )}
-            </FormItem>
-            <div style={{ display: 'flex', marginBottom: 3, alignItems: 'center' }}>
-              <div style={{ fontWeight: 'bold' }}>描述</div>
-              <div style={{ marginLeft: 80 }}>
-                <Button className="leftBtn" funcType="flat" onClick={this.handleShowFullEditor} style={{ display: 'flex', alignItems: 'center' }}>
-                  <Icon type="zoom_out_map" style={{ color: '#3f51b5', fontSize: '18px', marginRight: 12 }} />
-                  <span style={{ color: '#3f51b5' }}>全屏编辑</span>
-                </Button>
-              </div>
-            </div>
-            <FormItem>
-              {getFieldDecorator('description', {                
-              })(
-                <WYSIWYGEditor />,
+                <Input style={{ width: 500 }} maxLength={30} label="名称" />,
               )}
             </FormItem>
             <FormItem>
-              {getFieldDecorator('description', {
+              {getFieldDecorator('priorityId', {                
+                rules: [{
+                  required: true, message: '请选择优先级!',
+                }],
+                initialValue: 2,
               })(
-                <FullEditor
-                  visible={fullEditorVisible} 
-                  onCancel={this.handleModalCancel}
-                  onOk={this.handleModalOk}
-                />,
+                <Select label="优先级" style={{ width: 500 }}>
+                  <Option value={1}>低</Option>
+                  <Option value={2}>中</Option>
+                  <Option value={3}>高</Option>
+                </Select>,
               )}
-            </FormItem>            
+            </FormItem>    
             <FormItem>
-              {getFieldDecorator('epicId', {
-
+              {getFieldDecorator('statusId', {                
+                rules: [{
+                  required: true, message: '请选择状态!',
+                }],
+                initialValue: 1,
               })(
-                <SelectFocusLoad type="epic_program" style={{ width: 500 }} label="史诗" />,
+                <Select label="状态" style={{ width: 500 }}>
+                  <Option value={1}>待处理</Option>
+                  <Option value={2}>执行中</Option>
+                  <Option value={3}>已完成</Option>
+                  <Option value={4}>失败</Option>
+                </Select>,
               )}
-            </FormItem>
+            </FormItem> 
             <FormItem>
-              {getFieldDecorator('storyPoints', {
-
-              })(
-                <SelectNumber style={{ width: 500 }} label="故事点" />,
+              {getFieldDecorator('handlerId', {})(
+                <SelectFocusLoad label="指定人" type="user" style={{ width: 500 }} />,
               )}
-            </FormItem>            
-            <Form.Item>
-              {getFieldDecorator('upload', {
-                valuePropName: 'fileList',
-              })(
-                <UploadControl />,
-              )}
-            </Form.Item>
+            </FormItem> 
           </Form>
         </Content>
       </Sidebar>

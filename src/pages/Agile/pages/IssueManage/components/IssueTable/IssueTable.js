@@ -33,8 +33,8 @@ const IssueTable = ({
     },
     {
       title: '概要',
-      dataIndex: 'summary',
-      key: 'summary',
+      dataIndex: 'name',
+      key: 'name',
       width: 240,
       render: text => <Summary text={text} />,
     },
@@ -53,14 +53,13 @@ const IssueTable = ({
     },
     {
       title: '经办人',
-      dataIndex: 'assigneeName',
+      dataIndex: 'handler',
       width: 135,
-      key: 'assignee',
-      render: (text, record) => (
+      key: 'handler',
+      render: (handler, record) => (
         <Assignee
-          text={text}
-          id={record.assigneeId}
-          img={record.assigneeImageUrl}
+          text={handler.name}
+          id={record.handlerId}          
         />
       ),
     },

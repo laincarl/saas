@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "choerodon-ui": "^0.5.2",
+    "choerodon-ui": "0.5.0",
     "classnames": "^2.2.6",
     "mockjs": "^1.0.1-beta3",
     "nprogress": "^0.2.0",

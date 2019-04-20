@@ -2,8 +2,8 @@ import React from 'react';
 import { Select } from 'choerodon-ui';
 import { find } from 'lodash';
 import User from '../User';
-import { getUsers, getUser } from '../../api/CommonApi';
-import { loadEpics, loadProgramEpics, loadIssueTypes } from '../../api/NewIssueApi';
+import { getUsers, getUser } from '@/api/IamApi';
+import { loadEpics, loadProgramEpics, loadIssueTypes } from '@/api/AgileApi';
 import TypeTag from '../TypeTag';
 
 const { Option } = Select;

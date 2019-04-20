@@ -1,5 +1,7 @@
 import { getCookie, removeCookie, setCookie } from './cookie';
-import { ACCESS_DOMAIN, ACCESS_TOKEN, COOKIE_SERVER, LOCAL, TOKEN_TYPE } from './constants';
+import {
+  ACCESS_DOMAIN, ACCESS_TOKEN, COOKIE_SERVER, LOCAL, TOKEN_TYPE, 
+} from './constants';
 
 let cachedToken = null;
 
@@ -45,7 +47,7 @@ export function getAccessToken() {
   const accessToken = getCookieToken();
   const tokenType = getCookie(TOKEN_TYPE, option);
   if (accessToken && tokenType) {
-    return `${tokenType} ${accessToken}`;
+    return `${accessToken}`;
   }
   return null;
 }

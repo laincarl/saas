@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from 'choerodon-ui';
+import { ISSUE_TYPES } from '@/common/Constant';
 import './TypeTag.scss';
 
 const initTypes = ['agile_epic', 'agile_story', 'agile_fault', 'agile_task', 'agile_subtask', 'agile_feature', 'agile_enabler'];
@@ -7,8 +8,9 @@ const initTypes = ['agile_epic', 'agile_story', 'agile_fault', 'agile_task', 'ag
 class TypeTag extends Component {
   render() {
     const {
-      data, showName, style,
+      showName, style, type,
     } = this.props;
+    const data = ISSUE_TYPES[type];
     return (
       <div className="c7n-typeTag" style={style}>
         <Icon

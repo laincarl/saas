@@ -37,7 +37,7 @@ const User = ({
             width: 18, height: 18, lineHeight: '18px', textAlign: 'center', color: '#6473c3',
           }}
           >
-            {user.realName[0]}
+            {user.name[0]}
           </span>
         )
       }
@@ -53,9 +53,7 @@ const User = ({
           color: 'rgba(0, 0, 0, 0.65)',
         }}
       >
-        {user.loginName}
-        {' '}
-        {user.realName}
+        {user.name}        
       </span>
     </div>
   </div>

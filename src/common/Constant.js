@@ -1,8 +1,20 @@
 export const STATUS = {
-  todo: '#ffb100',
-  doing: '#4d90fe',
-  done: '#00bfa5',
-  prepare: '#F67F5A',
+  1: {
+    colour: 'rgb(255, 177, 0)',    
+    name: '待处理',
+  },
+  2: {
+    colour: 'rgb(77, 144, 254)',    
+    name: '执行中',
+  },
+  3: {
+    colour: 'rgb(0, 191, 165)',    
+    name: '已完成',
+  },
+  4: {
+    colour: '#F67F5A',    
+    name: '失败',
+  },
 };
 
 export const COLOR = {
@@ -19,7 +31,22 @@ export const COLOR = {
     bgColor: 'rgba(0, 0, 0, 0.08)',
   },
 };
-
+export const ISSUE_TYPES = {
+  0: {
+    colour: '#00bfa5',
+    description: '故事',
+    icon: 'agile_story',
+    name: '故事',
+    typeCode: 'story',
+  },
+  1: {
+    colour: '#00bfa5',
+    description: '故事',
+    icon: 'agile_story',
+    name: '故事',
+    typeCode: 'story',
+  },
+};
 export const TYPE = {
   story: '#00bfa5',
   bug: '#f44336',

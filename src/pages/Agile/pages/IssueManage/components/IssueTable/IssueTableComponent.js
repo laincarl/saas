@@ -32,8 +32,8 @@ export function IssueNum({ text }) {
 export function TypeCode({ record }) {
   return (
     <TypeTag
-      data={record.issueTypeDTO}
-      showName={record.issueTypeDTO && record.issueTypeDTO.name}
+      type={0}
+      showName
       style={{ minWidth: 80 }}
     />
   );
@@ -61,10 +61,10 @@ export function Summary({ text }) {
  */
 export function Priority({ record }) {
   return (
-    <Tooltip mouseEnterDelay={0.5} title={`优先级： ${record.priorityDTO ? record.priorityDTO.name : ''}`}>
+    <Tooltip mouseEnterDelay={0.5} title={`优先级： ${record.priority ? record.priority.name : ''}`}>
       <div>
         <PriorityTag
-          priority={record.priorityDTO}
+          priority={record.priority}
           style={{ minWidth: 65 }}
         />
       </div>
@@ -99,9 +99,8 @@ export function Assignee({ text, id, img }) {
       <div style={{ marginRight: 12 }}>
         <UserHead
           user={{
-            id,
-            loginName: '',
-            realName: text,
+            id,           
+            name: text,
             avatar: img,
           }}
         />

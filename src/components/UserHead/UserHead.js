@@ -64,7 +64,7 @@ class UserHead extends Component {
                     }}
                     className="user-Head-Title"
                   >
-                    {this.getFirst(user.realName)}
+                    {this.getFirst(user.name)}
                   </span>
                 )
               }
@@ -94,7 +94,7 @@ class UserHead extends Component {
                     width: s, height: s, lineHeight: `${s}px`, textAlign: 'center', color: '#6473c3',
                   }}
                   >
-                    {this.getFirst(user.realName)}
+                    {this.getFirst(user.name)}
                   </span>
                 )
               }
@@ -113,7 +113,7 @@ class UserHead extends Component {
                 color: color || 'rgba(0, 0, 0, 0.65)',
               }}
             >
-              {`${user.loginName || ''}${user.realName || ''}`}
+              {user.name}
             </span>
           )
         }

@@ -20,6 +20,9 @@ export function loadIssue(issueId) {
 export function updateIssue(data) {
   return axios.put('/agile/v1/issue', data);
 }
+export function deleteIssue(id) {
+  return axios.delete(`/agile/v1/issue/${id}`);
+}
 
 /**
  *获取当前组织的issue优先级

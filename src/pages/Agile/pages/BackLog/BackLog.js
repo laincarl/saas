@@ -70,6 +70,13 @@ class BackLog extends Component {
   }
 
   handleCreateIssue=() => {
+    this.setState({
+      createIssueVisible: false,
+    });
+    this.loadIssues();
+  }
+
+  handleIssueDelete=() => {
     this.loadIssues();
   }
 
@@ -102,6 +109,7 @@ class BackLog extends Component {
             <IssueSide
               issueId={selectedIssue.id}
               key={selectedIssue.id}
+              onDelete={this.handleIssueDelete}
             />
           )}
           <CreateIssue 

@@ -185,34 +185,10 @@ class EditIssue extends Component {
 
   handleClickMenu(e) {
     const { issueInfo } = this.props;
-    const { issueId } = issueInfo;
+    const { id } = issueInfo;
     switch (e.key) {
-      case 'copy': {
-        const copyConditionDTO = {
-          issueLink: false,
-          sprintValues: false,
-          subTask: false,
-          summary: false,
-        };
-        this.setState({
-          issueLoading: true,
-        });
-        cloneIssue(issueId, copyConditionDTO).then((res) => {
-        // 跳转至复制后的页面
-          if (res.issueId) {
-            this.handleLinkToNewIssue(res.issueId);
-          }
-          Choerodon.prompt('复制成功');
-        }).catch((err) => {
-          this.setState({
-            issueLoading: false,
-          });
-          Choerodon.prompt('网络错误');
-        });
-        break;
-      }
       case 'delete': {
-        this.handleDeleteIssue(issueId);
+        this.handleDeleteIssue(id);
         break;
       }
       default: break;
@@ -222,16 +198,16 @@ class EditIssue extends Component {
 
 handleDeleteIssue = (issueId) => {
   const { issueInfo, history } = this.props;
-  const { issueNum } = issueInfo;
+  const { name } = issueInfo;
   const that = this;
 
   confirm({
     width: 560,
-    title: `删除测试用例${issueNum}`,
-    content: '这个测试用例将会被彻底删除。包括所有步骤和相关执行',
+    title: `删除用例${name}`,
+    content: '这个用例将会被彻底删除。',
     onOk: () => deleteIssue(issueId)
       .then((res) => {
-
+        this.props.onDelete();
       }),
     okText: '删除',
     okType: 'danger',
@@ -656,28 +632,20 @@ render() {
   const typeCode = issueTypeDTO ? issueTypeDTO.typeCode : '';
   const typeColor = issueTypeDTO ? issueTypeDTO.colour : '#fab614';
   const typeIcon = issueTypeDTO ? issueTypeDTO.icon : 'help';
-  const { mode } = this.props;
+
   const getMenu = () => (
-    <Menu onClick={this.handleClickMenu.bind(this)}>
-      {/* <Menu.Item key="add_worklog">
-          <FormattedMessage id="issue_edit_addWworkLog" />
-        </Menu.Item> */}
-      <Menu.Item key="copy">
-        复制问题
+    <Menu onClick={this.handleClickMenu.bind(this)}>      
+      <Menu.Item
+        key="delete"
+      >
+        {'删除'}
       </Menu.Item>
-      {
-        <Menu.Item
-          key="delete"
-        >
-          {'删除'}
-        </Menu.Item>
-      }
     </Menu>
   );
   return (
     <div className="c7ntest-editIssue">
       {
-        issueLoading ? (
+        loading ? (
           <div
             style={{
               position: 'absolute',

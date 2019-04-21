@@ -32,6 +32,13 @@ class IssueSide extends Component {
     });
   }
 
+  handleDelete=() => {
+    this.setState({
+      isExpand: false,
+    });
+    this.props.onDelete();
+  }
+
   render() {
     const { issueId } = this.props;
     const { loading, issueInfo, isExpand } = this.state;
@@ -50,6 +57,7 @@ class IssueSide extends Component {
                 });
               }}
               mode="narrow"
+              onDelete={this.handleDelete}
             />
           )
         }

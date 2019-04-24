@@ -9,10 +9,12 @@ import {
 
 const { confirm } = Modal;
 const IssueTable = ({
+  loading,
   dataSource,
   pagination,
   onChange,
   onDeleteOk,
+  onRow,
 }) => {
   const deleteStatus = (data) => {
     confirm({
@@ -73,18 +75,26 @@ const IssueTable = ({
       title: '',
       key: 'action',
       render: (text, record) => (
-        <Button icon="delete_forever" shape="circle" onClick={() => { deleteStatus(record); }} />
-
+        <Button
+          icon="delete_forever"
+          shape="circle"
+          onClick={(e) => { 
+            e.stopPropagation();
+            deleteStatus(record); 
+          }}
+        />
       ),
     },
   ];
   return (
     <Table
       rowKey="issueId"
+      loading={loading}
       pagination={pagination}
       columns={columns}
       dataSource={dataSource}
       onChange={onChange}
+      onRow={onRow}
     />
   );
 };

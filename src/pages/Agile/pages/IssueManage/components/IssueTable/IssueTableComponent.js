@@ -64,7 +64,7 @@ export function Priority({ record }) {
     <Tooltip mouseEnterDelay={0.5} title={`优先级： ${record.priority ? record.priority.name : ''}`}>
       <div>
         <PriorityTag
-          priority={record.priority}
+          priority={record.priorityId}
           style={{ minWidth: 65 }}
         />
       </div>
@@ -81,7 +81,7 @@ export function StatusName({ record }) {
   return (
     <Tooltip mouseEnterDelay={0.5} title={`问题状态： ${record.statusMapDTO && record.statusMapDTO.name}`}>
       <StatusTag
-        data={record.statusMapDTO}
+        status={record.statusId}
         style={{ display: 'inline-block', verticalAlign: 'middle' }}
       />
     </Tooltip>

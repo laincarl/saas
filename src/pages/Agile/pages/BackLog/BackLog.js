@@ -5,7 +5,8 @@ import {
 } from 'choerodon-ui';
 import Page from 'components/Page';
 import CreateIssue from 'components/CreateIssue';
-import { IssueList, IssueSide } from './components';
+import IssueSide from 'components/IssueSide';
+import { IssueList } from './components';
 import { getIssues } from '@/api/AgileApi';
 
 const { Header, Content } = Page;

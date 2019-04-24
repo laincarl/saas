@@ -5,6 +5,7 @@ import {
   Form, Icon, Input, Button, Checkbox,
 } from 'choerodon-ui';
 import { login } from 'api/IamApi';
+import { getParams } from '@/common/utils';
 import { setAccessToken, removeAccessToken } from '@/common/accessToken';
 import './Login.scss';
 
@@ -19,18 +20,23 @@ class Login extends React.Component {
   }
   
   login = (data) => {
-    const { history } = this.props;
-
+    const { history } = this.props;   
+    
     login(data).then((res) => {
       const { access_token, expires_in, token_type } = res;
       if (access_token) {
         setAccessToken(access_token, 'bearer', expires_in);
-        history.goBack();
+        if (getParams().redirect_uri) {
+          window.location = getParams().redirect_uri;
+        } else {
+          history.replace('/');
+        }
       }
       this.setState({
         loading: false,
       });
     }).catch((err) => {
+      console.log(err);
       Choerodon.prompt('登录失败');
       this.setState({
         loading: false,

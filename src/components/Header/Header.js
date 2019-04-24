@@ -22,7 +22,7 @@ class Header extends Component {
         </div>           
         <ul className={`${prefixCls}-center`}>
           <li>
-            <MenuType />
+            {/* <MenuType /> */}
           </li>
           {/* {
             getSiteMenuData.length > 0 && (

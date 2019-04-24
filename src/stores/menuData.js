@@ -132,15 +132,13 @@ const data = {
     zhName: null,
     enName: null,
     subMenus: [{
-      id: 92, code: 'choerodon.code.test-manager.summary', name: '测试摘要', level: 'project', parentId: 75, type: 'menu', sort: 1, icon: 'table_chart', route: '/testManager/summary', objectVersionNumber: 7, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
-    }, {
       id: 91, code: 'choerodon.code.test-manager.manager', name: '测试用例', level: 'project', parentId: 75, type: 'menu', sort: 2, icon: 'description', route: '/testManager/IssueManage', objectVersionNumber: 7, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
-    }, {
-      id: 383, code: 'choerodon.code.test-manager.TestPlan', name: '测试计划', level: 'project', parentId: 75, type: 'menu', sort: 3, icon: 'test_planning', route: '/testManager/TestPlan', objectVersionNumber: 5, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
       id: 382, code: 'choerodon.code.test-manager.TestExecute', name: '测试执行', level: 'project', parentId: 75, type: 'menu', sort: 4, icon: 'test_execution', route: '/testManager/TestExecute', objectVersionNumber: 5, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 95, code: 'choerodon.code.test-manager.status', name: '自定义状态', level: 'project', parentId: 75, type: 'menu', sort: 6, icon: 'filter_vintage', route: '/testManager/status', objectVersionNumber: 7, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
+      id: 382, code: 'choerodon.code.test-manager.TestDone', name: '测试完成', level: 'project', parentId: 75, type: 'menu', sort: 4, icon: 'done_all', route: '/testManager/done', objectVersionNumber: 5, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
+    }, {
+      id: 382, code: 'choerodon.code.test-manager.TestFail', name: '测试失败', level: 'project', parentId: 75, type: 'menu', sort: 4, icon: 'bug_report', route: '/testManager/fail', objectVersionNumber: 5, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
       id: 657, code: 'choerodon.code.test-manager.autotest', name: '自动化测试', level: 'project', parentId: 75, type: 'menu', sort: 8, icon: 'auto_test', route: '/testManager/AutoTest/list', objectVersionNumber: 3, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }],

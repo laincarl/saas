@@ -14,9 +14,9 @@ const TestManagerIndex = ({ match }) => {
   return (
     <IntlProviderAsync>
       <Switch>
-        <Route exact path={`${match.url}/backlog`} component={BackLog} />
-        <Route exact path={`${match.url}/active`} component={ActiveSprint} />
-        <Route exact path={`${match.url}/end`} component={EndIssue} />
+        <Route exact path={`${match.url}/TestExecute`} component={BackLog} />
+        <Route exact path={`${match.url}/fail`} component={ActiveSprint} />
+        <Route exact path={`${match.url}/done`} component={EndIssue} />
         <Route exact path={`${match.url}/IssueManage`} component={IssueManage} />
         <Route path="*" component={nomatch} />
       </Switch>

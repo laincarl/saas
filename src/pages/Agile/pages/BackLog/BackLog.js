@@ -9,6 +9,11 @@ import { IssueList, IssueSide } from './components';
 import { getIssues } from '@/api/AgileApi';
 
 const { Header, Content } = Page;
+const propTypes = {
+  type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,  
+};
+
 class BackLog extends Component {
   state = {
     data: [],
@@ -30,8 +35,9 @@ class BackLog extends Component {
     this.setState({
       loading: true,
     });
+    const { type } = this.props;
     const { current, pageSize } = pagination;  
-    getIssues(current - 1, pageSize).then((res) => {
+    getIssues(type, current - 1, pageSize).then((res) => {
       const {
         content, number, totalElements, size,
       } = res;
@@ -84,9 +90,10 @@ class BackLog extends Component {
     const {
       data, selectedIssue, pagination, loading, createIssueVisible,
     } = this.state;
+    const { title } = this.props;
     return (
       <Page>
-        <Header title="待办事项">
+        <Header title={title}>
           <Button icon="playlist_add" onClick={this.handleCreateIssueClick}>
             创建问题
           </Button>          
@@ -123,8 +130,6 @@ class BackLog extends Component {
   }
 }
 
-BackLog.propTypes = {
-
-};
+BackLog.propTypes = propTypes;
 
 export default BackLog;

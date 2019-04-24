@@ -16,11 +16,11 @@ const data = {
     subMenus: [{
       id: 36, code: 'choerodon.code.agile.backlog', name: '待办事项', level: 'project', parentId: 33, type: 'menu', sort: 1, icon: 'baseline-list_alt', route: '/agile/backlog', objectVersionNumber: 21, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 39, code: 'choerodon.code.agile.scrumboard', name: '活跃冲刺', level: 'project', parentId: 33, type: 'menu', sort: 2, icon: 'directions_run', route: '/agile/scrumboard', objectVersionNumber: 21, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
+      id: 39, code: 'choerodon.code.agile.scrumboard', name: '活跃冲刺', level: 'project', parentId: 33, type: 'menu', sort: 2, icon: 'directions_run', route: '/agile/active', objectVersionNumber: 21, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 38, code: 'choerodon.code.agile.issue', name: '结束事项', level: 'project', parentId: 33, type: 'menu', sort: 4, icon: 'assignment', route: '/agile/issue', objectVersionNumber: 21, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
+      id: 38, code: 'choerodon.code.agile.end', name: '结束事项', level: 'project', parentId: 33, type: 'menu', sort: 4, icon: 'publish2', route: '/agile/end', objectVersionNumber: 21, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 325, code: 'choerodon.code.agile.userStoryMap', name: '故事地图', level: 'project', parentId: 33, type: 'menu', sort: 3, icon: 'usermap', route: '/agile/usermap', objectVersionNumber: 5, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
+      id: 38, code: 'choerodon.code.agile.issue', name: '问题管理', level: 'project', parentId: 33, type: 'menu', sort: 4, icon: 'assignment', route: '/agile/issue', objectVersionNumber: 21, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }],
     default: true,
   }, {
@@ -162,19 +162,19 @@ const data = {
     zhName: null,
     enName: null,
     subMenus: [{
-      id: 10, code: 'choerodon.code.usercenter.user-info', name: '个人信息', level: 'user', parentId: 2, type: 'menu', sort: 1, icon: 'person', route: '/iam/user-info', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true, 
+      id: 10, code: 'choerodon.code.usercenter.user-info', name: '个人信息', level: 'user', parentId: 2, type: 'menu', sort: 1, icon: 'person', route: '/iam/user-info', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 9, code: 'choerodon.code.usercenter.password', name: '修改密码', level: 'user', parentId: 2, type: 'menu', sort: 2, icon: 'vpn_key', route: '/iam/password', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true, 
+      id: 9, code: 'choerodon.code.usercenter.password', name: '修改密码', level: 'user', parentId: 2, type: 'menu', sort: 2, icon: 'vpn_key', route: '/iam/password', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 923, code: 'choerodon.code.usercenter.permission-info', name: '权限信息', level: 'user', parentId: 2, type: 'menu', sort: 3, icon: 'project', route: '/iam/permission-info', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true, 
+      id: 923, code: 'choerodon.code.usercenter.permission-info', name: '权限信息', level: 'user', parentId: 2, type: 'menu', sort: 3, icon: 'project', route: '/iam/permission-info', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 672, code: 'choerodon.code.usercenter.token-manager', name: '授权管理', level: 'user', parentId: 2, type: 'menu', sort: 4, icon: 'authority', route: '/iam/token-manager', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true, 
+      id: 672, code: 'choerodon.code.usercenter.token-manager', name: '授权管理', level: 'user', parentId: 2, type: 'menu', sort: 4, icon: 'authority', route: '/iam/token-manager', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 396, code: 'choerodon.code.usercenter.user-msg', name: '消息通知', level: 'user', parentId: 2, type: 'menu', sort: 6, icon: 'message_notification', route: '/iam/user-msg', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true, 
+      id: 396, code: 'choerodon.code.usercenter.user-msg', name: '消息通知', level: 'user', parentId: 2, type: 'menu', sort: 6, icon: 'message_notification', route: '/iam/user-msg', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
-      id: 496, code: 'choerodon.code.usercenter.receive-setting', name: '接收设置', level: 'user', parentId: 2, type: 'menu', sort: 7, icon: 'settings', route: '/iam/receive-setting', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true, 
+      id: 496, code: 'choerodon.code.usercenter.receive-setting', name: '接收设置', level: 'user', parentId: 2, type: 'menu', sort: 7, icon: 'settings', route: '/iam/receive-setting', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }],
-    default: true, 
+    default: true,
   }],
 };
 export default data;

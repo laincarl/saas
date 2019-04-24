@@ -1,8 +1,16 @@
 import { axios } from 'choerodon-front-boot';
 import '../mock/AgileMock';
-
-export function getIssues(page = 0, size = 10) {  
-  return axios.get(`/agile/v1/issue/list/all?page=${page}&size=${size}`);
+/**
+ * 
+ *
+ * @export
+ * @param {*} type all backlog active finished
+ * @param {number} [page=0]
+ * @param {number} [size=10]
+ * @returns
+ */
+export function getIssues(type, page = 0, size = 10) {  
+  return axios.get(`/agile/v1/issue/list/${type}?page=${page}&size=${size}`);
 }
 export function createIssue(data) {
   return axios.post('/agile/v1/issue', data);

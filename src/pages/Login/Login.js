@@ -27,6 +27,7 @@ class Login extends React.Component {
       if (access_token) {
         setAccessToken(access_token, 'bearer', expires_in);
         if (getParams().redirect_uri) {
+          // console.log(getParams().redirect_uri);
           window.location = getParams().redirect_uri;
         } else {
           history.replace('/');
@@ -54,7 +55,7 @@ class Login extends React.Component {
           password,
           isRememberMe,
         });
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
       }
     });
   }

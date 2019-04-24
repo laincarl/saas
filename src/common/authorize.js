@@ -8,9 +8,9 @@ export function authorize() {
   if (window.location.href.indexOf('#') === -1) {
     window.location = `${AUTH_URL}?redirect_uri=${uri}`;
   } else if (window.location.href.indexOf('?') === -1) {
-    window.location = `${AUTH_URL}?redirect_uri=${uri}%3FredirectFlag`;
+    window.location = `${AUTH_URL}?redirect_uri=${uri}`;
   } else {
-    window.location = `${AUTH_URL}&redirect_uri=${uri}%26redirectFlag`;
+    window.location = `${AUTH_URL}&redirect_uri=${uri}`;
   }
 }
 
@@ -18,11 +18,11 @@ export function authorize() {
  * 登出
  */
 export function logout() {
-  const token = getCookieToken();
-  let logoutUrl = '#/login';
-  if (token) {
-    logoutUrl += `?${ACCESS_TOKEN}=${getCookieToken()}`;
-  }
+  // const token = getCookieToken();
+  const logoutUrl = '#/login';
+  // if (token) {
+  //   logoutUrl += `?${ACCESS_TOKEN}=${getCookieToken()}`;
+  // }
   removeAccessToken();
   localStorage.clear();
   sessionStorage.clear();

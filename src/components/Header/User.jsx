@@ -45,15 +45,15 @@ export default class UserPreferences extends Component {
 
   render() {
     const { AppState, HeaderStore, MenuStore } = this.props;
-    const { imageUrl, loginName, realName, email } = AppState.getUserInfo || {};
+    const { imageUrl, loginName, name, email } = AppState.getUserInfo || {};
     const realData = MenuStore.menuGroup && MenuStore.menuGroup.user[0] && MenuStore.menuGroup.user[0].subMenus.filter(item => !blackList.has(item.code));
     const AppBarIconRight = (
       <div className={`${prefixCls}-popover-content`}>
         <Avatar src={imageUrl} prefixCls={prefixCls}>
-          {realName && realName.charAt(0)}
+          {name && name.charAt(0)}
         </Avatar>
         <div className={`${prefixCls}-popover-title`}>
-          <span>{realName}</span>
+          <span>{name}</span>
           <span>{email}</span>
         </div>
         <div className={`${prefixCls}-popover-menu`}>
@@ -86,7 +86,7 @@ export default class UserPreferences extends Component {
         onVisibleChange={this.handleVisibleChange}
       >
         <Avatar src={imageUrl} prefixCls={prefixCls}>
-          {realName && realName.charAt(0)}
+          {name && name.charAt(0)}
         </Avatar>
       </Popover>
     );

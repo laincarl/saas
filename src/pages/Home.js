@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import Header from 'components/Header';
 import Menu from 'components/menu';
 import Agile from 'pages/Agile';
+import TestManager from 'pages/TestManager';
 import Iam from 'pages/Iam';
 import Devops from 'pages/devops';
 import { getSelf } from 'api/IamApi';
@@ -117,7 +118,7 @@ class Home extends Component {
             <Route path="/agile" component={Agile} />
             <Route path="/iam" component={Iam} />
             <Route path="/devops" component={Devops} />            
-            {/* <Route path="/testManager" component={TestManager} /> */}
+            <Route path="/testManager" component={TestManager} />
             <Route path="*" component={nomatch} />
             {/* <Redirect from={`${match.url}`} to={`${match.url}/main`} />   */}
             {/* 其他重定向到 404 */}

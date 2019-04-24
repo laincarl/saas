@@ -31,7 +31,7 @@ class IssueItem extends Component {
             className={classnames('c7n-backlog-IssueCard-left')}
           >
             <TypeTag
-              type={0}
+              type={data.type}
             />
             <div className="c7n-backlog-IssueCard-left-summaryContainer">
               <div className="c7n-backlog-IssueCard-left-issueNum" style={{ textDecoration: data.statusMapDTO && data.statusMapDTO.code === 'complete' ? 'line-through' : 'none' }}>

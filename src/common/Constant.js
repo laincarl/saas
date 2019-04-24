@@ -40,11 +40,11 @@ export const ISSUE_TYPES = {
     typeCode: 'story',
   },
   1: {
-    colour: '#00bfa5',
-    description: '故事',
-    icon: 'agile_story',
-    name: '故事',
-    typeCode: 'story',
+    colour: 'rgb(77, 144, 254)',
+    description: '测试',
+    icon: 'test-case',
+    name: '测试',
+    typeCode: 'test',
   },
 };
 export const TYPE = {

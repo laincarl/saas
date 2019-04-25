@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -22,6 +23,26 @@ module.exports = {
       open: true,
       port: 3030,
     },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'SAAS',
+        inject: true,
+        minify: {
+          html5: true,
+          collapseWhitespace: true,
+          removeComments: true,
+          removeTagWhitespace: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+        },
+        // hash: true,
+        // excludeChunks:['contact'],
+        // chunks: ['manifest', 'vendor', 'app'],
+        // chunks:['vendor','app'],
+        favicon: path.resolve(__dirname, './template/favicon.ico'),
+        template: path.resolve(__dirname, './template/index.ejs'), // Load a custom template (ejs by default see the FAQ for details)
+      }),
+    ],
   },
   theme: './theme.less',
   // envs: {

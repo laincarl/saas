@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, Modal } from 'choerodon-ui';
 import './IssueTable.scss';
 import { Button } from 'choerodon-ui';
+import { Permission } from 'choerodon-front-boot';
 import {
   IssueNum, TypeCode, Summary, StatusName, Priority, Assignee, LastUpdateTime, Sprint, Epic,
 } from './IssueTableComponent';
@@ -76,14 +77,16 @@ const IssueTable = ({
       title: '',
       key: 'action',
       render: (text, record) => (
-        <Button
-          icon="delete_forever"
-          shape="circle"
-          onClick={(e) => { 
-            e.stopPropagation();
-            deleteStatus(record); 
-          }}
-        />
+        <Permission>
+          <Button
+            icon="delete_forever"
+            shape="circle"
+            onClick={(e) => { 
+              e.stopPropagation();
+              deleteStatus(record); 
+            }}
+          />
+        </Permission>
       ),
     },
   ];

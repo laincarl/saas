@@ -33,11 +33,11 @@ export const COLOR = {
 };
 export const ISSUE_TYPES = {
   0: {
-    colour: '#00bfa5',
-    description: '故事',
-    icon: 'agile_story',
-    name: '故事',
-    typeCode: 'story',
+    colour: 'rgb(77, 144, 254)',
+    description: '任务',
+    icon: 'agile_task',
+    name: '任务',
+    typeCode: 'task',
   },
   1: {
     colour: 'rgb(77, 144, 254)',

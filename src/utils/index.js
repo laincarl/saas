@@ -1,4 +1,5 @@
 import Page from 'components/Page';
+import Permission from 'components/Permission';
 import { message } from 'choerodon-ui';
 import AppState from 'stores/AppState';
 import nomatch from 'nomatch';
@@ -50,7 +51,7 @@ const stores = {
   AppState,
 };
 export {
-  stores, nomatch, Page, Content, Header, 
+  stores, nomatch, Page, Content, Header, Permission,
 };
 // export { default as LoadingBar } from './loading-bar';
 

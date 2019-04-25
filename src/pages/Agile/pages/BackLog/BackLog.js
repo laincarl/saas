@@ -54,8 +54,8 @@ class BackLog extends Component {
     });
   }
 
-  handlePaginationChange = (current, size) => {
-
+  handlePaginationChange = (pagination) => {
+    this.loadIssues(pagination);
   }
 
   handleIssueSelect = (issue) => {

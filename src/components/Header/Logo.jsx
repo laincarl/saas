@@ -39,11 +39,12 @@ export default class Logo extends Component {
             ? <Button shape="circle" icon="menu" className={`${prefixCls}-menu-icon`} onClick={this.handleMenuClick} />
             : <div className={classnames(`${prefixCls}-icon`, systemLogo ? null : `${prefixCls}-default-icon`)} style={{ backgroundImage: systemLogo ? `url(${systemLogo})` : null }} />
         }
-        {
-          pathname === '/' && !search
-            ? <div className={prefixCls}>{systemName}</div>
-            : <Link to={homePath} className={prefixCls} style={{ textDecoration: 'none' }}>{systemName}MinuteF</Link>
-        }
+        {/* { */}
+          {/* pathname === '/' && !search */}
+            {/* ? <div className={prefixCls}>{systemName}</div> */}
+            {/* : */}
+             <Link to={homePath} className={prefixCls} style={{ textDecoration: 'none' }}>{systemName}MinuteF</Link>
+        {/* } */}
       </div>
     );
   }

@@ -1,9 +1,8 @@
 /* eslint-disable react/sort-comp */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { observer } from 'mobx-react';
 import {
-  Modal, Form, Radio, Input, Select, Tooltip, 
+  Modal, Form, Radio, Input, Select, Tooltip,
 } from 'choerodon-ui';
 import { Content, stores } from 'choerodon-front-boot';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -12,9 +11,8 @@ import 'pages/devops/main.scss';
 import './BranchCreate.scss';
 import '../index.scss';
 import MouserOverWrapper from 'components/MouseOverWrapper';
-import DevPipelineStore from 'stores/devPipeline';
-import DevConsoleStore from 'stores/devConsole';
 import InterceptMask from 'components/interceptMask/InterceptMask';
+import { getBranchs, createBranch, getTags } from '@/api/DevopsApi';
 
 const { AppState } = stores;
 const { Sidebar } = Modal;
@@ -30,19 +28,14 @@ const formItemLayout = {
     sm: { span: 26 },
   },
 };
-@observer
+
 class BranchCreate extends Component {
-  constructor(props) {
-    const menu = AppState.currentMenuType;
-    super(props);
-    this.state = {
-      projectId: menu.id,
-      submitting: false,
-      type: 'custom',
-      branchSize: 3,
-      tagSize: 3,
-      filter: false,
-    };
+  state = {
+    branches: [],
+    issues: [],
+    tags: [],
+    submitting: false,
+    type: 'custom',
   }
 
   /**
@@ -139,9 +132,8 @@ class BranchCreate extends Component {
    */
   handleOk = (e) => {
     e.preventDefault();
-    const { store, isDevConsole } = this.props;
-    const appId = DevPipelineStore.selectedApp;
-    const { projectId, type } = this.state;
+    const { currentRepo } = this.props;
+    const { type } = this.state;
     this.props.form.validateFieldsAndScroll((err, data) => {
       if (!err) {
         const postData = data;
@@ -149,13 +141,8 @@ class BranchCreate extends Component {
           ? `${type}-${data.branchName}`
           : data.branchName;
         this.setState({ submitting: true });
-        store
-          .createBranch(projectId, appId, postData)
+        createBranch(currentRepo, postData)
           .then(() => {
-            store.loadBranchList({ projectId, appId: this.props.appId });
-            if (isDevConsole) {
-              DevConsoleStore.loadBranchList(projectId, appId);
-            }
             this.props.onClose();
             this.props.form.resetFields();
             this.setState({ submitting: false });
@@ -167,6 +154,24 @@ class BranchCreate extends Component {
       }
     });
   };
+
+  loadBranchData = () => {
+    const { currentRepo } = this.props;
+    getBranchs(currentRepo).then((branches) => {
+      this.setState({
+        branches,
+      });
+    });
+  }
+
+  loadTagData = () => {
+    const { currentRepo } = this.props;
+    getTags(currentRepo).then((tags) => {
+      this.setState({
+        tags,
+      });
+    });
+  }
 
   /**
    * 触发分支名称检查
@@ -267,13 +272,8 @@ class BranchCreate extends Component {
    * @param input
    * @param options
    */
-  searchIssue = (input, options) => {
-    const { store } = this.props;
-    if (input !== '') {
-      store.loadIssue(this.state.projectId, input, false);
-    } else {
-      store.loadIssue(this.state.projectId, '', true);
-    }
+  searchIssue = (input) => {
+    this.loadIssue(input);
   };
 
   /**
@@ -306,32 +306,19 @@ class BranchCreate extends Component {
   /**
    * 搜索分支数据
    */
-  searchData = (input) => {
-    const { store } = this.props;
-    const { branchSize, tagSize } = this.state;
-    this.setState({ filter: input });
-    store.loadBranchData({
-      projectId: this.state.projectId,
-      size: branchSize,
-      postData: { searchParam: { branchName: [input] }, param: '' },
-    });
-    store.loadTagData(this.state.projectId, 0, tagSize, {
-      searchParam: { tagName: [input] },
-      param: '',
-    });
+  searchData = () => {
+    this.loadBranchData();
+    this.loadTagData();
   };
 
   render() {
     const {
       visible,
       intl,
-      store,
       form: { getFieldDecorator },
       name,
     } = this.props;
-    const issue = store.issue.slice();
-    const branches = store.branchData;
-    const tags = store.tagData;
+    const { branches, tags, issues } = this.state;
     return (
       <Sidebar
         title={<FormattedMessage id="branch.create" />}
@@ -357,7 +344,6 @@ class BranchCreate extends Component {
                 <Select
                   dropdownClassName="createBranch-dropdown"
                   onFilterChange={this.searchIssue}
-                  loading={store.issueLoading}
                   onSelect={this.changeIssue}
                   key="service"
                   allowClear
@@ -368,7 +354,7 @@ class BranchCreate extends Component {
                   optionFilterProp="children"
                   filterOption={false}
                 >
-                  {issue.map(s => (
+                  {issues.map(s => (
                     <Option value={s.issueId} key={s.typeCode}>
                       {this.getOptionContent(s)}
                     </Option>
@@ -400,47 +386,23 @@ class BranchCreate extends Component {
                     label={intl.formatMessage({ id: 'branch.branch' })}
                     key="proGroup"
                   >
-                    {branches.content.map(s => (
+                    {branches.map(s => (
                       <Option value={s.branchName} key={s.branchName}>
                         <i className="icon icon-branch c7n-branch-formItem-icon" />
                         {s.branchName}
                       </Option>
                     ))}
-                    {branches.totalElements > branches.numberOfElements
-                    && branches.numberOfElements > 0 ? (
-                      <Option key="more">
-                        <div
-                          role="none"
-                          onClick={this.changeSize.bind(this, 'branch')}
-                          className="c7n-option-popover c7n-dom-more"
-                        >
-                          {intl.formatMessage({ id: 'ist.more' })}
-                        </div>
-                      </Option>
-                      ) : null}
                   </OptGroup>
                   <OptGroup
                     label={intl.formatMessage({ id: 'branch.tag' })}
                     key="more"
                   >
-                    {tags.content.map(s => (
+                    {tags.map(s => (
                       <Option value={s.tagName} key={s.tagName}>
                         <i className="icon icon-local_offer c7n-branch-formItem-icon" />
                         {s.tagName}
                       </Option>
                     ))}
-                    {tags.totalElements > tags.numberOfElements
-                    && tags.numberOfElements > 0 ? (
-                      <Option value="more">
-                        <div
-                          role="none"
-                          onClick={this.changeSize.bind(this, 'tag')}
-                          className="c7n-option-popover c7n-dom-more"
-                        >
-                          {intl.formatMessage({ id: 'ist.more' })}
-                        </div>
-                      </Option>
-                      ) : null}
                   </OptGroup>
                 </Select>,
               )}

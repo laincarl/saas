@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
-import { observer, inject } from 'mobx-react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import {
-  Content, Header, Page, stores, 
+  Content, Header, Page, stores,
 } from 'choerodon-front-boot';
 import {
-  Icon, Button, Table, Tooltip, 
+  Button, Table, Tooltip,
 } from 'choerodon-ui';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import _ from 'lodash';
@@ -14,7 +13,8 @@ import MouserOverWrapper from 'components/MouseOverWrapper';
 import 'pages/devops/main.scss';
 import './RepositoryHome.scss';
 import DepPipelineEmpty from 'components/DepPipelineEmpty/DepPipelineEmpty';
-import DevPipelineStore from 'stores/devPipeline';
+import { getRepositoryList, deleteRepository } from '@/api/DevopsApi.js';
+import CreateRepository from './components/CreateRepository';
 
 const { AppState } = stores;
 const repoColor = [
@@ -26,25 +26,31 @@ const repoColor = [
   '#F953BA',
 ];
 
-@observer
+
 class RepositoryHome extends Component {
   constructor(props) {
     super(props);
-    const menu = AppState.currentMenuType;
     this.state = {
-      projectId: menu.id,
-      param: [],
-      filters: {},
-      sort: {
-        columnKey: 'id',
-        order: 'descend',
-      },
+      loading: false,
+      createRepositoryVisible: false,
+      repositoryList: [],
     };
   }
 
   componentDidMount() {
-    DevPipelineStore.queryAppData(AppState.currentMenuType.id);
-    this.loadRepoData();
+    this.loadRepositoryList();
+  }
+
+  loadRepositoryList = () => {
+    this.setState({
+      loading: true,
+    });
+    getRepositoryList().then((repositoryList) => {
+      this.setState({
+        repositoryList,
+        loading: false,
+      });
+    });
   }
 
   /**
@@ -56,43 +62,12 @@ class RepositoryHome extends Component {
     return repoColor[idMode];
   };
 
-  /**
-   * 表格切换页码和搜索排序时触发
-   * @param pagination
-   * @param filters
-   * @param sorter
-   * @param param
-   */
-  tableChange = (pagination, filters, sorter, param) => {
-    const search = {
-      searchParam: filters,
-      param: param[0],
-    };
-    this.setState({ param, filters, sort: sorter });
-    this.loadRepoData(pagination.current - 1, pagination.pageSize, sorter, search);
-  };
-
-  /**
-   * 分页加载所有仓库数据
-   * @param page
-   * @param pageSize
-   * @param sorter
-   * @param search
-   */
-  loadRepoData = (page = 0, pageSize, sorter = {}, search = { searchParam: {}, param: '' }) => {
-    const { RepositoryStore } = this.props;
-    const { projectId } = this.state;
-    RepositoryStore.queryRepoData(projectId, page, pageSize, sorter, search);
-  };
 
   /**
    * 页面刷新
    */
   handleRefresh = () => {
-    const { RepositoryStore } = this.props;
-    const { param, sort, filters } = this.state;
-    const pageInfos = RepositoryStore.getPageInfo;
-    this.tableChange(pageInfos, filters, sort, param);
+    this.loadRepositoryList();
   };
 
   /**
@@ -108,7 +83,7 @@ class RepositoryHome extends Component {
   linkToReports = (appId) => {
     const { history } = this.props;
     const {
-      id: projectId, name: projectName, organizationId, type, 
+      id: projectId, name: projectName, organizationId, type,
     } = AppState.currentMenuType;
     history.push({
       pathname: '/devops/reports/submission',
@@ -120,18 +95,33 @@ class RepositoryHome extends Component {
     });
   };
 
+  handleCreateClick=() => {
+    this.setState({
+      createRepositoryVisible: true,
+    });
+  }
+
+  handleCancel=() => {
+    this.setState({
+      createRepositoryVisible: false,
+    });
+  }
+
+  handleDeleteRepository=(record) => {
+    const { id } = record;
+    this.setState({
+      loading: true,
+    });
+    deleteRepository(id).then(() => {
+      this.loadRepositoryList();
+    });
+  }
+
   renderAction = (text, record) => {
     const noRepoUrl = this.props.intl.formatMessage({ id: 'repository.noUrl' });
     return (
-      <div>
-        { record.sonarUrl ? (
-          <Tooltip title={<FormattedMessage id="repository.quality" />} placement="bottom">
-            <a className="repo-copy-btn" href={record.sonarUrl} rel="nofollow me noopener noreferrer" target="_blank">
-        <Button shape="circle" size="small" icon="quality" />
-      </a>
-          </Tooltip>
-        ) : null }
-        <Tooltip title={<FormattedMessage id="repository.report" />} placement="bottom">
+      <div>        
+        <Tooltip title={<FormattedMessage id="repository.report" />}>
           <Button
             className="repo-copy-btn"
             shape="circle"
@@ -140,37 +130,30 @@ class RepositoryHome extends Component {
             onClick={this.linkToReports.bind(this, record.id)}
           />
         </Tooltip>
-        <Tooltip title={<FormattedMessage id="repository.copyUrl" />} placement="bottom">
+        <Tooltip title={<FormattedMessage id="repository.copyUrl" />}>
           <CopyToClipboard
-            text={record.repoUrl || noRepoUrl}
+            text={record.url || noRepoUrl}
             onCopy={this.handleCopy}
           >
-            <Button shape="circle" size="small">
-        <i className="icon icon-library_books" />
-      </Button>
+            <Button shape="circle" size="small" className="repo-copy-btn">
+              <i className="icon icon-library_books" />
+            </Button>
           </CopyToClipboard>
+        </Tooltip>
+        <Tooltip title="删除">          
+          <Button shape="circle" size="small" icon="delete_forever" onClick={this.handleDeleteRepository.bind(this, record)} />          
         </Tooltip>
       </div>
     );
   };
 
   render() {
-    const { intl, RepositoryStore } = this.props;
-    const {
-      type, id: projectId, organizationId: orgId, name, 
-    } = AppState.currentMenuType;
-    const { param, filters, sort: { columnKey, order } } = this.state;
-    const { getRepoData, getPageInfo, loading } = RepositoryStore;
-    const appData = DevPipelineStore.getAppData;
-    const flag = _.filter(appData, ['permission', true]);
+    const { repositoryList, loading, createRepositoryVisible } = this.state;
     const columns = [{
       title: <FormattedMessage id="repository.repository" />,
-      dataIndex: 'code',
-      key: 'code',
+      dataIndex: 'gitlabName',
+      key: 'gitlabName',
       sorter: true,
-      filters: [],
-      sortOrder: columnKey === 'code' && order,
-      filteredValue: filters.code || [],
       render: (text, record) => (
         <div>
           <span className="repo-commit-avatar" style={{ color: this.getRepoColor(record.id) }}>{text.toString().substr(0, 1).toUpperCase()}</span>
@@ -179,12 +162,12 @@ class RepositoryHome extends Component {
       ),
     }, {
       title: <FormattedMessage id="repository.url" />,
-      dataIndex: 'repoUrl',
-      key: 'repoUrl',
+      dataIndex: 'url',
+      key: 'url',
       render: (text, record) => (
-        <a href={record.repoUrl || null} rel="nofollow me noopener noreferrer" target="_blank">
-          <MouserOverWrapper text={record.repoUrl} width={0.25}>
-            {record.repoUrl ? `../${record.repoUrl.split('/')[record.repoUrl.split('/').length - 1]}` : ''}
+        <a href={record.url || null} rel="nofollow me noopener noreferrer" target="_blank">
+          <MouserOverWrapper text={record.url} width={0.25}>
+            {record.url ? `../${record.url.split('/')[record.url.split('/').length - 1]}` : ''}
           </MouserOverWrapper>
         </a>
       ),
@@ -193,23 +176,18 @@ class RepositoryHome extends Component {
       dataIndex: 'name',
       key: 'name',
       sorter: true,
-      filters: [],
-      sortOrder: columnKey === 'name' && order,
-      filteredValue: filters.name || [],
     }, {
       align: 'right',
-      width: 120,
+      width: 150,
       key: 'action',
       render: this.renderAction,
     }];
     return (
       <Page
         className="c7n-region c7n-app-wrapper"
-        service={[
-          'devops-service.application.listCodeRepository',
-        ]}
       >
-        {flag && flag.length ? (
+        <CreateRepository visible={createRepositoryVisible} onCreate={this.handleRefresh} />
+        {repositoryList && repositoryList.length ? (
           <Fragment>
             <Header title={<FormattedMessage id="repository.head" />}>
               <Button
@@ -221,18 +199,14 @@ class RepositoryHome extends Component {
             </Header>
             <Content code="repository" values={{ name }}>
               <Table
-                filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
                 loading={loading}
-                onChange={this.tableChange}
-                pagination={getPageInfo}
                 columns={columns}
-                filters={param || []}
-                dataSource={getRepoData}
+                dataSource={repositoryList}
                 rowKey={record => record.id}
               />
             </Content>
           </Fragment>
-        ) : <DepPipelineEmpty title={<FormattedMessage id="repository.head" />} type="app" />}
+        ) : <DepPipelineEmpty title={<FormattedMessage id="repository.head" />} type="app" callback={this.handleCreateClick} />}
       </Page>
     );
   }

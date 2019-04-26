@@ -18,6 +18,7 @@ import './Home.scss';
 import '@/mock/DevopsMock';
 import '@/mock/IamMock';
 import { from } from 'rxjs';
+import { authorize } from '../common';
 
 function parseQueryToMenuType(search) {
   const menuType = {
@@ -52,6 +53,9 @@ class Home extends Component {
     const { AppState } = this.props;
     getSelf().then((res) => {
       AppState.setUserInfo(res);
+    }).catch((err) => {
+      AppState.setUserInfo({});
+      authorize();
     });
   }
 

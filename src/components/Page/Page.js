@@ -57,9 +57,9 @@ class Header extends Component {
   }
 }
 const Content = ({
-  children, title, description, link, style,
+  children, title, description, link, style, className,
 }) => (
-  <div className="page-content" style={style}>
+  <div className={`page-content ${className}`} style={style}>
     <div className="page-content-header">
       <div className="title">
         {title}

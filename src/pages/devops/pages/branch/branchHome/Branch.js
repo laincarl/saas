@@ -17,7 +17,7 @@ import MouserOverWrapper from 'components/MouseOverWrapper';
 import DepPipelineEmpty from 'components/DepPipelineEmpty/DepPipelineEmpty';
 import BranchEdit from '../branchEdit';
 import BranchCreate from '../branchCreate';
-import { getRepositoryList, getBranchs } from '@/api/DevopsApi.js';
+import { getRepositoryList, getBranchs, deleteBranch } from '@/api/DevopsApi.js';
 
 const { AppState } = stores;
 const { Option } = Select;
@@ -26,7 +26,7 @@ const { Option } = Select;
 class Branch extends Component {
   state = {
     repositoryList: [],
-    currentRepo: null,
+    currentRepo: {},
     branchs: [],
     createBranchVisible: false,
   }
@@ -45,7 +45,7 @@ class Branch extends Component {
         this.loadData(repositoryList[0].id);
         this.setState({
           repositoryList,
-          currentRepo: repositoryList[0].id,
+          currentRepo: repositoryList[0],
         });
       } else {
         this.setState({
@@ -58,7 +58,7 @@ class Branch extends Component {
   /**
    * 获取分支
    */
-  loadData = (value = this.state.currentRepo) => {
+  loadData = (value = this.state.currentRepo.id) => {
     this.setState({
       loading: true,
     });
@@ -98,12 +98,12 @@ class Branch extends Component {
     const branchColumns = [
       {
         title: <FormattedMessage id="branch.name" />,
-        dataIndex: 'branchName',
+        dataIndex: 'name',
         render: (text, record) => (
           <div>
-            {this.getIcon(record.branchName)}
-            <MouserOverWrapper text={record.branchName} width={0.2} className="c7n-branch-text">
-              {record.branchName}
+            {this.getIcon(record.name)}
+            <MouserOverWrapper text={record.name} width={0.2} className="c7n-branch-text">
+              {record.name}
             </MouserOverWrapper>
           </div>
         ),
@@ -128,6 +128,16 @@ class Branch extends Component {
             <MouserOverWrapper text={record.commitContent} width={0.2} className="branch-col-icon">
               {record.commitContent}
             </MouserOverWrapper>
+          </div>
+        ),
+      },
+      {
+        title: <FormattedMessage id="branch.issue" />,
+        dataIndex: 'commit.message',
+        render: (text, record) => (
+          <div>
+            {record.typeCode ? this.getOptionContent(record) : null}
+            <a onClick={this.showIssue.bind(this, record.issueId, record.branchName)} role="none"><Tooltip title={record.issueName}>{record.issueCode}</Tooltip></a>
           </div>
         ),
       },
@@ -170,14 +180,14 @@ class Branch extends Component {
         key: 'action',
         render: (test, record) => (
           <div>
-            {record.branchName !== 'master'
+            {record.name !== 'master'
               ? (
                 <React.Fragment>
                   <Tooltip
                     placement="bottom"
                     title={<FormattedMessage id="branch.edit" />}
                   >
-                    <Button size="small" shape="circle" onClick={this.handleEdit.bind(this, record.branchName)}>
+                    <Button size="small" shape="circle" onClick={this.handleEdit.bind(this, record.name)}>
                       <i className="icon icon-mode_edit" />
                     </Button>
                   </Tooltip>
@@ -185,7 +195,7 @@ class Branch extends Component {
                     placement="bottom"
                     title={<FormattedMessage id="branch.request" />}
                   >
-                    <a href={record.commitUrl && `${record.commitUrl.split('/commit')[0]}/merge_requests/new?change_branches=true&merge_request[source_branch]=${record.branchName}&merge_request[target_branch]=master`} target="_blank" rel="nofollow me noopener noreferrer">
+                    <a href={record.commitUrl && `${record.commitUrl.split('/commit')[0]}/merge_requests/new?change_branches=true&merge_request[source_branch]=${record.name}&merge_request[target_branch]=master`} target="_blank" rel="nofollow me noopener noreferrer">
                       <Button size="small" shape="circle">
                         <i className="icon icon-merge_request" />
                       </Button>
@@ -195,7 +205,7 @@ class Branch extends Component {
                     placement="bottom"
                     title={<FormattedMessage id="delete" />}
                   >
-                    <Button size="small" shape="circle" onClick={this.openRemove.bind(this, record.branchName)}>
+                    <Button size="small" shape="circle" onClick={this.openRemove.bind(this, record.name)}>
                       <i className="icon icon-delete_forever" />
                     </Button>
                   </Tooltip>
@@ -327,13 +337,10 @@ class Branch extends Component {
   /**
    * 删除数据
    */
-  handleDelete = () => {
-    const { BranchStore } = this.props;
-    const { name, currentRepo } = this.state;
-    const menu = AppState.currentMenuType;
-    const organizationId = menu.id;
+  handleDelete = () => {  
+    const { name, currentRepo } = this.state;  
     this.setState({ submitting: true });
-    BranchStore.deleteData(organizationId, currentRepo, name).then((data) => {
+    deleteBranch(currentRepo.id, name).then((data) => {
       this.setState({ submitting: false });
       this.loadData();
       this.closeRemove();
@@ -349,19 +356,18 @@ class Branch extends Component {
     });
   }
 
-  render() {
-    const { name } = AppState.currentMenuType;
+  render() {    
     const { BranchStore, intl: { formatMessage }, history: { location: { state } } } = this.props;
     const {
-      name: branchName, submitting, visible, repositoryList, currentRepo, createBranchVisible,
+      name, submitting, visible, repositoryList, currentRepo, createBranchVisible,
     } = this.state;
-    const titleName = _.find(repositoryList, ['id', currentRepo]) ? _.find(repositoryList, ['id', currentRepo]).name : name;
+    const titleName = _.find(repositoryList, ['id', currentRepo.id]) ? _.find(repositoryList, ['id', currentRepo.id]).name : name;
     const backPath = state && state.backPath;
     return (
       <Page
         className="c7n-region c7n-branch"
       >
-        {repositoryList && repositoryList.length && currentRepo ? (
+        {repositoryList && repositoryList.length && currentRepo.id ? (
           <Fragment>
             <Header
               title={<FormattedMessage id="branch.head" />}
@@ -372,7 +378,7 @@ class Branch extends Component {
                 className="c7n-header-select"
                 dropdownClassName="c7n-header-select_drop"
                 placeholder={formatMessage({ id: 'ist.noApp' })}
-                value={currentRepo}
+                value={currentRepo.id}
                 disabled={repositoryList.length === 0}
                 onChange={this.loadData}
               >
@@ -404,15 +410,14 @@ class Branch extends Component {
               {this.tableBranch()}
             </Content>
 
-            <BranchCreate
-              name={_.filter(repositoryList, app => app.id === currentRepo)[0].name}
+            <BranchCreate            
               currentRepo={currentRepo}              
               visible={createBranchVisible}
               onClose={this.hideSidebar}
             />
             {/* {BranchStore.createBranchShow === 'edit' && (
               <BranchEdit
-                name={branchName}
+                name={name}
                 appId={DevPipelineStore.selectedApp}
                 store={BranchStore}
                 visible={BranchStore.createBranchShow === 'edit'}
@@ -423,7 +428,7 @@ class Branch extends Component {
             <Modal
               confirmLoading={submitting}
               visible={visible}
-              title={`${formatMessage({ id: 'branch.action.delete' })}“${branchName}”`}
+              title={`${formatMessage({ id: 'branch.action.delete' })}“${name}”`}
               closable={false}
               footer={[
                 <Button key="back" onClick={this.closeRemove} disabled={submitting}>{<FormattedMessage id="cancel" />}</Button>,

@@ -1,7 +1,8 @@
 import { observable, action, computed } from 'mobx';
-import _ from 'lodash';
+import { groupBy } from 'lodash';
 import { axios, store, stores } from 'choerodon-front-boot';
 import { handleProptError } from 'pages/devops/utils';
+import { getMergeRequests } from '@/api/DevopsApi.js';
 
 const { AppState } = stores;
 
@@ -81,7 +82,7 @@ class MergeRequestStore {
   }
 
   @action setMerge(mergeData, key) {
-    this.mergeData[key] = mergeData;
+    this.mergeData[key] = mergeData || [];
   }
 
   @computed get getMerge() {
@@ -124,71 +125,31 @@ class MergeRequestStore {
   loadMergeRquest(appId, key = 'opened', page = 0, size = 10, projectId = AppState.currentMenuType.id) {
     this.setMerge([]);
     this.setLoading(true);
-    const userId = this.getUserId;
-    if (key === 'all') {
-      axios.get(`/devops/v1/projects/${1}/apps/${appId}/git/merge_request/list?page=${page}&size=${size}`)
-        .then((res) => {
-          const response = handleProptError(res);
-          if (response) {
-            const {
-              pageResult, closeCount, mergeCount, openCount, totalCount, 
-            } = response;
-            const { number, totalElements, content } = pageResult;
-            this.setPageInfo({
-              current: number + 1,
-              pageSize: pageResult.size,
-              total: totalElements,
-            }, key);
-            this.setMerge(content, key);
-            this.setCount({
-              closeCount,
-              mergeCount,
-              openCount,
-              totalCount,
-            });
-          }
-          this.setLoading(false);
-        })
-        .catch((error) => {
-          this.setLoading(false);
-          Choerodon.prompt(error.message);
+    
+    getMergeRequests(appId).then((res) => {
+      const response = handleProptError(res);
+      if (response) {        
+        const closeCount = response.filter(merge => merge.state === 'closed').length;
+        const mergeCount = response.filter(merge => merge.state === 'merged').length;
+        const openCount = response.filter(merge => merge.state === 'opened').length;
+        const mergeData = { ...groupBy(response, 'state'), all: response };
+        Object.keys(mergeData).forEach((key) => {
+          this.setMerge(mergeData[key], key);
         });
-    } else {
-      // 针对opened和assignee的数据不分页处理，原因是前端从opened中分离assignee数据，会导致分页数据都显示opened的，期待后端修改
-      axios.get(`/devops/v1/projects/${1}/apps/${appId}/git/merge_request/list?state=${key}&page=${page}&size=${key === 'opened' ? 30 : size}`)
-        .then((res) => {
-          const response = handleProptError(res);
-          if (response) {
-            const {
-              pageResult, closeCount, mergeCount, openCount, totalCount, 
-            } = response;
-            const { number, totalElements, content } = pageResult;
-            this.setPageInfo({
-              current: number + 1,
-              pageSize: pageResult.size,
-              total: totalElements,
-            }, key);
-            this.setMerge(content, key);
-            if (key === 'opened') {
-              const assignee = pageResult
-                ? _.filter(content, a => a.assignee && a.assignee.id === userId) : [];
-              this.setAssignee(assignee);
-              this.setAssigneeCount(assignee.length);
-            }
-            this.setCount({
-              closeCount,
-              mergeCount,
-              openCount,
-              totalCount,
-            });
-          }
-          this.setLoading(false);
-        })
-        .catch((error) => {
-          this.setLoading(false);
-          Choerodon.prompt(error.message);
+        
+        this.setCount({
+          closeCount,
+          mergeCount,
+          openCount,
+          totalCount: response.length,
         });
-    }
+      }
+      this.setLoading(false);
+    })
+      .catch((error) => {
+        this.setLoading(false);
+        Choerodon.prompt(error.message);
+      });
   }
 
 

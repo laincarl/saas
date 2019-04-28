@@ -2,6 +2,9 @@ import { observable, action, computed } from 'mobx';
 import { axios, store } from 'choerodon-front-boot';
 import { handleProptError } from 'pages/devops/utils';
 import DevPipelineStore from '../devPipeline/DevPipelineStore';
+import {
+  getBranchs, getTags, createTag, updateTag, deleteTag,
+} from '@/api/DevopsApi.js';
 
 @store('AppTagStore')
 class AppTagStore {
@@ -50,24 +53,19 @@ class AppTagStore {
     return this.branchData;
   }
 
-  queryTagData = (projectId, page = 0, sizes = 10, postData = { searchParam: {}, param: '' }) => {
+  queryTagData = (page = 0, sizes = 10, postData = { searchParam: {}, param: '' }) => {
     this.setLoading(true);
     if (DevPipelineStore.selectedApp) {
-      axios.post(`/devops/v1/projects/${1}/apps/${DevPipelineStore.selectedApp}/git/tags_list_options?page=${page}&size=${sizes}`, JSON.stringify(postData))
-        .then((data) => {
-          this.setLoading(false);
-          const result = handleProptError(data);
-          if (result) {
-            const {
-              content, totalElements, number, size, 
-            } = result;
-            this.setTagData(content);
-            this.setPageInfo({ current: number + 1, pageSize: size, total: totalElements });
-          }
-        }).catch((err) => {
-          Choerodon.handleResponseError(err);
-          this.setLoading(false);
-        });
+      getTags(DevPipelineStore.selectedApp, { page, size: sizes }).then((data) => {
+        this.setLoading(false);
+        const result = handleProptError(data);
+        if (result) {          
+          this.setTagData(result);          
+        }
+      }).catch((err) => {
+        Choerodon.handleResponseError(err);
+        this.setLoading(false);
+      });
     } else {
       // 增加loading效果，如觉不妥，请删除
       setTimeout(() => {
@@ -82,10 +80,8 @@ class AppTagStore {
    * @param appId
    * @returns {Promise<T>}
    */
-  queryBranchData = ({
-    projectId, sorter = { field: 'createDate', order: 'asc' }, postData = { searchParam: {}, param: '' }, size = 3, 
-  }) => {
-    axios.post(`/devops/v1/projects/${1}/apps/${DevPipelineStore.selectedApp}/git/branches?page=0&size=${size}`, JSON.stringify(postData)).then((data) => {
+  queryBranchData = () => {
+    getBranchs(DevPipelineStore.selectedApp).then((data) => {
       const result = handleProptError(data);
       if (result) {
         this.setBranchData(result);
@@ -107,7 +103,7 @@ class AppTagStore {
    * @param ref 来源分支
    * @param release 发布日志
    */
-  createTag = (projectId, tag, ref, release) => axios.post(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/tags?tag=${tag}&ref=${ref}`, release);
+  createTag =(tag, ref, release) => createTag(DevPipelineStore.selectedApp, tag, ref, release);
 
   /**
    * 编辑发布日志
@@ -116,14 +112,14 @@ class AppTagStore {
    * @param release
    * @returns {IDBRequest | Promise<void>}
    */
-  editTag = (projectId, tag, release) => axios.put(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/tags?tag=${tag}`, release);
+  editTag = (tag, release) => updateTag(DevPipelineStore.selectedApp, tag, release);
 
   /**
    * 删除标记
    * @param projectId
    * @param tag
    */
-  deleteTag = (projectId, tag) => axios.delete(`/devops/v1/projects/${projectId}/apps/${DevPipelineStore.selectedApp}/git/tags?tag=${tag}`);
+  deleteTag = tag => deleteTag(DevPipelineStore.selectedApp, tag)
 }
 
 const appTagStore = new AppTagStore();

@@ -8,6 +8,7 @@ import MergeRequestStore from '../mergeRequest';
 import CiPipelineStore from '../ciPipelineManage';
 import DevConsoleStore from '../devConsole';
 import DeploymentPipelineStore from '../deploymentPipeline';
+import { getRepositoryList, getBranchs } from '@/api/DevopsApi.js';
 
 const { AppState } = stores;
 
@@ -124,48 +125,46 @@ class DevPipelineStore {
       DeploymentPipelineStore.setProRole('app', '');
     }
     this.setPreProId(projectId);
-    axios.get(`/devops/v1/projects/${1}/apps`)
-      .then((data) => {
-        const res = handleProptError(data);
-        if (res) {
-          const appSort = _.concat(_.filter(res, ['permission', true]), _.filter(res, ['permission', false]));
-          const result = _.filter(appSort, ['permission', true]);
-          this.setAppData(appSort);
-          if (result && result.length) {
-            if (apps) {
-              this.setSelectApp(apps);
-            } else if (this.selectedApp) {
-              if (_.filter(result, ['id', this.selectedApp]).length === 0) {
-                this.setSelectApp(result[0].id);
-              }
-            } else {
+    getRepositoryList().then((data) => {
+      const res = handleProptError(data);
+      if (res) {       
+        const result = res;
+        this.setAppData(res);
+        if (result && result.length) {
+          if (apps) {
+            this.setSelectApp(apps);
+          } else if (this.selectedApp) {
+            if (_.filter(result, ['id', this.selectedApp]).length === 0) {
               this.setSelectApp(result[0].id);
             }
-            switch (type) {
-              case 'branch':
-                BranchStore.loadBranchList({ projectId });
-                break;
-              case 'tag':
-                AppTagStore.queryTagData(projectId, 0, 10);
-                break;
-              case 'merge':
-                MergeRequestStore.loadMergeRquest(this.selectedApp);
-                MergeRequestStore.loadUrl(projectId, this.selectedApp);
-                break;              
-              default:
-                break;
-            }
-            AppTagStore.setDefaultAppName(result[0].name);
           } else {
-            this.setSelectApp(null);
-            AppTagStore.setLoading(false);
-            CiPipelineStore.setLoading(false);
-            MergeRequestStore.setLoading(false);
-            DevConsoleStore.setBranchLoading(false);
-            DeploymentPipelineStore.judgeRole('app');
+            this.setSelectApp(result[0].id);
           }
+          switch (type) {
+            case 'branch':
+              BranchStore.loadBranchList({ projectId });
+              break;
+            case 'tag':
+              AppTagStore.queryTagData(0, 10);
+              break;
+            case 'merge':
+              MergeRequestStore.loadMergeRquest(this.selectedApp);
+              MergeRequestStore.loadUrl(projectId, this.selectedApp);
+              break;              
+            default:
+              break;
+          }
+          AppTagStore.setDefaultAppName(result[0].name);
+        } else {
+          this.setSelectApp(null);
+          AppTagStore.setLoading(false);
+          CiPipelineStore.setLoading(false);
+          MergeRequestStore.setLoading(false);
+          DevConsoleStore.setBranchLoading(false);
+          DeploymentPipelineStore.judgeRole('app');
         }
-      }).catch(err => Choerodon.handleResponseError(err));
+      }
+    }).catch(err => Choerodon.handleResponseError(err));
   };
 }
 

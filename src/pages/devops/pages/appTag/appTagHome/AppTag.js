@@ -12,12 +12,15 @@ import ReactMarkdown from 'react-markdown';
 import _ from 'lodash';
 import LoadingBar from 'components/loadingBar';
 import TimePopover from 'components/timePopover/index';
-import DevPipelineStore from 'stores/devPipeline';
 import DepPipelineEmpty from 'components/DepPipelineEmpty/DepPipelineEmpty';
 import AppTagCreate from '../appTagCreate';
 import AppTagEdit from '../appTagEdit';
+import DevPipelineStore from 'stores/devPipeline';
+import { getRepositoryList, getTagsPage } from '@/api/DevopsApi.js';
+
 import 'pages/devops/main.scss';
 import './AppTag.scss';
+
 
 const { AppState } = stores;
 const { Option, OptGroup } = Select;
@@ -37,9 +40,10 @@ class AppTag extends Component {
       editRelease: null,
       creationDisplay: false,
       editDisplay: false,
-      appName: null,
+      appName: null,      
     };
   }
+
 
   componentDidMount() {
     const { AppTagStore } = this.props;
@@ -83,9 +87,8 @@ class AppTag extends Component {
    * @param pageSize
    */
   loadTagData = (page = 0, pageSize = 10) => {
-    const { AppTagStore } = this.props;
-    const { projectId } = AppState.currentMenuType;
-    AppTagStore.queryTagData(projectId, page, pageSize);
+    const { AppTagStore } = this.props;  
+    AppTagStore.queryTagData(page, pageSize);
   };
 
   /**
@@ -116,11 +119,10 @@ class AppTag extends Component {
    * 删除tag
    */
   deleteTag = () => {
-    const { AppTagStore } = this.props;
-    const { projectId } = AppState.currentMenuType;
+    const { AppTagStore } = this.props;  
     const { tag } = this.state;
     this.setState({ deleteLoading: true });
-    AppTagStore.deleteTag(projectId, tag).then((data) => {
+    AppTagStore.deleteTag(tag).then((data) => {
       if (data && data.failed) {
         Choerodon.prompt(data.message);
       } else {
@@ -184,7 +186,7 @@ class AppTag extends Component {
           url,
         },
         commitUserImage,
-        tagName,
+        name: tagName,
         release,
       } = item;
       const header = (
@@ -337,7 +339,7 @@ class AppTag extends Component {
                   {tagList.length ? (
                     <Fragment>
                       <Collapse bordered={false}>{tagList}</Collapse>
-                      <div className="c7n-tag-pagin">
+                      {/* <div className="c7n-tag-pagin">
                         <Pagination
                           total={total}
                           current={current}
@@ -345,7 +347,7 @@ class AppTag extends Component {
                           onChange={this.handlePaginChange}
                           onShowSizeChange={this.handlePaginChange}
                         />
-                      </div>
+                      </div> */}
                     </Fragment>
                   ) : (
                     <div className="c7n-tag-empty">

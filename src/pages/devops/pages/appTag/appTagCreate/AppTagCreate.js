@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Content, stores } from 'choerodon-front-boot';
-import { Select, Modal, Form, Input, Icon } from 'choerodon-ui';
+import {
+  Select, Modal, Form, Input, Icon, 
+} from 'choerodon-ui';
 import _ from 'lodash';
 import MdEditor from 'components/MdEditor';
 import 'pages/devops/main.scss';
 import './AppTagCreate.scss';
-import Tips from "components/Tips/Tips";
-import InterceptMask from "components/interceptMask/InterceptMask";
+import Tips from 'components/Tips/Tips';
+import InterceptMask from 'components/interceptMask/InterceptMask';
 
 const { AppState } = stores;
 const { Option, OptGroup } = Select;
@@ -72,17 +74,16 @@ class AppTagCreate extends Component {
   handleOk = (e) => {
     e.preventDefault();
     const { store, form: { validateFieldsAndScroll } } = this.props;
-    const { id: projectId } = AppState.currentMenuType;
     this.setState({ submitting: true });
     validateFieldsAndScroll((err, data) => {
       if (!err) {
         const { tag, ref } = data;
         const { release } = this.state;
-        store.createTag(projectId, tag, ref, release).then((req) => {
+        store.createTag(tag, ref, release).then((req) => {
           if (req && req.failed) {
             Choerodon.prompt(data.message);
           } else {
-            store.queryTagData(projectId, 0, 10);
+            store.queryTagData(0, 10);
             this.handleCancel();
           }
           this.setState({ submitting: false });
@@ -115,7 +116,7 @@ class AppTagCreate extends Component {
     const { id: projectId } = AppState.currentMenuType;
     const { size, filter } = this.state;
     this.setState({ size: size + 10 });
-    store.queryBranchData({ projectId, size: size + 10, postData: { searchParam: { branchName: [filter] }, param: '' } });
+    store.queryBranchData({ projectId, size: size + 10, postData: { searchParam: { name: [filter] }, param: '' } });
   };
 
   /**
@@ -127,7 +128,7 @@ class AppTagCreate extends Component {
     const { store } = this.props;
     const { id: projectId } = AppState.currentMenuType;
     const { size } = this.state;
-    store.queryBranchData({ projectId, size, postData: { searchParam: { branchName: [input] }, param: '' } });
+    store.queryBranchData({ projectId, size, postData: { searchParam: { name: [input] }, param: '' } });
   };
 
   /**
@@ -139,56 +140,61 @@ class AppTagCreate extends Component {
   };
 
   render() {
-    const { intl: { formatMessage }, store, form: { getFieldDecorator }, show, app: name } = this.props;
+    const {
+      intl: { formatMessage }, store, form: { getFieldDecorator }, show, app: name, 
+    } = this.props;
     const { submitting, release } = this.state;
-    const { content, totalElements, numberOfElements } = store.getBranchData;
-    return (<Sidebar
-      destroyOnClose
-      title={<FormattedMessage id="apptag.create" />}
-      visible={show}
-      onOk={this.handleOk}
-      okText={<FormattedMessage id="create" />}
-      cancelText={<FormattedMessage id="cancel" />}
-      confirmLoading={submitting}
-      onCancel={this.handleCancel}
-    >
-      <Content code="apptag.create" values={{ name }} className="c7n-tag-create sidebar-content">
-        <Form layout="vertical" className="c7n-sidebar-form">
-          <div className="apptag-formitem">
-            <Icon type="local_offer" className="c7n-apptag-icon" />
-            <FormItem
-              {...formItemLayout}
-            >
-              {getFieldDecorator('tag', {
-                rules: [{
-                  required: true,
-                  whitespace: true,
-                  message: formatMessage({ id: 'required' }),
-                }, {
-                  validator: this.checkTagName,
-                }],
-              })(
-                <Input
-                  autoFocus
-                  label={<FormattedMessage id="apptag.name" />}
-                  size="default"
-                  suffix={<Tips type="form" data="apptag.name.tip" />}
-                  maxLength="20"
-                />,
-              )}
-            </FormItem>
-          </div>
-          <div className="apptag-formitem c7ncd-sidebar-select">
-            <Icon type="wrap_text" className="c7n-apptag-icon" />
-            <FormItem
-              {...formItemLayout}
-            >
-              {getFieldDecorator('ref', {
-                rules: [{
-                  required: true,
-                  message: formatMessage({ id: 'required' }),
-                }],
-              })(<Select
+    const branchs = store.getBranchData;
+    return (
+      <Sidebar
+        destroyOnClose
+        title={<FormattedMessage id="apptag.create" />}
+        visible={show}
+        onOk={this.handleOk}
+        okText={<FormattedMessage id="create" />}
+        cancelText={<FormattedMessage id="cancel" />}
+        confirmLoading={submitting}
+        onCancel={this.handleCancel}
+      >
+        <Content code="apptag.create" values={{ name }} className="c7n-tag-create sidebar-content">
+          <Form layout="vertical" className="c7n-sidebar-form">
+            <div className="apptag-formitem">
+              <Icon type="local_offer" className="c7n-apptag-icon" />
+              <FormItem
+                {...formItemLayout}
+              >
+                {getFieldDecorator('tag', {
+                  rules: [{
+                    required: true,
+                    whitespace: true,
+                    message: formatMessage({ id: 'required' }),
+                  }, 
+                  // {
+                  //   validator: this.checkTagName,
+                  // }
+                  ],
+                })(
+                  <Input
+                    autoFocus
+                    label={<FormattedMessage id="apptag.name" />}
+                    size="default"
+                    suffix={<Tips type="form" data="apptag.name.tip" />}
+                    maxLength="20"
+                  />,
+                )}
+              </FormItem>
+            </div>
+            <div className="apptag-formitem c7ncd-sidebar-select">
+              <Icon type="wrap_text" className="c7n-apptag-icon" />
+              <FormItem
+                {...formItemLayout}
+              >
+                {getFieldDecorator('ref', {
+                  rules: [{
+                    required: true,
+                    message: formatMessage({ id: 'required' }),
+                  }],
+                })(<Select
                   onFilterChange={this.searchBranch}
                   allowClear
                   label={<FormattedMessage id="apptag.ref" />}
@@ -200,35 +206,31 @@ class AppTagCreate extends Component {
                 >
                   <OptGroup label={<FormattedMessage id="apptag.branch" />}>
                     {
-                      _.map(content, item => (<Option
-                        key={item.branchName}
-                        value={item.branchName}
-                      >
-                        <Icon className="apptag-branch-icon" type="branch" />{item.branchName}
-                      </Option>))
-                    }
-                    {(totalElements > numberOfElements && numberOfElements > 0) ? <Option key="more">
-                      <div
-                        role="none"
-                        onClick={this.changeSize}
-                        className="c7n-option-popover c7n-dom-more"
-                      >{formatMessage({ id: 'ist.more' })}</div>
-                    </Option> : null }
+                      _.map(branchs, item => (
+                        <Option
+                          key={item.name}
+                          value={item.name}
+                        >
+                          <Icon className="apptag-branch-icon" type="branch" />
+                          {item.name}
+                        </Option>
+                      ))
+                    }     
                   </OptGroup>
-                </Select>
-              )}
-            </FormItem>
-            <Tips type="form" data="apptag.tip" />
-          </div>
-        </Form>
-        <div className="c7n-creation-title"><FormattedMessage id='apptag.release.title' /></div>
-        <MdEditor
-          value={release}
-          onChange={this.handleNoteChange}
-        />
-        <InterceptMask visible={submitting} />
-      </Content>
-    </Sidebar>);
+                </Select>)}
+              </FormItem>
+              <Tips type="form" data="apptag.tip" />
+            </div>
+          </Form>
+          <div className="c7n-creation-title"><FormattedMessage id="apptag.release.title" /></div>
+          <MdEditor
+            value={release}
+            onChange={this.handleNoteChange}
+          />
+          <InterceptMask visible={submitting} />
+        </Content>
+      </Sidebar>
+    );
   }
 }
 

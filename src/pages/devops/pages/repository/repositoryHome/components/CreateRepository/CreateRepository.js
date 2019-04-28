@@ -16,13 +16,16 @@ const defaultProps = {
 
 const propTypes = {
   visible: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onCreate: PropTypes.func,
 };
 const { AppState } = stores;
 @Form.create()
 class CreateRepository extends Component {
+  state={
+    loading: false,
+  }
+
   handleOk = () => {
     const { form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
@@ -43,20 +46,30 @@ class CreateRepository extends Component {
 
   handleCreateRepository = (repoObj) => {
     const { onCreate } = this.props;
+    this.setState({
+      loading: true,
+    });
     createRepository(repoObj).then((res) => {        
       if (onCreate) {
         onCreate();
       }
+      this.setState({
+        loading: false,
+      });
     }).catch((error) => {
       console.log(error);     
+      this.setState({
+        loading: false,
+      });
     });
   }
 
 
   render() {
     const {
-      visible, onCancel, loading, form, 
+      visible, onCancel, form, 
     } = this.props;
+    const { loading } = this.state;
     const { getFieldDecorator } = form;
     return (
       <Sidebar

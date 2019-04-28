@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Content, stores } from 'choerodon-front-boot';
+import { Content } from 'choerodon-front-boot';
 import { Modal } from 'choerodon-ui';
 import MdEditor from 'components/MdEditor';
 import 'pages/devops/main.scss';
-import InterceptMask from "components/interceptMask/InterceptMask";
+import InterceptMask from 'components/interceptMask/InterceptMask';
 
-const { AppState } = stores;
+
 const { Sidebar } = Modal;
 
 @observer
@@ -28,15 +28,14 @@ class AppTagEdit extends Component {
   handleOk = (e) => {
     e.preventDefault();
     const { store, tag } = this.props;
-    const { id: projectId } = AppState.currentMenuType;
     const { notes } = this.state;
     this.setState({ submitting: true });
-    store.editTag(projectId, tag, notes || 'empty').then((req) => {
+    store.editTag(tag, notes || 'empty').then((req) => {
       this.setState({ submitting: false });
       if (req && req.failed) {
         Choerodon.prompt(req.message);
       } else {
-        store.queryTagData(projectId, 0, 10);
+        store.queryTagData(0, 10);
         this.handleCancel();
       }
     }).catch((error) => {
@@ -62,25 +61,27 @@ class AppTagEdit extends Component {
   render() {
     const { intl: { formatMessage }, show, tag } = this.props;
     const { submitting, notes } = this.state;
-    return (<Sidebar
-      destroyOnClose
-      title={<FormattedMessage id="apptag.update" />}
-      visible={show}
-      onOk={this.handleOk}
-      okText={<FormattedMessage id="save" />}
-      cancelText={<FormattedMessage id="cancel" />}
-      confirmLoading={submitting}
-      onCancel={this.handleCancel}
-    >
-      <Content code="apptag.update" values={{ name: tag }} className="c7n-tag-create sidebar-content">
-        <div className="c7n-apptag-release-title">{formatMessage({ id: 'apptag.release.title' })}</div>
-        <MdEditor
-          value={notes}
-          onChange={this.handleNoteChange}
-        />
-        <InterceptMask visible={submitting} />
-      </Content>
-    </Sidebar>);
+    return (
+      <Sidebar
+        destroyOnClose
+        title={<FormattedMessage id="apptag.update" />}
+        visible={show}
+        onOk={this.handleOk}
+        okText={<FormattedMessage id="save" />}
+        cancelText={<FormattedMessage id="cancel" />}
+        confirmLoading={submitting}
+        onCancel={this.handleCancel}
+      >
+        <Content code="apptag.update" values={{ name: tag }} className="c7n-tag-create sidebar-content">
+          <div className="c7n-apptag-release-title">{formatMessage({ id: 'apptag.release.title' })}</div>
+          <MdEditor
+            value={notes}
+            onChange={this.handleNoteChange}
+          />
+          <InterceptMask visible={submitting} />
+        </Content>
+      </Sidebar>
+    );
   }
 }
 

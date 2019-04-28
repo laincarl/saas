@@ -33,7 +33,7 @@ class MergeRequestHome extends Component {
   componentDidMount() {
     const { MergeRequestStore } = this.props;
     DevPipelineStore.queryAppData(AppState.currentMenuType.id, 'merge');
-    MergeRequestStore.loadUser();
+    // MergeRequestStore.loadUser();
   }
 
   /**
@@ -63,7 +63,7 @@ class MergeRequestHome extends Component {
     if (key === 'assignee') {
       keys = 'opened';
     }
-    MergeRequestStore.loadMergeRquest(DevPipelineStore.selectedApp, keys);
+    // MergeRequestStore.loadMergeRquest(DevPipelineStore.selectedApp, keys);
   };
 
   /**
@@ -141,8 +141,6 @@ class MergeRequestHome extends Component {
         closeCount, mergeCount, openCount, totalCount, 
       },
       getIsLoading,
-      getAssignee,
-      getAssigneeCount,
     } = MergeRequestStore;
     const appData = DevPipelineStore.getAppData;
     const appId = DevPipelineStore.getSelectApp;
@@ -191,8 +189,8 @@ class MergeRequestHome extends Component {
           {record.author ? (
             <Tooltip title={record.author.username !== record.author.name ? `${record.author.username} ${record.author.name}` : record.author.name}>
               {record.author.avatarUrl
-    ? <img className="c7n-merge-avatar" src={record.author.avatarUrl} alt="avatar" />
-    : <span className="apptag-commit apptag-commit-avatar">{record.author.name.toString().substr(0, 1)}</span>}
+                ? <img className="c7n-merge-avatar" src={record.author.avatarUrl} alt="avatar" />
+                : <span className="apptag-commit apptag-commit-avatar">{record.author.name.toString().substr(0, 1)}</span>}
             </Tooltip>
           ) : <span className="apptag-commit apptag-commit-avatar">?</span>}
           <Tooltip
@@ -206,15 +204,17 @@ class MergeRequestHome extends Component {
           </Tooltip>
         </div>
       ),
-    }, {
-      title: <Tips type="title" data="merge.commit" />,
-      key: 'commits',
-      render: record => (
-        <div>
-          {record.commits.length ? `${record.commits.length} commits` : '0 commit'}
-        </div>
-      ),
-    }, {
+    }, 
+    // {
+    //   title: <Tips type="title" data="merge.commit" />,
+    //   key: 'commits',
+    //   render: record => (
+    //     <div>
+    //       {record.commits.length ? `${record.commits.length} commits` : '0 commit'}
+    //     </div>
+    //   ),
+    // }, 
+    {
       title: <FormattedMessage id="merge.upDate" />,
       key: 'updatedAt',
       render: record => (
@@ -290,8 +290,8 @@ class MergeRequestHome extends Component {
           {record.author ? (
             <Tooltip title={record.author.username !== record.author.name ? `${record.author.username} ${record.author.name}` : record.author.name}>
               {record.author.avatarUrl
-    ? <img className="c7n-merge-avatar" src={record.author.avatarUrl} alt="avatar" />
-    : <span className="apptag-commit apptag-commit-avatar">{record.author.name.toString().substr(0, 1)}</span>}
+                ? <img className="c7n-merge-avatar" src={record.author.avatarUrl} alt="avatar" />
+                : <span className="apptag-commit apptag-commit-avatar">{record.author.name.toString().substr(0, 1)}</span>}
             </Tooltip>
           ) : <span className="apptag-commit apptag-commit-avatar">?</span>}
           <Tooltip title={record.createdAt}>
@@ -303,15 +303,17 @@ class MergeRequestHome extends Component {
           </Tooltip>
         </div>
       ),
-    }, {
-      title: <Tips type="title" data="merge.commit" />,
-      key: 'commits',
-      render: record => (
-        <div>
-          {record.commits.length ? `${record.commits.length} commits` : '0 commit'}
-        </div>
-      ),
-    }, {
+    }, 
+    // {
+    //   title: <Tips type="title" data="merge.commit" />,
+    //   key: 'commits',
+    //   render: record => (
+    //     <div>
+    //       {record.commits.length ? `${record.commits.length} commits` : '0 commit'}
+    //     </div>
+    //   ),
+    // }, 
+    {
       title: <FormattedMessage id="merge.upDate" />,
       key: 'updatedAt',
       render: record => (
@@ -389,8 +391,8 @@ class MergeRequestHome extends Component {
           {record.author ? (
             <Tooltip title={record.author.username !== record.author.name ? `${record.author.username} ${record.author.name}` : record.author.name}>
               {record.author.avatarUrl
-    ? <img className="c7n-merge-avatar" src={record.author.avatarUrl} alt="avatar" />
-    : <span className="apptag-commit apptag-commit-avatar">{record.author.name.toString().substr(0, 1)}</span>}
+                ? <img className="c7n-merge-avatar" src={record.author.avatarUrl} alt="avatar" />
+                : <span className="apptag-commit apptag-commit-avatar">{record.author.name.toString().substr(0, 1)}</span>}
             </Tooltip>
           ) : <span className="apptag-commit apptag-commit-avatar">?</span>}
           <Tooltip title={record.createdAt}>
@@ -402,15 +404,17 @@ class MergeRequestHome extends Component {
           </Tooltip>
         </div>
       ),
-    }, {
-      title: <Tips type="title" data="merge.commit" />,
-      key: 'commits',
-      render: record => (
-        <div>
-          {record.commits.length ? `${record.commits.length} commits` : '0 commit'}
-        </div>
-      ),
-    }, {
+    }, 
+    // {
+    //   title: <Tips type="title" data="merge.commit" />,
+    //   key: 'commits',
+    //   render: record => (
+    //     <div>
+    //       {record.commits.length ? `${record.commits.length} commits` : '0 commit'}
+    //     </div>
+    //   ),
+    // }, 
+    {
       title: <FormattedMessage id="merge.upDate" />,
       key: 'updatedAt',
       render: record => (
@@ -433,10 +437,10 @@ class MergeRequestHome extends Component {
           {record.assignee ? (
             <div>
               <Tooltip title={record.assignee.username !== record.assignee.name ? `${record.assignee.username} ${record.assignee.name}` : record.assignee.name}>
-    {record.assignee.avatarUrl
-                ? <img className="c7n-merge-avatar" src={record.assignee.avatarUrl} alt="avatar" />
-                : <span className="apptag-commit apptag-commit-avatar">{record.assignee.name.toString().substr(0, 1)}</span>}
-  </Tooltip>
+                {record.assignee.avatarUrl
+                  ? <img className="c7n-merge-avatar" src={record.assignee.avatarUrl} alt="avatar" />
+                  : <span className="apptag-commit apptag-commit-avatar">{record.assignee.name.toString().substr(0, 1)}</span>}
+              </Tooltip>
               {record.assignee.username !== record.assignee.name ? `${record.assignee.username} ${record.assignee.name}` : record.assignee.name}
             </div>
           ) : <FormattedMessage id="merge.noAssignee" />}
@@ -483,18 +487,18 @@ class MergeRequestHome extends Component {
               backPath={backPath}
             >
               <Select
-    filter
-    className="c7n-header-select"
-    dropdownClassName="c7n-header-select_drop"
-    placeholder={intl.formatMessage({ id: 'ist.noApp' })}
-    value={appData && appData.length ? DevPipelineStore.getSelectApp : undefined}
-    disabled={appData.length === 0}
-    filterOption={(input, option) => option.props.children.props.children.props.children
-              .toLowerCase().indexOf(input.toLowerCase()) >= 0}
-    onChange={this.handleChange.bind(this)}
-  >
-    <OptGroup label={intl.formatMessage({ id: 'recent' })} key="recent">
-              {
+                filter
+                className="c7n-header-select"
+                dropdownClassName="c7n-header-select_drop"
+                placeholder={intl.formatMessage({ id: 'ist.noApp' })}
+                value={appData && appData.length ? DevPipelineStore.getSelectApp : undefined}
+                disabled={appData.length === 0}
+                filterOption={(input, option) => option.props.children.props.children.props.children
+                  .toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                onChange={this.handleChange.bind(this)}
+              >
+                <OptGroup label={intl.formatMessage({ id: 'recent' })} key="recent">
+                  {
                 _.map(DevPipelineStore.getRecentApp, app => (
                   <Option
                     key={`recent-${app.id}`}
@@ -505,9 +509,9 @@ class MergeRequestHome extends Component {
                   </Option>
                 ))
               }
-            </OptGroup>
-    <OptGroup label={intl.formatMessage({ id: 'deploy.app' })} key="app">
-              {
+                </OptGroup>
+                <OptGroup label={intl.formatMessage({ id: 'deploy.app' })} key="app">
+                  {
                 _.map(appData, (app, index) => (
                   <Option
                     value={app.id}
@@ -518,95 +522,95 @@ class MergeRequestHome extends Component {
                   </Option>
                 ))
               }
-            </OptGroup>
-  </Select>
+                </OptGroup>
+              </Select>
               {appData.length ? (
-    <Button
-  funcType="flat"
-  onClick={this.linkToNewMerge}
->
-  <i className="icon-playlist_add icon" />
-  <FormattedMessage id="merge.createMerge" />
-</Button>
-  ) : null}
+                <Button
+                  funcType="flat"
+                  onClick={this.linkToNewMerge}
+                >
+                  <i className="icon-playlist_add icon" />
+                  <FormattedMessage id="merge.createMerge" />
+                </Button>
+              ) : null}
               <Button
-    funcType="flat"
-    onClick={this.reload}
-  >
-    <i className="icon-refresh icon" />
-    <FormattedMessage id="refresh" />
-  </Button>
+                funcType="flat"
+                onClick={this.reload}
+              >
+                <i className="icon-refresh icon" />
+                <FormattedMessage id="refresh" />
+              </Button>
             </Header>
             <Content code={appData.length ? 'merge.app' : 'merge'} values={{ name: titleName }}>
               <Tabs activeKey={tabKey} onChange={this.tabChange} animated={false}>
-      <TabPane tab={`${intl.formatMessage({ id: 'merge.tab1' })}(${openCount || 0})`} key="opened">
-              <Table
-                filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
-                onChange={this.tableChange}
-                loading={getIsLoading}
-                columns={columnsOpen}
-                pagination={false}
-                filters={param || []}
-                dataSource={od.slice()}
-                rowKey={record => record.id}
-                filterBar={false}
-              />
-            </TabPane>
-      <TabPane tab={`${intl.formatMessage({ id: 'merge.tab2' })}(${mergeCount || 0})`} key="merged">
-              <Table
-                filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
-                onChange={this.tableChange}
-                loading={getIsLoading}
-                columns={columns}
-                pagination={mp}
-                filters={param || []}
-                dataSource={md.slice()}
-                rowKey={record => record.id}
-                filterBar={false}
-              />
-            </TabPane>
-      <TabPane tab={`${intl.formatMessage({ id: 'merge.tab3' })}(${closeCount || 0})`} key="closed">
-              <Table
-                filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
-                onChange={this.tableChange}
-                loading={getIsLoading}
-                columns={columns}
-                pagination={cp}
-                filters={param || []}
-                dataSource={cd.slice()}
-                rowKey={record => record.id}
-                filterBar={false}
-              />
-            </TabPane>
-      <TabPane tab={`${intl.formatMessage({ id: 'merge.tab4' })}(${totalCount || 0})`} key="all">
-              <Table
-                filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
-                onChange={this.tableChange}
-                loading={getIsLoading}
-                columns={columnsAll}
-                pagination={ap}
-                filters={param || []}
-                dataSource={ad.slice()}
-                rowKey={record => record.id}
-                filterBar={false}
-              />
-            </TabPane>
-      {getAssigneeCount !== 0 ? (
-              <TabPane tab={`${intl.formatMessage({ id: 'merge.tab5' })}(${getAssigneeCount || 0})`} key="assignee">
-  <Table
-                filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
-                onChange={this.tableChange}
-                loading={getIsLoading}
-                columns={columnsOpen}
-                pagination={false}
-                filters={param || []}
-                dataSource={getAssignee.slice()}
-                rowKey={record => record.id}
-                filterBar={false}
-              />
-</TabPane>
-            ) : null}
-    </Tabs>
+                <TabPane tab={`${intl.formatMessage({ id: 'merge.tab1' })}(${openCount || 0})`} key="opened">
+                  <Table
+                    filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
+                    onChange={this.tableChange}
+                    loading={getIsLoading}
+                    columns={columnsOpen}
+                    pagination={false}
+                    filters={param || []}
+                    dataSource={od.slice()}
+                    rowKey={record => record.id}
+                    filterBar={false}
+                  />
+                </TabPane>
+                <TabPane tab={`${intl.formatMessage({ id: 'merge.tab2' })}(${mergeCount || 0})`} key="merged">
+                  <Table
+                    filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
+                    onChange={this.tableChange}
+                    loading={getIsLoading}
+                    columns={columns}
+                    pagination={false}
+                    filters={param || []}
+                    dataSource={md.slice()}
+                    rowKey={record => record.id}
+                    filterBar={false}
+                  />
+                </TabPane>
+                <TabPane tab={`${intl.formatMessage({ id: 'merge.tab3' })}(${closeCount || 0})`} key="closed">
+                  <Table
+                    filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
+                    onChange={this.tableChange}
+                    loading={getIsLoading}
+                    columns={columns}
+                    pagination={false}
+                    filters={param || []}
+                    dataSource={cd.slice()}
+                    rowKey={record => record.id}
+                    filterBar={false}
+                  />
+                </TabPane>
+                <TabPane tab={`${intl.formatMessage({ id: 'merge.tab4' })}(${totalCount || 0})`} key="all">
+                  <Table
+                    filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
+                    onChange={this.tableChange}
+                    loading={getIsLoading}
+                    columns={columnsAll}
+                    pagination={false}
+                    filters={param || []}
+                    dataSource={ad.slice()}
+                    rowKey={record => record.id}
+                    filterBar={false}
+                  />
+                </TabPane>
+                {/* {getAssigneeCount !== 0 ? (
+                  <TabPane tab={`${intl.formatMessage({ id: 'merge.tab5' })}(${getAssigneeCount || 0})`} key="assignee">
+                    <Table
+                      filterBarPlaceholder={intl.formatMessage({ id: 'filter' })}
+                      onChange={this.tableChange}
+                      loading={getIsLoading}
+                      columns={columnsOpen}
+                      pagination={false}
+                      filters={param || []}
+                      dataSource={getAssignee.slice()}
+                      rowKey={record => record.id}
+                      filterBar={false}
+                    />
+                  </TabPane>
+                ) : null} */}
+              </Tabs>
             </Content>
           </Fragment>
         ) : <DepPipelineEmpty title={<FormattedMessage id="merge.head" />} type="app" />}

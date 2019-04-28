@@ -45,10 +45,33 @@ export function getBranchs(id) {
 }
 export function createBranch(id, data) {
   const {
-    name, source, user_id, issue_id,
+    name, source, issueId: issue_id, 
   } = data;
-  return axios.post(`/devops/v1/${id}/branch?name=${name}&source=${source}&user_id=${user_id}&issue_id=${issue_id}`);
+  const user_id = AppState.userInfo.id;
+  return axios.post(`/devops/v1/${id}/branch?name=${name}&source=${source}&user_id=${user_id}${issue_id ? `&issue_id=${issue_id}` : ''}`);
+}
+export function deleteBranch(id, name) {
+  const user_id = AppState.userInfo.id;
+  return axios.delete(`/devops/v1/${id}/branch/${name}?user_id=${user_id}`);
 }
 export function getTags(id) {
-  return axios.get(`/devops/v1/${id}/tags?user_id=${AppState.userInfo.id}`);
+  return axios.get(`/devops/v1/${id}/tags`);
+}
+// export function getTagsPage(id, { size, page }) {
+//   return axios.get(`/devops/v1/${id}/tags/page?page=${page}&size=${size}`);
+// }
+export function createTag(id, tag, ref, release) {
+  const user_id = AppState.userInfo.id;
+  return axios.post(`/devops/v1/${id}/tags?name=${tag}&ref=${ref}&user_id=${user_id}`, release);
+}
+export function updateTag(id, tag, release) {
+  const user_id = AppState.userInfo.id;
+  return axios.post(`/devops/v1/${id}/tags?name=${tag}&user_id=${user_id}`, release);
+}
+export function deleteTag(id, tag) {
+  const user_id = AppState.userInfo.id;
+  return axios.delete(`/devops/v1/${id}/tags?name=${tag}&user_id=${user_id}`);
+}
+export function getMergeRequests(id) {
+  return axios.get(`/devops/v1/${id}/merge_requests`);
 }

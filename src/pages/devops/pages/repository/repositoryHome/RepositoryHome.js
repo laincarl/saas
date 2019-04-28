@@ -5,7 +5,7 @@ import {
   Content, Header, Page, stores,
 } from 'choerodon-front-boot';
 import {
-  Button, Table, Tooltip,
+  Button, Table, Tooltip, Popconfirm,
 } from 'choerodon-ui';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import _ from 'lodash';
@@ -44,6 +44,7 @@ class RepositoryHome extends Component {
   loadRepositoryList = () => {
     this.setState({
       loading: true,
+      createRepositoryVisible: false,
     });
     getRepositoryList().then((repositoryList) => {
       this.setState({
@@ -140,8 +141,10 @@ class RepositoryHome extends Component {
             </Button>
           </CopyToClipboard>
         </Tooltip>
-        <Tooltip title="删除">          
-          <Button shape="circle" size="small" icon="delete_forever" onClick={this.handleDeleteRepository.bind(this, record)} />          
+        <Tooltip title="删除">
+          <Popconfirm title="确定删除仓库吗？" onConfirm={this.handleDeleteRepository.bind(this, record)}>          
+            <Button shape="circle" size="small" icon="delete_forever" />          
+          </Popconfirm>
         </Tooltip>
       </div>
     );

@@ -12,6 +12,7 @@ import './BranchCreate.scss';
 import '../index.scss';
 import MouserOverWrapper from 'components/MouseOverWrapper';
 import InterceptMask from 'components/interceptMask/InterceptMask';
+import { getIssues } from '@/api/AgileApi';
 import { getBranchs, createBranch, getTags } from '@/api/DevopsApi';
 
 const { AppState } = stores;
@@ -81,15 +82,15 @@ class BranchCreate extends Component {
             <i className={`icon icon-${icon}`} />
           </div>
         </Tooltip>
-        <Tooltip title={s.summary}>
+        <Tooltip title={s.name}>
           <span className="branch-issue-content">
-            <span style={{ color: 'rgb(0,0,0,0.65)' }}>{s.issueNum}</span>
+            <span style={{ color: 'rgb(0,0,0,0.65)' }}>{s.name}</span>
             <MouserOverWrapper
               style={{ display: 'inline-block', verticalAlign: 'sub' }}
               width="350px"
-              text={s.summary}
+              text={s.name}
             >
-              {s.summary}
+              {s.name}
             </MouserOverWrapper>
           </span>
         </Tooltip>
@@ -137,11 +138,11 @@ class BranchCreate extends Component {
     this.props.form.validateFieldsAndScroll((err, data) => {
       if (!err) {
         const postData = data;
-        postData.branchName = type && type !== 'custom'
-          ? `${type}-${data.branchName}`
-          : data.branchName;
+        postData.name = type && type !== 'custom'
+          ? `${type}-${data.name}`
+          : data.name;
         this.setState({ submitting: true });
-        createBranch(currentRepo, postData)
+        createBranch(currentRepo.id, postData)
           .then(() => {
             this.props.onClose();
             this.props.form.resetFields();
@@ -157,7 +158,7 @@ class BranchCreate extends Component {
 
   loadBranchData = () => {
     const { currentRepo } = this.props;
-    getBranchs(currentRepo).then((branches) => {
+    getBranchs(currentRepo.id).then((branches) => {
       this.setState({
         branches,
       });
@@ -166,7 +167,7 @@ class BranchCreate extends Component {
 
   loadTagData = () => {
     const { currentRepo } = this.props;
-    getTags(currentRepo).then((tags) => {
+    getTags(currentRepo.id).then((tags) => {
       this.setState({
         tags,
       });
@@ -234,36 +235,14 @@ class BranchCreate extends Component {
    * @param value
    * @param options
    */
-  changeIssue = (value, options) => {
-    const { key } = options;
-    const {
-      store,
+  changeIssue = (value, options) => { 
+    const {   
       form: { setFieldsValue },
-    } = this.props;
-    const issue = store.issue.slice();
-    const issueDto = _.filter(issue, i => i.issueId === value)[0];
-    let type = '';
-    switch (key) {
-      case 'story':
-        type = 'feature';
-        break;
-      case 'bug':
-        type = 'bugfix';
-        break;
-      case 'issue_epic':
-        type = 'custom';
-        break;
-      case 'sub_task':
-        type = 'feature';
-        break;
-      case 'task':
-        type = 'feature';
-        break;
-      default:
-        type = 'custom';
-    }
+    } = this.props;   
+  
+    const type = 'feature';    
     this.setState({ type });
-    setFieldsValue({ type, branchName: issueDto ? issueDto.issueNum : '' });
+    setFieldsValue({ type });
     this.triggerNameCheck();
   };
 
@@ -275,6 +254,14 @@ class BranchCreate extends Component {
   searchIssue = (input) => {
     this.loadIssue(input);
   };
+
+  loadIssue = () => {
+    getIssues('all').then((res) => {
+      this.setState({
+        issues: res.content,
+      });
+    });
+  }
 
   /**
    * 改变长度
@@ -316,7 +303,9 @@ class BranchCreate extends Component {
       visible,
       intl,
       form: { getFieldDecorator },
-      name,
+      currentRepo: {
+        name,
+      },
     } = this.props;
     const { branches, tags, issues } = this.state;
     return (
@@ -355,7 +344,7 @@ class BranchCreate extends Component {
                   filterOption={false}
                 >
                   {issues.map(s => (
-                    <Option value={s.issueId} key={s.typeCode}>
+                    <Option value={s.id} key={s.id}>
                       {this.getOptionContent(s)}
                     </Option>
                   ))}
@@ -363,7 +352,7 @@ class BranchCreate extends Component {
               )}
             </FormItem>
             <FormItem className="branch-formItem" {...formItemLayout}>
-              {getFieldDecorator('originBranch', {
+              {getFieldDecorator('source', {
                 rules: [
                   {
                     required: true,
@@ -371,7 +360,6 @@ class BranchCreate extends Component {
                     message: intl.formatMessage({ id: 'required' }),
                   },
                 ],
-                initialValue: this.state.originBranch,
               })(
                 <Select
                   key="service"
@@ -387,9 +375,9 @@ class BranchCreate extends Component {
                     key="proGroup"
                   >
                     {branches.map(s => (
-                      <Option value={s.branchName} key={s.branchName}>
+                      <Option value={s.name} key={s.name}>
                         <i className="icon icon-branch c7n-branch-formItem-icon" />
-                        {s.branchName}
+                        {s.name}
                       </Option>
                     ))}
                   </OptGroup>
@@ -398,9 +386,9 @@ class BranchCreate extends Component {
                     key="more"
                   >
                     {tags.map(s => (
-                      <Option value={s.tagName} key={s.tagName}>
+                      <Option value={s.name} key={s.name}>
                         <i className="icon icon-local_offer c7n-branch-formItem-icon" />
-                        {s.tagName}
+                        {s.name}
                       </Option>
                     ))}
                   </OptGroup>
@@ -438,16 +426,16 @@ class BranchCreate extends Component {
               )}
             </FormItem>
             <FormItem className="c7n-formItem_281" {...formItemLayout}>
-              {getFieldDecorator('branchName', {
+              {getFieldDecorator('name', {
                 rules: [
                   {
                     required: true,
                     whitespace: true,
                     message: intl.formatMessage({ id: 'required' }),
                   },
-                  {
-                    validator: this.checkName,
-                  },
+                  // {
+                  //   validator: this.checkName,
+                  // },
                 ],
               })(
                 <Input

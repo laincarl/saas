@@ -61,10 +61,12 @@ const IssueTable = ({
       width: 135,
       key: 'handler',
       render: (handler, record) => (
-        <Assignee
-          text={handler.name}
-          id={record.handlerId}          
-        />
+        handler ? (
+          <Assignee
+            text={handler.name}
+            id={record.handlerId}
+          />
+        ) : ''
       ),
     },
     {

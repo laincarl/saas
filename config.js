@@ -25,7 +25,7 @@ module.exports = {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'SAAS',
+        title: 'MinuteF',
         inject: true,
         minify: {
           html5: true,

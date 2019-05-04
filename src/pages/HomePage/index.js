@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Page from 'components/Page';
 import { Icon } from 'choerodon-ui';
+import { observer } from 'mobx-react';
+
 import UserInfoStore from '@/stores/UserInfoStore';
 import './index.scss';
 
 const { Header, Content } = Page;
+@observer
 class HomePage extends Component {
   render() {
     const { mobile, name, email } = UserInfoStore.getUserInfo;

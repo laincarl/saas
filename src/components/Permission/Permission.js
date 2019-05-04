@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
 @inject('AppState')
+@observer
 class Permission extends Component {
-  render() {
-    const permissions = [1, 2, 3];
-    const { AppState, children } = this.props;
+  render() { 
+    const {
+      AppState, children, noAccessChildren, type, 
+    } = this.props;
+    const permissions = type || [1, 2, 3];
     const hasPermission = permissions.includes(AppState.userInfo.type);
-    return hasPermission ? children : null;
+    return hasPermission ? children : noAccessChildren;
   }
 }
 

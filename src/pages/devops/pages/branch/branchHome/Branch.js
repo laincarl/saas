@@ -15,6 +15,7 @@ import '../index.scss';
 import MouserOverWrapper from 'components/MouseOverWrapper';
 
 import DepPipelineEmpty from 'components/DepPipelineEmpty/DepPipelineEmpty';
+import moment from 'moment';
 import BranchEdit from '../branchEdit';
 import BranchCreate from '../branchCreate';
 import { getRepositoryList, getBranchs, deleteBranch } from '@/api/DevopsApi.js';
@@ -108,70 +109,51 @@ class Branch extends Component {
           </div>
         ),
       },
+      // {
+      //   title: <FormattedMessage id="branch.commit" />,
+      //   render: (text, record) => (
+      //     <div>
+      //       <div>
+      //         <i className="icon icon-point branch-column-icon" />
+      //         <a href={record.commitUrl} target="_blank" rel="nofollow me noopener noreferrer">
+      //           <span>{record.sha && record.sha.slice(0, 8)}</span>
+      //         </a>
+      //         <i className="icon icon-schedule branch-col-icon branch-column-icon" style={{ paddingLeft: 16, fontSize: 16, marginBottom: 2 }} />
+      //         <TimePopover content={record.commitDate} style={{ display: 'inline-block', color: 'rgba(0, 0, 0, 0.65)' }} />
+      //       </div>
+      //       {record.commitUserUrl && record.commitUserName ? (
+      //         <Tooltip title={record.commitUserName}>
+      //           <div className="branch-user-img" style={{ backgroundImage: `url(${record.commitUserUrl})` }} />
+      //         </Tooltip>
+      //       ) : <Tooltip title={record.commitUserName}><div className="branch-user-img">{record.commitUserName && record.commitUserName.slice(0, 1)}</div></Tooltip>}
+      //       <MouserOverWrapper text={record.commitContent} width={0.2} className="branch-col-icon">
+      //         {record.commitContent}
+      //       </MouserOverWrapper>
+      //     </div>
+      //   ),
+      // },
+      // {
+      //   title: <FormattedMessage id="branch.issue" />,
+      //   dataIndex: 'commit.message',
+      //   render: (text, record) => (
+      //     <div>
+      //       {record.typeCode ? this.getOptionContent(record) : null}
+      //       <a onClick={this.showIssue.bind(this, record.issueId, record.branchName)} role="none"><Tooltip title={record.issueName}>{record.issueCode}</Tooltip></a>
+      //     </div>
+      //   ),
+      // },
       {
-        title: <FormattedMessage id="branch.commit" />,
-        render: (text, record) => (
-          <div>
-            <div>
-              <i className="icon icon-point branch-column-icon" />
-              <a href={record.commitUrl} target="_blank" rel="nofollow me noopener noreferrer">
-                <span>{record.sha && record.sha.slice(0, 8)}</span>
-              </a>
-              <i className="icon icon-schedule branch-col-icon branch-column-icon" style={{ paddingLeft: 16, fontSize: 16, marginBottom: 2 }} />
-              <TimePopover content={record.commitDate} style={{ display: 'inline-block', color: 'rgba(0, 0, 0, 0.65)' }} />
-            </div>
-            {record.commitUserUrl && record.commitUserName ? (
-              <Tooltip title={record.commitUserName}>
-                <div className="branch-user-img" style={{ backgroundImage: `url(${record.commitUserUrl})` }} />
-              </Tooltip>
-            ) : <Tooltip title={record.commitUserName}><div className="branch-user-img">{record.commitUserName && record.commitUserName.slice(0, 1)}</div></Tooltip>}
-            <MouserOverWrapper text={record.commitContent} width={0.2} className="branch-col-icon">
-              {record.commitContent}
-            </MouserOverWrapper>
-          </div>
+        title: '创建时间',
+        dataIndex: 'creationDate',
+        render: creationDate => (
+          moment(creationDate).format('YYYY-MM-DD hh:mm:ss')
         ),
       },
       {
-        title: <FormattedMessage id="branch.issue" />,
-        dataIndex: 'commit.message',
-        render: (text, record) => (
-          <div>
-            {record.typeCode ? this.getOptionContent(record) : null}
-            <a onClick={this.showIssue.bind(this, record.issueId, record.branchName)} role="none"><Tooltip title={record.issueName}>{record.issueCode}</Tooltip></a>
-          </div>
-        ),
-      },
-      {
-        title: <FormattedMessage id="branch.time" />,
-        dataIndex: 'commit.committedDate',
-        render: (text, record) => (
-          <div>
-            {record.createUserName && record.createUserUrl
-              ? (
-                <React.Fragment>
-                  <div className="branch-user-img" style={{ backgroundImage: `url(${record.createUserUrl})` }} />
-                  <div style={{ display: 'inline-block' }}>
-                    <span style={{ paddingRight: 5 }}>{record.createUserName}</span>
-                    {record.createUserName !== record.createUserRealName
-                      && <span>{record.createUserRealName}</span>}
-                  </div>
-                </React.Fragment>
-              )
-              : (
-                <React.Fragment>
-                  {record.createUserName ? (
-                    <div>
-                      <div className="branch-user-img">{record.createUserRealName && record.createUserRealName.slice(0, 1).toUpperCase()}</div>
-                      <div style={{ display: 'inline-block' }}>
-                        <span style={{ paddingRight: 5 }}>{record.createUserName}</span>
-                        {record.createUserName !== record.createUserRealName
-                          && <span>{record.createUserRealName}</span>}
-                      </div>
-                    </div>
-                  ) : null}
-                </React.Fragment>
-              )}
-          </div>
+        title: '更新时间',
+        dataIndex: 'lastUpdateDate',
+        render: lastUpdateDate => (
+          moment(lastUpdateDate).format('YYYY-MM-DD hh:mm:ss')
         ),
       },
       {
@@ -183,15 +165,15 @@ class Branch extends Component {
             {record.name !== 'master'
               ? (
                 <React.Fragment>
-                  <Tooltip
+                  {/* <Tooltip
                     placement="bottom"
                     title={<FormattedMessage id="branch.edit" />}
                   >
                     <Button size="small" shape="circle" onClick={this.handleEdit.bind(this, record.name)}>
                       <i className="icon icon-mode_edit" />
                     </Button>
-                  </Tooltip>
-                  <Tooltip
+                  </Tooltip> */}
+                  {/* <Tooltip
                     placement="bottom"
                     title={<FormattedMessage id="branch.request" />}
                   >
@@ -200,7 +182,7 @@ class Branch extends Component {
                         <i className="icon icon-merge_request" />
                       </Button>
                     </a>
-                  </Tooltip>
+                  </Tooltip> */}
                   <Tooltip
                     placement="bottom"
                     title={<FormattedMessage id="delete" />}
@@ -337,8 +319,8 @@ class Branch extends Component {
   /**
    * 删除数据
    */
-  handleDelete = () => {  
-    const { name, currentRepo } = this.state;  
+  handleDelete = () => {
+    const { name, currentRepo } = this.state;
     this.setState({ submitting: true });
     deleteBranch(currentRepo.id, name).then((data) => {
       this.setState({ submitting: false });
@@ -356,7 +338,7 @@ class Branch extends Component {
     });
   }
 
-  render() {    
+  render() {
     const { BranchStore, intl: { formatMessage }, history: { location: { state } } } = this.props;
     const {
       name, submitting, visible, repositoryList, currentRepo, createBranchVisible,
@@ -410,8 +392,8 @@ class Branch extends Component {
               {this.tableBranch()}
             </Content>
 
-            <BranchCreate            
-              currentRepo={currentRepo}              
+            <BranchCreate
+              currentRepo={currentRepo}
               visible={createBranchVisible}
               onClose={this.hideSidebar}
             />
@@ -423,8 +405,8 @@ class Branch extends Component {
                 visible={BranchStore.createBranchShow === 'edit'}
                 onClose={this.hideSidebar}
               />
-            )} */}        
-     
+            )} */}
+
             <Modal
               confirmLoading={submitting}
               visible={visible}

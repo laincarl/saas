@@ -167,10 +167,6 @@ const data = {
       id: 923, code: 'choerodon.code.usercenter.permission-info', name: '权限信息', level: 'user', parentId: 2, type: 'menu', sort: 3, icon: 'project', route: '/iam/permission-info', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }, {
       id: 672, code: 'choerodon.code.usercenter.token-manager', name: '授权管理', level: 'user', parentId: 2, type: 'menu', sort: 4, icon: 'authority', route: '/iam/token-manager', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
-    }, {
-      id: 396, code: 'choerodon.code.usercenter.user-msg', name: '消息通知', level: 'user', parentId: 2, type: 'menu', sort: 6, icon: 'message_notification', route: '/iam/user-msg', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
-    }, {
-      id: 496, code: 'choerodon.code.usercenter.receive-setting', name: '接收设置', level: 'user', parentId: 2, type: 'menu', sort: 7, icon: 'settings', route: '/iam/receive-setting', category: null, objectVersionNumber: 1, permissions: [], zhName: null, enName: null, subMenus: null, default: true,
     }],
     default: true,
   }],

@@ -1,5 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { axios } from 'choerodon-front-boot';
+import { updateUser, checkEmail, updatePassword } from '@/api/IamApi';
 
 class UserInfoStore {
   @observable userInfo = {};
@@ -27,13 +28,11 @@ class UserInfoStore {
     return this.avatar;
   }
 
-  updateUserInfo = user => axios.put(`/iam/v1/users/${user.id}/info`, JSON.stringify(user));
+  updateUserInfo = updateUser;
 
-  updatePassword = (id, body) => axios.put(`/iam/v1/users/${id}/password`, JSON.stringify(body));
+  updatePassword = updatePassword;
 
-  checkEmailAddress = email => (
-    axios.post('/iam/v1/users/check', JSON.stringify({ id: this.userInfo.id, email }))
-  );
+  checkEmailAddress = checkEmail;
 }
 
 export default new UserInfoStore();

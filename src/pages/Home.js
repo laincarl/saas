@@ -9,6 +9,7 @@ import Header from 'components/Header';
 import Menu from 'components/menu';
 import Agile from 'pages/Agile';
 import TestManager from 'pages/TestManager';
+import HomePage from 'pages/HomePage';
 import Iam from 'pages/Iam';
 import Devops from 'pages/devops';
 import { getSelf } from 'api/IamApi';
@@ -17,8 +18,9 @@ import nomatch from 'nomatch';
 import './Home.scss';
 import '@/mock/DevopsMock';
 import '@/mock/IamMock';
-import { from } from 'rxjs';
+
 import { authorize } from '../common';
+import UserInfoStore from '../stores/UserInfoStore';
 
 function parseQueryToMenuType(search) {
   const menuType = {
@@ -53,6 +55,7 @@ class Home extends Component {
     const { AppState } = this.props;
     getSelf().then((res) => {
       AppState.setUserInfo(res);
+      UserInfoStore.setUserInfo(res);
     }).catch((err) => {
       AppState.setUserInfo({});
       authorize();
@@ -119,10 +122,13 @@ class Home extends Component {
         <div style={{ display: 'flex', flex: 1, position: 'relative' }}>
           <Menu />
           <Switch>
+            <Route exact path="/" component={HomePage} />
             <Route path="/agile" component={Agile} />
             <Route path="/iam" component={Iam} />
             <Route path="/devops" component={Devops} />            
             <Route path="/testManager" component={TestManager} />
+            
+            
             <Route path="*" component={nomatch} />
             {/* <Redirect from={`${match.url}`} to={`${match.url}/main`} />   */}
             {/* 其他重定向到 404 */}

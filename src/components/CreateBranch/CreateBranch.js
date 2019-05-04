@@ -4,6 +4,13 @@ import {
   Modal, Form, Input, Select, Icon,
 } from 'choerodon-ui';
 import { stores, Content, axios } from 'choerodon-front-boot';
+import {
+  getRepositoryList, getBranchs, createBranch, getTags, 
+} from '@/api/DevopsApi';
+import {
+  updateStatus, updateIssue,
+  deleteIssue, loadStatus, cloneIssue,
+} from '@/api/agileApi';
 import './CreateBranch.scss';
 import './commom.scss';
 
@@ -43,26 +50,21 @@ class CreateBranch extends Component {
 
   handleOk = (e) => {
     e.preventDefault();
-    const { form, issueId, onOk } = this.props;
+    const { form, issue, onOk } = this.props;
     form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        const devopsBranchDTO = {
-          branchName: values.type === 'custom' ? values.name : `${values.type}-${values.name}`,
-          issueId,
-          originBranch: values.branch,
-        };
-        const applicationId = values.app;
-        const projectId = AppState.currentMenuType.id;
+      if (!err) {        
         this.setState({
           confirmLoading: true,
         });
-        axios.post(`/devops/v1/projects/${projectId}/apps/${applicationId}/git/branch`, devopsBranchDTO)
-          .then((res) => {
-            this.setState({
-              confirmLoading: false,
-            });
-            onOk();
-          })
+        updateIssue({
+          ...issue,
+          branchId: values.branch,
+        }).then((res) => {
+          this.setState({
+            confirmLoading: false,
+          });
+          onOk();
+        })
           .catch((error) => {
             this.setState({
               confirmLoading: false,
@@ -88,20 +90,19 @@ class CreateBranch extends Component {
 
   onApplicationNameChange = () => {
     // this.setState({ selectLoading: true });
-    axios.get(`/devops/v1/projects/${AppState.currentMenuType.id}/apps`)
-      .then((res) => {
-        this.setState({
-          originApps: res,
-          selectLoading: false,
-          branchLoading: true,
-        });
+    getRepositoryList().then((res) => {
+      this.setState({
+        originApps: res,
+        selectLoading: false,
+        branchLoading: true,
       });
+    });
   };
 
   render() {
     const {
       visible, store, form, form: { getFieldDecorator },
-      onCancel, issueNum, typeCode,
+      onCancel, issue: { name }, 
     } = this.props;
     const {
       confirmLoading, selectLoading, branchLoading,
@@ -111,11 +112,11 @@ class CreateBranch extends Component {
     return (
       <Sidebar
         className="c7n-createBranch"
-        title="创建分支"
+        title="关联分支"
         visible={visible}
         onOk={this.handleOk}
         onCancel={onCancel}
-        okText="创建"
+        okText="关联"
         cancelText="取消"
         confirmLoading={confirmLoading}
       >
@@ -124,8 +125,8 @@ class CreateBranch extends Component {
             padding: 0,
             width: 512,
           }}
-          title={`对问题“${issueNum}”创建分支`}
-          description="您可以在此选择应用、分支来源，可以修改默认的分支类型及分支名称，即可为该问题创建关联的分支。"
+          title={`对问题“${name}”关联分支`}
+          description="您可以在此选择仓库、分支来源，即可为该问题创建关联的分支。"
           link="http://v0-10.choerodon.io/zh/docs/user-guide/agile/issue/manage-branch/"
         >
           <Form layout="vertical" className="c7n-sidebar-form">
@@ -134,10 +135,10 @@ class CreateBranch extends Component {
             </div>
             <FormItem className="branch-formItem">
               {getFieldDecorator('app', {
-                rules: [{ required: true, message: '请选择应用' }],
+                rules: [{ required: true, message: '请选择仓库' }],
               })(
                 <Select
-                  label="应用名称"
+                  label="仓库名称"
                   allowClear
                   onFocus={this.onApplicationNameChange}
                   filter
@@ -159,137 +160,52 @@ class CreateBranch extends Component {
             </div>
             <FormItem className="branch-formItem">
               {getFieldDecorator('branch', {
-                rules: [{ required: true, message: '请选择分支来源' }],
+                rules: [{ required: true, message: '请选择分支' }],
               })(
                 <Select
                   label="分支来源"
                   allowClear
                   disabled={!form.getFieldValue('app')}
                   filter
-                  filterOption={false}
-                  optionLabelProp="value"
+                  filterOption={false}            
                   loading={branchLoading}
                   onFilterChange={(input) => {
                     this.setState({
                       branchsInput: input,
+                    });                    
+                    getBranchs(form.getFieldValue('app')).then((res) => {
+                      this.setState({
+                        branchs: res,                     
+                        branchLoading: false,
+                      });
                     });
-                    axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/branches?page=0&size=5`, {
-                      searchParam: {
-                        branchName: [input],
-                      },
-                      param: '',
-                    })
-                      .then((res) => {
-                        this.setState({
-                          branchs: res.content,
-                          branchsSize: res.numberOfElements,
-                          // branchsShowMore: res.totalPages !== 1,
-                          branchsObj: res,
-                          branchLoading: false,
-                        });
+                    getTags(form.getFieldValue('app')).then((res) => {
+                      this.setState({
+                        tags: res,
                       });
-                    axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/tags_list_options?page=0&size=5`, {
-                      searchParam: {
-                        tagName: [input],
-                      },
-                      param: '',
-                    })
-                      .then((res) => {
-                        this.setState({
-                          tags: res.content,
-                          tagsSize: res.numberOfElements,
-                          // tagsShowMore: res.totalPages !== 1,
-                          tagsObj: res,
-                        });
-                      });
+                    });
                   }}
                 >
                   <OptGroup label="分支" key="branchGroup">
                     {branchs.map(s => (
-                      <Option value={s.branchName} key={s.branchName}>
+                      <Option value={s.id}>
                         <Icon type="branch" />
-                        {s.branchName}
+                        {s.name}
                       </Option>
                     ))}
-                    {
-                      branchsObj.totalElements > branchsObj.numberOfElements
-                      && branchsObj.numberOfElements > 0 ? (
-                        <Option key="more">
-                          <div
-                            role="none"
-                            style={{
-                              margin: '-4px -20px',
-                              padding: '4px 20px',
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/branches?page=0&size=${branchsSize + 5}`, {
-                                searchParam: {
-                                  branchName: [branchsInput],
-                                },
-                                param: null,
-                              })
-                                .then((res) => {
-                                  this.setState({
-                                    branchs: res.content,
-                                    branchsSize: res.numberOfElements,
-                                    // branchsShowMore: res.totalPages !== 1,
-                                    branchsObj: res,
-                                  });
-                                });
-                            }}
-                          >
-                            查看更多
-                          </div>
-                        </Option>
-                        ) : null
-                    }
                   </OptGroup>
                   <OptGroup label="tag" key="tagGroup">
                     {tags.map(s => (
-                      <Option value={s.tagName} key={s.tagName}>
+                      <Option value={s.id}>
                         <Icon type="local_offer" />
-                        {s.tagName}
+                        {s.name}
                       </Option>
                     ))}
-                    {
-                      tagsObj.totalElements > branchsObj.numberOfElements
-                      && branchsObj.numberOfElements > 0 ? (
-                        <Option key="more">
-                          <div
-                            role="none"
-                            style={{
-                              margin: '-4px -20px',
-                              padding: '4px 20px',
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              axios.post(`/devops/v1/projects/${1}/apps/${form.getFieldValue('app')}/git/tags_list_options?page=0&size=${tagsSize + 5}`, {
-                                searchParam: {
-                                  tagName: [branchsInput],
-                                },
-                                param: null,
-                              })
-                                .then((res) => {
-                                  this.setState({
-                                    tags: res.content,
-                                    tagsSize: res.numberOfElements,
-                                    // tagsShowMore: res.totalPages !== 1,
-                                    tagsObj: res,
-                                  });
-                                });
-                            }}
-                          >
-                            查看更多
-                          </div>
-                        </Option>
-                        ) : null
-                    }
                   </OptGroup>
                 </Select>,
               )}
             </FormItem>
-
+            {/* 
             <div className="branch-formItem-icon">
               <span className="icon icon-branch" />
             </div>
@@ -329,7 +245,7 @@ class CreateBranch extends Component {
                   maxLength={30}
                 />,
               )}
-            </FormItem>
+            </FormItem> */}
           </Form>
         </Content>
       </Sidebar>

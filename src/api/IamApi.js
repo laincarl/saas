@@ -13,16 +13,19 @@ export function getSelf() {
   return axios.get('/oauth/v1/user/detail');
 }
 
-/**
- *获取指定用户
- *
- * @export
- * @param {*} userId
- * @returns
- */
-export function getUser(userId) {
-  return axios.get(`iam/v1/projects/${1}/users?id=${userId}`);
+export function updateUser(data) {
+  return axios.put('/oauth/v1/update', data);
 }
+export function checkEmail(email) {
+  return axios.get(`/oauth/v1/check/email?email=${email}`);
+}
+export function updatePassword(user_id, password) {
+  return axios.put(`/oauth/v1/update/password/${user_id}?password=${password}`);
+}
+export function createUser(data) {
+  return axios.post('/oauth/v1/register', data);
+}
+
 /**
  *获取用户列表
  *
@@ -30,9 +33,9 @@ export function getUser(userId) {
  * @param {*} param
  * @returns
  */
-export function getUsers(param) {
-  if (param) {
-    return axios.get(`/oauth/v1/list/all?size=40&page=0&param=${param}`);
-  }
-  return axios.get('/oauth/v1/list/all?size=40&page=0');
+export function getUsers({
+  size = 40,
+  page = 0,
+} = {}) {
+  return axios.get(`/oauth/v1/list/all?size=${size}&page=${page}`);
 }

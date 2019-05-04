@@ -78,8 +78,8 @@ class RepositoryHome extends Component {
   handleCopy = () => Choerodon.prompt('复制成功');
 
   /**
-   * 点击跳转到应用提交情况报表
-   * @param appId 应用id
+   * 点击跳转到仓库提交情况报表
+   * @param appId 仓库id
    */
   linkToReports = (appId) => {
     const { history } = this.props;

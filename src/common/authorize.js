@@ -7,11 +7,11 @@ export function authorize() {
   if (window.location.href.indexOf('#/login') !== -1) {
     return;
   }
-  if (window.location.href.indexOf('?') === -1) {
-    window.location = `${AUTH_URL}?redirect_uri=${uri}`;
-  } else {
-    window.location = `${AUTH_URL}&redirect_uri=${uri}`;
-  }
+  // if (window.location.href.indexOf('?') === -1) {
+  window.location = `${AUTH_URL}?redirect_uri=${uri}`;
+  // } else {
+  //   window.location = `${AUTH_URL}&redirect_uri=${uri}`;
+  // }
 }
 
 /**

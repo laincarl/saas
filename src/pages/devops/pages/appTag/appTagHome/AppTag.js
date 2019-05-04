@@ -53,7 +53,7 @@ class AppTag extends Component {
   }
 
   /**
-   * 通过下拉选择器选择应用时，获取应用id
+   * 通过下拉选择器选择仓库时，获取仓库id
    * @param id
    * @param option
    */
@@ -74,7 +74,7 @@ class AppTag extends Component {
   };
 
   /**
-   * 加载应用信息
+   * 加载仓库信息
    */
   loadInitData = () => {
     DevPipelineStore.queryAppData(AppState.currentMenuType.id, 'tag');

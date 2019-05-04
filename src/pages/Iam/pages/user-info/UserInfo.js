@@ -45,8 +45,8 @@ export default class UserInfo extends Component {
   checkEmailAddress = (rule, value, callback) => {
     const { edit, intl } = this.props;
     if (!edit || value !== this.state.userInfo.email) {
-      UserInfoStore.checkEmailAddress(value).then(({ failed }) => {
-        if (failed) {
+      UserInfoStore.checkEmailAddress(value).then((success) => {
+        if (!success) {
           callback(intl.formatMessage({ id: `${intlPrefix}.email.used.msg` }));
         } else {
           callback();
@@ -72,10 +72,10 @@ export default class UserInfo extends Component {
     const user = {
       ...originUser,
       ...value,
-      imageUrl: UserInfoStore.getAvatar,
+      // imageUrl: UserInfoStore.getAvatar,
     };
-    user.internationalTelCode = user.internationalTelCode ? `+${value.internationalTelCode}` : '';
-    user.phone = user.phone || '';
+    // user.internationalTelCode = user.internationalTelCode ? `+${value.internationalTelCode}` : '';
+    // user.phone = user.phone || '';
     this.submitForm(user);
   }
 
@@ -140,19 +140,19 @@ export default class UserInfo extends Component {
       <div className="user-info-avatar-wrap">
         <div
           className="user-info-avatar"
-          // style={
-          //   avatar && {
-          //     backgroundImage: `url(${avatar})`,
-          //   }
-          // }
+        // style={
+        //   avatar && {
+        //     backgroundImage: `url(${avatar})`,
+        //   }
+        // }
         >
-          {!avatar && realName && realName.charAt(0)}         
-            <Button className="user-info-avatar-button" onClick={this.openAvatorUploader}>
-              <div className="user-info-avatar-button-icon">
-                <Icon type="photo_camera" />
-              </div>
-            </Button>
-            <AvatarUploader id={id} visible={visible} onVisibleChange={this.handleVisibleChange} />
+          {!avatar && realName && realName.charAt(0)}
+          <Button className="user-info-avatar-button" onClick={this.openAvatorUploader}>
+            <div className="user-info-avatar-button-icon">
+              <Icon type="photo_camera" />
+            </div>
+          </Button>
+          <AvatarUploader id={id} visible={visible} onVisibleChange={this.handleVisibleChange} />
         </div>
       </div>
     );
@@ -160,7 +160,7 @@ export default class UserInfo extends Component {
 
   renderForm(user) {
     const { intl } = this.props;
-    const { loginName, realName, email, language, timeZone, phone, ldap, organizationName, organizationCode, internationalTelCode } = user;
+    const { loginName, name, email, language, timeZone, mobile, ldap, organizationName, organizationCode, internationalTelCode } = user;
     return (
       <Form layout="vertical" className="user-info">
         <div className="user-info-top-container">
@@ -169,15 +169,15 @@ export default class UserInfo extends Component {
           </div>
           <div className="user-info-login-info">
             <div>{loginName}</div>
-            <div>{intl.formatMessage({ id: `${intlPrefix}.source` })}:{ldap ? intl.formatMessage({ id: `${intlPrefix}.ldap` }) : intl.formatMessage({ id: `${intlPrefix}.notldap` })}</div>
+            {/* <div>{intl.formatMessage({ id: `${intlPrefix}.source` })}:{ldap ? intl.formatMessage({ id: `${intlPrefix}.ldap` }) : intl.formatMessage({ id: `${intlPrefix}.notldap` })}</div> */}
             <div>
               <span>{intl.formatMessage({ id: `${intlPrefix}.name` })}：</span>
               <TextEditToggle
                 formKey="realName"
                 formStyle={{ width: '80px' }}
-                originData={realName}
+                originData={name}
                 className="user-info-info-container-account-content-realName"
-                onSubmit={value => this.handleSubmit('realName', value)}
+                onSubmit={value => this.handleSubmit('name', value)}
                 validate={{
                   validateFirst: true,
                 }}
@@ -190,7 +190,7 @@ export default class UserInfo extends Component {
                 ]}
               >
                 <Text style={{ fontSize: '13px' }}>
-                  <span>{realName}</span>
+                  <span>{name}</span>
                 </Text>
                 <Edit>
                   <Input autoComplete="off" />
@@ -244,116 +244,10 @@ export default class UserInfo extends Component {
                 <Icon type="phone_iphone" className="form-icon" />
                 <span className="user-info-info-container-account-title">{intl.formatMessage({ id: `${intlPrefix}.phone` })}:</span>
                 <PhoneWrapper
-                  initialPhone={phone}
+                  initialPhone={mobile}
                   initialCode={internationalTelCode}
-                  onSubmit={value => this.handleSubmitPhone(value)}
+                  onSubmit={value => this.handleSubmit('mobile', value.mobile)}
                 />
-                {/* <span style={{ marginLeft: '30px', marginRight: '15px', verticalAlign: 'middle' }}>+</span> */}
-                {/* <TextEditToggle */}
-                {/* formKey="internationalTelCode" */}
-                {/* style={{ maxWidth: '120px' }} */}
-                {/* originData={internationalTelCode ? internationalTelCode.split('+')[1] : undefined} */}
-                {/* className="user-info-info-container-account-content-phonezone" */}
-                {/* onSubmit={value => this.handleSubmit('internationalTelCode', value)} */}
-                {/* validate={{ */}
-                {/* validateFirst: true, */}
-                {/* }} */}
-                {/* rules={ */}
-                {/* [{ */}
-                {/* pattern: /^[0-9]*$/, */}
-                {/* whitespace: true, */}
-                {/* message: '只能输入数字', */}
-                {/* }, { */}
-                {/* max: 3, */}
-                {/* message: '不合法的国际区号', */}
-                {/* }, { */}
-                {/* validator: this.checkPhoneZone, */}
-                {/* }, */}
-                {/* ]} */}
-                {/* > */}
-                {/* <Text style={{ minLength: '150px' }}> */}
-                {/* <span>{internationalTelCode ? internationalTelCode.split('+')[1] : undefined}</span> */}
-                {/* </Text> */}
-                {/* <Edit> */}
-                {/* <Input onChange={this.changePhoneZone} autoComplete="off" /> */}
-                {/* </Edit> */}
-                {/* </TextEditToggle> */}
-                {/* <span style={{ verticalAlign: 'middle' }}>-</span> */}
-                {/* <TextEditToggle */}
-                {/* formKey="phone" */}
-                {/* originData={phone} */}
-                {/* className="user-info-info-container-account-content-phone" */}
-                {/* onSubmit={value => this.handleSubmit('phone', value)} */}
-                {/* rules={ */}
-                {/* [{ */}
-                {/* validator: this.checkPhone, */}
-                {/* }, */}
-                {/* ]} */}
-                {/* > */}
-                {/* <Text style={{ minLength: '150px' }}> */}
-                {/* <span>{phone}</span> */}
-                {/* </Text> */}
-                {/* <Edit> */}
-                {/* <Input onChange={this.changePhone} autoComplete="off" /> */}
-                {/* </Edit> */}
-                {/* </TextEditToggle> */}
-              </div>
-              <div>
-                <Icon type="language" className="form-icon" />
-                <span className="user-info-info-container-account-title">{intl.formatMessage({ id: `${intlPrefix}.language` })}:</span>
-                <TextEditToggle
-                  formKey="language"
-                  originData={language}
-                  className="user-info-info-container-account-content user-info-info-container-account-content-short"
-                  formStyle={{ width: '80px' }}
-                >
-                  <Text>
-                    <span>{'简体中文'}</span>
-                  </Text>
-                  <Edit>
-                    <Select
-                      getPopupContainer={() => document.getElementsByClassName('page-content')[0]}
-                    >
-                      {this.getLanguageOptions()}
-                    </Select>,
-                  </Edit>
-                </TextEditToggle>
-              </div>
-              <div>
-                <Icon type="location_city" className="form-icon" />
-                <span className="user-info-info-container-account-title">{intl.formatMessage({ id: `${intlPrefix}.timezone` })}:</span>
-                <TextEditToggle
-                  formKey="timeZone"
-                  originData={timeZone || 'CTT'}
-                  className="user-info-info-container-account-content user-info-info-container-account-content-short"
-                  formStyle={{ width: '80px' }}
-                >
-                  <Text>
-                    <span>{'中国'}</span>
-                  </Text>
-                  <Edit>
-                    <Select
-                      getPopupContainer={() => document.getElementsByClassName('page-content')[0]}
-                    >
-                      {this.getTimeZoneOptions()}
-                    </Select>,
-                  </Edit>
-                </TextEditToggle>
-              </div>
-            </div>
-          </div>
-          <div className="user-info-info-container-account">
-            <div>{intl.formatMessage({ id: `${intlPrefix}.orginfo` })}</div>
-            <div>
-              <div>
-                <Icon type="domain" className="form-icon" />
-                <span className="user-info-info-container-account-title">{intl.formatMessage({ id: `${intlPrefix}.org.name` })}:</span>
-                <span className="user-info-info-container-account-content">{organizationName}</span>
-              </div>
-              <div>
-                <Icon type="copyright" className="form-icon" />
-                <span className="user-info-info-container-account-title">{intl.formatMessage({ id: `${intlPrefix}.org.code` })}:</span>
-                <span className="user-info-info-container-account-content">{organizationCode}</span>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import Permission from 'components/Permission';
 import { message } from 'choerodon-ui';
 import AppState from 'stores/AppState';
 import nomatch from 'nomatch';
+import NoPermission from 'components/error-pages/403';
 // 提示错误信息
 function prompt(content, type = 'info', duration, placement = 'leftBottom', onClose) {
   const messageType = ['success', 'error', 'info', 'warning', 'warn', 'loading'];
@@ -51,7 +52,7 @@ const stores = {
   AppState,
 };
 export {
-  stores, nomatch, Page, Content, Header, Permission,
+  stores, nomatch, Page, Content, Header, Permission, NoPermission,
 };
 // export { default as LoadingBar } from './loading-bar';
 

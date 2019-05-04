@@ -79,14 +79,14 @@ export default class PhoneWrapper extends Component {
     if (value) {
       if (pattern.test(value)) {
         if (value === '86') {
-          validateFields(['phone'], { force: true });
+          validateFields(['mobile'], { force: true });
         }
         callback();
       } else {
         callback('请输入数字');
       }
     } else {
-      validateFields(['phone'], { force: true });
+      validateFields(['mobile'], { force: true });
       callback();
     }
   }
@@ -124,7 +124,7 @@ export default class PhoneWrapper extends Component {
     const { getFieldDecorator } = form;
     return editing ? (
       <Form layout="inline" className="c7n-iam-userinfo-phone-wrapper-edit">
-        <FormItem
+        {/* <FormItem
           style={{ marginRight: '4px' }}
         >
           {getFieldDecorator('internationalTelCode', {
@@ -143,9 +143,9 @@ export default class PhoneWrapper extends Component {
               showLengthInfo={false}
             />,
           )}
-        </FormItem>
+        </FormItem> */}
         <FormItem>
-          {getFieldDecorator('phone', {
+          {getFieldDecorator('mobile', {
             rules: [{
               validator: this.checkPhone,
             }],

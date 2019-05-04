@@ -70,5 +70,10 @@ export const TYPE_NAME = {
   issue_epic: '史诗',
   sub_task: '子任务',
 };
-
+export const USER_TYPE = {
+  0: '开发人员',
+  1: '管理员',
+  2: '平台所有者',
+  3: '经理',
+};
 export const SERVICES_URL = 'SERVICES_URL_EXAMPLE';

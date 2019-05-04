@@ -328,7 +328,7 @@ class BranchCreate extends Component {
             onSubmit={this.handleOk}
             className="c7n-sidebar-form"
           >
-            <FormItem className="branch-formItem" {...formItemLayout}>
+            {/* <FormItem className="branch-formItem" {...formItemLayout}>
               {getFieldDecorator('issueId')(
                 <Select
                   dropdownClassName="createBranch-dropdown"
@@ -350,7 +350,7 @@ class BranchCreate extends Component {
                   ))}
                 </Select>,
               )}
-            </FormItem>
+            </FormItem> */}
             <FormItem className="branch-formItem" {...formItemLayout}>
               {getFieldDecorator('source', {
                 rules: [

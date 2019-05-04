@@ -73,15 +73,12 @@ export default class Password extends Component {
   handleSubmit = (e) => {
     const { getFieldValue } = this.props.form;
     const user = UserInfoStore.getUserInfo;
-    const body = {
-      originalPassword: getFieldValue('oldpassword'),
-      password: getFieldValue('confirm'),
-    };
+    
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({ submitting: true });
-        UserInfoStore.updatePassword(user.id, body)
+        UserInfoStore.updatePassword(user.id,getFieldValue('confirm'))
           .then(({ failed, message }) => {
             this.setState({ submitting: false });
             if (failed) {

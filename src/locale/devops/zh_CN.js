@@ -20,7 +20,7 @@ const pageDetail = {
   // 环境
   "env.title": '项目"{name}"的环境流水线',
   "env.description":
-    "环境是指一个应用可以被部署的地方。常见环境有开发测试环境，预生产环境，生产环境等。平台自动为您的项目生成一条环境流水线，您可在下方拖拽需要调整顺序的环境至目标位置。",
+    "环境是指一个仓库可以被部署的地方。常见环境有开发测试环境，预生产环境，生产环境等。平台自动为您的项目生成一条环境流水线，您可在下方拖拽需要调整顺序的环境至目标位置。",
   "env.link": `${docServer}/user-guide/deployment-pipeline/environment-pipeline/`,
   "env.create.title": '在项目"{name}"中创建环境',
   "env.create.description":
@@ -47,7 +47,7 @@ const pageDetail = {
   // domain
   "domain.title": '项目"{name}"的域名',
   "domain.description":
-    "域名是用户通过浏览器可以从外部访问系统内部应用程序的地址。您可在此配置已经预定义好的域名，使外部能够通过指定的域名访问到系统内部的实例。",
+    "域名是用户通过浏览器可以从外部访问系统内部仓库程序的地址。您可在此配置已经预定义好的域名，使外部能够通过指定的域名访问到系统内部的实例。",
   "domain.link": `${docServer}/user-guide/deployment-pipeline/ingress/`,
   "domain.create.head": "创建域名",
   "domain.create.title": '在项目"{name}"中创建域名',
@@ -60,36 +60,36 @@ const pageDetail = {
   "domain.update.link": `${docServer}/user-guide/deployment-pipeline/ingress/`,
 
   // deploymentApp
-  "deploy.title": '项目"{name}"的应用部署',
+  "deploy.title": '项目"{name}"的仓库部署',
   "deploy.description":
-    "应用部署是一个将某版本的应用部署至某环境的操作。您可在此按照指引分步骤完成应用部署。",
+    "仓库部署是一个将某版本的仓库部署至某环境的操作。您可在此按照指引分步骤完成仓库部署。",
   "deploy.link": `${docServer}/user-guide/deployment-pipeline/application-deployment/`,
-  "deploy.sidebar.title": '项目"{name}"的部署选择应用',
+  "deploy.sidebar.title": '项目"{name}"的部署选择仓库',
   "deploy.sidebar.description":
-    "您可在此灵活选择来源于本项目及应用市场的应用，且有列表式及卡片式两种展示方式可以切换。",
+    "您可在此灵活选择来源于本项目及仓库市场的仓库，且有列表式及卡片式两种展示方式可以切换。",
   "deploy.sidebar.link": `${docServer}/user-guide/deployment-pipeline/application-deployment/`,
 
   // appRelease
-  "release.title": '项目"{name}"的应用发布',
+  "release.title": '项目"{name}"的仓库发布',
   "release.description":
-    "应用发布是可以将您研发的应用发布至其他项目使用。可发布的范围有本组织或全平台下的所有项目，并且您可以控制应用版本的发布范围。",
+    "仓库发布是可以将您研发的仓库发布至其他项目使用。可发布的范围有本组织或全平台下的所有项目，并且您可以控制仓库版本的发布范围。",
   "release.link": `${docServer}/user-guide/application-management/application-release/`,
-  "release.add.title": '项目"{name}"的应用发布',
+  "release.add.title": '项目"{name}"的仓库发布',
   "release.add.description":
-    "应用发布是可以将您研发的应用发布至其他项目使用。可发布的范围有本组织或全平台下的所有项目，并且您可以控制应用版本的发布范围。",
-  "release.edit.title": '修改应用"{name}"的信息',
+    "仓库发布是可以将您研发的仓库发布至其他项目使用。可发布的范围有本组织或全平台下的所有项目，并且您可以控制仓库版本的发布范围。",
+  "release.edit.title": '修改仓库"{name}"的信息',
   "release.edit.description":
-    "您可在此修改应用发布的展示信息，包括贡献者、分类及应用描述。",
-  "release.editVersion.title": '查看应用"{name}"的版本',
+    "您可在此修改仓库发布的展示信息，包括贡献者、分类及仓库描述。",
+  "release.editVersion.title": '查看仓库"{name}"的版本',
   "release.editVersion.description":
     "您可在此查看未发布及已发布的版本，且可以发布未发布的版本。",
-  "release.addVersion.title": `添加应用"{name}"发布的版本`,
+  "release.addVersion.title": `添加仓库"{name}"发布的版本`,
   "release.addVersion.description": "您可在此勾选并添加需要发布的版本。",
 
   // container
   "container.title": '项目"{name}"的容器',
   "container.description":
-    "容器便于您查看和管理Kubernetes中应用实例生成的容器， 可以实时查看相关容器的地址、创建时间、状态，确定容器是否正常运行且通过健康检查，并且可以查看容器日志进行错误定位和状态监控。",
+    "容器便于您查看和管理Kubernetes中仓库实例生成的容器， 可以实时查看相关容器的地址、创建时间、状态，确定容器是否正常运行且通过健康检查，并且可以查看容器日志进行错误定位和状态监控。",
   "container.link": `${docServer}/user-guide/deployment-pipeline/container/`,
   "container.log.title": '查看容器"{name}"的日志',
   "container.term.title": '在容器组"{name}"中运行命令',
@@ -99,32 +99,32 @@ const pageDetail = {
     "您可在此选择容器组下的Pod运行命令进行相关信息实时查看。",
 
   // template
-  "template.title": '组织"{name}"的应用模板',
+  "template.title": '组织"{name}"的仓库模板',
   "template.description":
-    "应用模板是将同类型应用的代码库结构整理成模板，用于创建应用时能引用相应模板快速创建初始代码库。您也可以根据实际情况自定义应用模板。",
-  "template.create.title": '在组织"{name}"中创建应用模板',
+    "仓库模板是将同类型仓库的代码库结构整理成模板，用于创建仓库时能引用相应模板快速创建初始代码库。您也可以根据实际情况自定义仓库模板。",
+  "template.create.title": '在组织"{name}"中创建仓库模板',
   "template.create.description":
-    "请在下面输入应用模板编码、名称、描述，创建默认空白模板。您也可以通过复制于现有模板，以便节省部分操作，提升效率。",
-  "template.edit.title": '对应用模板"{name}"进行修改',
-  "template.edit.description": "您可在此修改应用名称及描述。",
-  "template.delDescription": "确定要删除该应用模板吗？",
+    "请在下面输入仓库模板编码、名称、描述，创建默认空白模板。您也可以通过复制于现有模板，以便节省部分操作，提升效率。",
+  "template.edit.title": '对仓库模板"{name}"进行修改',
+  "template.edit.description": "您可在此修改仓库名称及描述。",
+  "template.delDescription": "确定要删除该仓库模板吗？",
   "template.create.link": `${docServer}/user-guide/application-management/application-template/`,
   "template.link": `${docServer}/user-guide/application-management/application-template/`,
   "template.edit.link": `${docServer}/user-guide/application-management/application-template/`,
 
   // app
-  "app.title": '项目"{name}"的应用',
-  "app.import.title": '在项目"{name}"中导入应用',
+  "app.title": '项目"{name}"的仓库',
+  "app.import.title": '在项目"{name}"中导入仓库',
   "app.description":
-    "应用是满足用户某些需求的程序代码的集合。您可在此创建应用、停用应用、启用应用、配置应用权限以及修改应用名称。",
+    "仓库是满足用户某些需求的程序代码的集合。您可在此创建仓库、停用仓库、启用仓库、配置仓库权限以及修改仓库名称。",
   "app.import.description":
-    "请在下面选择应用导入的来源，并对相关的操作进行授权，再选择应用模板；平台会为您自动创建对应的git库以便管理该应用代码。同时，您可为此应用分配特定的开发操作人员。",
-  "app.create.title": '在项目"{name}"中创建应用',
+    "请在下面选择仓库导入的来源，并对相关的操作进行授权，再选择仓库模板；平台会为您自动创建对应的git库以便管理该仓库代码。同时，您可为此仓库分配特定的开发操作人员。",
+  "app.create.title": '在项目"{name}"中创建仓库',
   "app.create.description":
-    "请在下面输入应用编码及名称，也可以选择某个应用模板，快速创建应用。平台会为您自动创建对应的git库以便管理该应用代码。同时，您可为所创应用分配特定的开发操作人员。",
-  "app.edit.title": '对应用"{name}"进行修改',
+    "请在下面输入仓库编码及名称，也可以选择某个仓库模板，快速创建仓库。平台会为您自动创建对应的git库以便管理该仓库代码。同时，您可为所创仓库分配特定的开发操作人员。",
+  "app.edit.title": '对仓库"{name}"进行修改',
   "app.edit.description":
-    "您可在此修改应用名称，同时也可对此应用的权限进行管理。",
+    "您可在此修改仓库名称，同时也可对此仓库的权限进行管理。",
   "app.link": `${docServer}/user-guide/application-management/application/`,
   "app.create.link": `${docServer}/user-guide/application-management/application/`,
   "app.import.link": `${docServer}/user-guide/application-management/application/`,
@@ -133,11 +133,11 @@ const pageDetail = {
   // branch
   "branch.title": '项目"{name}"的分支',
   "branch.description":
-    "分支是将您的开发工作从主线上分离开来，以免影响主线。您可在此查看各应用的分支，创建分支，并将代码拉至本地开发后提交代码。",
-  "branch.app.title": '应用"{name}"的分支',
+    "分支是将您的开发工作从主线上分离开来，以免影响主线。您可在此查看各仓库的分支，创建分支，并将代码拉至本地开发后提交代码。",
+  "branch.app.title": '仓库"{name}"的分支',
   "branch.app.description":
-    "分支是将您的开发工作从主线上分离开来，以免影响主线。您可在此查看各应用的分支，创建分支，并将代码拉至本地开发后提交代码。",
-  "branch.create.title": '在应用"{name}"中创建分支',
+    "分支是将您的开发工作从主线上分离开来，以免影响主线。您可在此查看各仓库的分支，创建分支，并将代码拉至本地开发后提交代码。",
+  "branch.create.title": '在仓库"{name}"中创建分支',
   "branch.create.description":
     "您在此选择该分支要解决的问题、分支来源，修改默认的分支类型及分支名称，即可创建分支。",
   "branch.edit.title": '修改分支"{name}"关联的问题',
@@ -151,7 +151,7 @@ const pageDetail = {
   "ist.title.project": '项目"{name}"的实例',
   "ist.title.env": '环境"{name}"的实例',
   "ist.description":
-    "实例是一次应用部署生成的应用实体。您可在此查看此环境中各个应用对应的实例情况。",
+    "实例是一次仓库部署生成的仓库实体。您可在此查看此环境中各个仓库对应的实例情况。",
   "ist.edit.title": '对"{name}"进行修改',
   "ist.edit.description": "对实例配置信息进行修改后重新部署。",
   "ist.upgrade.title": '对"{name}"进行修改',
@@ -166,67 +166,67 @@ const pageDetail = {
   // 部署总览
   "dpOverview.title": '项目"{name}"的部署总览',
   "dpOverview.description":
-    "部署总览页面包含了所有应用在各个环境中的部署情况。您可以通过该界面查看各个应用在各个环境中的部署情况，并能直接在此界面进行应用最新版本的快速部署。",
+    "部署总览页面包含了所有仓库在各个环境中的部署情况。您可以通过该界面查看各个仓库在各个环境中的部署情况，并能直接在此界面进行仓库最新版本的快速部署。",
   "dpOverview.link": `${docServer}/user-guide/deployment-pipeline/deployment-overview/`,
 
   // appstore
   "appstore.description.label": "描述",
   "appstore.exportName": "导出文件名称",
   "appstore.description":
-    "应用市场是应用的集市。您可在此查看已发布至您项目的应用及其详细信息，并选择需要的应用版本进行部署。",
-  "appstore.import.title": "应用导入",
-  "appstore.export.title": "应用导出",
-  "appstore.export.description": "您可在此选择相应的应用，并选择版本进行导出。",
+    "仓库市场是仓库的集市。您可在此查看已发布至您项目的仓库及其详细信息，并选择需要的仓库版本进行部署。",
+  "appstore.import.title": "仓库导入",
+  "appstore.export.title": "仓库导出",
+  "appstore.export.description": "您可在此选择相应的仓库，并选择版本进行导出。",
   "appstore.import.description":
-    "您可在此选择相应的应用，上传文件后并进行导入。",
+    "您可在此选择相应的仓库，上传文件后并进行导入。",
   "appstore.exportStep1":
-    "您可在此选择想要导出的应用，您可以一次选择多个应用。",
+    "您可在此选择想要导出的仓库，您可以一次选择多个仓库。",
   "appstore.exportStep2": "您可在此选择想要导出的版本。",
   "appstore.exportStep3":
-    "您可以在下方为导出的应用文件重新命名，以便于您后续的辨识（导出文件名默认为chart）。最后您需在此确认应用发布的信息，如需修改请返回相应步骤。",
+    "您可以在下方为导出的仓库文件重新命名，以便于您后续的辨识（导出文件名默认为chart）。最后您需在此确认仓库发布的信息，如需修改请返回相应步骤。",
   "appstore.importStep1": "您可在此选择相应的文件，并进行上传。",
   "appstore.importStep2":
     "您可在此选择是否发布，如果发布还可以选择发布的范围。若本组织内所有项目均可使用，则选择本组织；若全平台下的所有项目均可使用，则选择全平台。",
-  "appstore.importStep3": "您可在此确认上传应用的信息，如需修改请返回上一步。",
+  "appstore.importStep3": "您可在此确认上传仓库的信息，如需修改请返回上一步。",
   "appstore.link": `${docServer}/user-guide/application-management/application-market/`,
   "appstore.export.link": `${docServer}/user-guide/application-management/application-market/`,
   "appstore.import.link": `${docServer}/user-guide/application-management/application-market/`,
 
   // appVersion
-  "appVer.title": '项目"{name}"的应用版本',
+  "appVer.title": '项目"{name}"的仓库版本',
   "appVer.description":
-    "应用版本是应用迭代升级生成的版本。您可在此查看版本号、应用编码、应用名称以及版本生成时间。",
+    "仓库版本是仓库迭代升级生成的版本。您可在此查看版本号、仓库编码、仓库名称以及版本生成时间。",
   "appVer.link": `${docServer}/user-guide/application-management/application-version/`,
 
   // ci-pipeline
   "ciPipeline.title": '项目"{name}"的持续集成',
-  "ciPipeline.description": "您可在此查看各应用所有持续集成流水线的运行情况。",
-  "ciPipeline.app.title": '应用"{name}"的持续集成',
+  "ciPipeline.description": "您可在此查看各仓库所有持续集成流水线的运行情况。",
+  "ciPipeline.app.title": '仓库"{name}"的持续集成',
   "ciPipeline.app.description":
-    "您可在此查看各应用所有持续集成流水线的运行情况。",
+    "您可在此查看各仓库所有持续集成流水线的运行情况。",
   "ciPipeline.link": `${docServer}/user-guide/development-pipeline/continuous-integration/`,
 
   // merge-request
   "merge.title": '项目"{name}"的合并请求',
   "merge.description":
-    "合并请求是将某一分支的代码合并至另一分支的操作。您可在此查看各应用的合并请求，及创建合并请求。",
-  "merge.app.title": '应用"{name}"的合并请求',
+    "合并请求是将某一分支的代码合并至另一分支的操作。您可在此查看各仓库的合并请求，及创建合并请求。",
+  "merge.app.title": '仓库"{name}"的合并请求',
   "merge.app.description":
-    "合并请求是将某一分支的代码合并至另一分支的操作。您可在此查看各应用的合并请求，及创建合并请求。",
+    "合并请求是将某一分支的代码合并至另一分支的操作。您可在此查看各仓库的合并请求，及创建合并请求。",
   "merge.link": `${docServer}/user-guide/development-pipeline/merge-request/`,
 
   // app-tag
   "apptag.description":
-    "标记是用于标识某一时间点形成的稳定可发布的代码版本。您可在此查看各应用的所有标记及相关提交信息，还可以基于某一分支创建标记。",
+    "标记是用于标识某一时间点形成的稳定可发布的代码版本。您可在此查看各仓库的所有标记及相关提交信息，还可以基于某一分支创建标记。",
   "apptag.title": '项目"{name}"的标记',
   "apptag.app.description":
-    "标记是用于标识某一时间点形成的稳定可发布的代码版本。您可在此查看各应用的所有标记及相关提交信息，还可以基于某一分支创建标记。",
-  "apptag.app.title": '应用"{name}"的标记',
+    "标记是用于标识某一时间点形成的稳定可发布的代码版本。您可在此查看各仓库的所有标记及相关提交信息，还可以基于某一分支创建标记。",
+  "apptag.app.title": '仓库"{name}"的标记',
   "apptag.link": `${docServer}/user-guide/development-pipeline/tag/`,
-  "apptag.createTag": '在应用"{name}"中创建标记',
+  "apptag.createTag": '在仓库"{name}"中创建标记',
   "apptag.createDescription":
     "您在此填写标记名称，选择标记来源，即可基于某一分支创建标记。",
-  "apptag.create.title": '在应用"{name}"中创建标记',
+  "apptag.create.title": '在仓库"{name}"中创建标记',
   "apptag.create.description":
     "您在此填写标记名称，选择标记来源，即可基于某一分支创建标记。",
   "apptag.create.link": `${docServer}/user-guide/development-pipeline/tag/`,
@@ -236,17 +236,17 @@ const pageDetail = {
 
   // repository
   "repository.description":
-    "代码仓库是部分实现特定功能的程序代码集合。您可在此查看该项目下的代码仓库、仓库地址及其关联的应用名称，还可以一键复制仓库地址以便克隆代码。",
+    "代码仓库是部分实现特定功能的程序代码集合。您可在此查看该项目下的代码仓库、仓库地址及其关联的仓库名称，还可以一键复制仓库地址以便克隆代码。",
   "repository.title": '项目"{name}"的代码仓库',
   "repository.link": `${docServer}/user-guide/development-pipeline/repository/`,
 
   // 环境总览
   "envoverview.description":
-    "环境总览页面包含了某个环境内所有与应用部署相关的详情。您可以直接通过环境总览对某个环境下所有与部署相关的实体进行查看或管理。",
+    "环境总览页面包含了某个环境内所有与仓库部署相关的详情。您可以直接通过环境总览对某个环境下所有与部署相关的实体进行查看或管理。",
   "envoverview.title": '环境"{name}"总览',
   "envoverview.noenv.title": '项目"{name}"的环境总览',
   "envoverview.link": `${docServer}/user-guide/deployment-pipeline/environments-overview/`,
-  "envoverview.unlist": "暂无可用应用",
+  "envoverview.unlist": "暂无可用仓库",
   "envOverview.confirm.reDeploy": "确认部署",
   "envOverview.confirm.content.reDeploy": "未修改配置信息是否重新部署?",
 
@@ -268,17 +268,17 @@ const pageDetail = {
   "report.build-number.title": '项目"{name}"的构建次数',
   "report.build-duration.title": '项目"{name}"的构建时长',
   "report.description":
-    "DevOps报表将从多个维度直观清晰地展示您当前项目中的代码提交、代码质量、应用构建和应用部署等情况。点击相应报表便能查看对应的内容。",
+    "DevOps报表将从多个维度直观清晰地展示您当前项目中的代码提交、代码质量、仓库构建和仓库部署等情况。点击相应报表便能查看对应的内容。",
   "report.submission.description":
-    "代码提交情况图能从项目、应用的维度帮助我们查看某个项目或是该项目下某个应用的代码提交情况。",
+    "代码提交情况图能从项目、仓库的维度帮助我们查看某个项目或是该项目下某个仓库的代码提交情况。",
   "report.deploy-duration.description":
-    "部署时长图能展示该项目下某一环境中各个应用部署时长等部署相关的信息，这有助于您了解项目中各个应用的部署情况。",
+    "部署时长图能展示该项目下某一环境中各个仓库部署时长等部署相关的信息，这有助于您了解项目中各个仓库的部署情况。",
   "report.deploy-times.description":
-    "部署次数图能展示出该项目下各个环境中各个应用的部署频率，这将帮助您了解团队的部署频次与整体的效率。",
+    "部署次数图能展示出该项目下各个环境中各个仓库的部署频率，这将帮助您了解团队的部署频次与整体的效率。",
   "report.build-number.description":
-    "构建次数图将从应用的维度为您展示任意时间段某个应用的构建次数，构建成功次数以及构建成功率。这将帮助您快速地定位构建出现的问题，同时直观地了解到项目中某个应用的构建情况。",
+    "构建次数图将从仓库的维度为您展示任意时间段某个仓库的构建次数，构建成功次数以及构建成功率。这将帮助您快速地定位构建出现的问题，同时直观地了解到项目中某个仓库的构建情况。",
   "report.build-duration.description":
-    "构建时长图将从应用的维度为您展示所选时间段某个应用每一次构建的时长，这将帮助您更为直观地了解应用构建的效率。",
+    "构建时长图将从仓库的维度为您展示所选时间段某个仓库每一次构建的时长，这将帮助您更为直观地了解仓库构建的效率。",
   "report.submission.link": `${docServer}/user-guide/report/devops-report/code-commits`,
   "report.build-number.link": `${docServer}/user-guide/report/devops-report/build-frequency`,
   "report.deploy-duration.link": `${docServer}/user-guide/report/devops-report/deploy-duration`,
@@ -287,7 +287,7 @@ const pageDetail = {
   "report.link": `${docServer}/user-guide/report/devops-report/`,
 
   // 开发控制台
-  "devCs.title": '应用"{name}"的开发控制台',
+  "devCs.title": '仓库"{name}"的开发控制台',
 
   // 集群
   "cluster.description":
@@ -375,16 +375,16 @@ const pageDetail = {
   "autoDeploy.record.link": `${docServer}/user-guide/deployment-pipeline/auto-deploy/`,
   "autoDeploy.create.title": '在项目"{name}"中创建自动部署任务',
   "autoDeploy.create.description":
-    "您可在此设置应用、版本类型、对应的环境以及配置信息来创建自动部署的任务。",
+    "您可在此设置仓库、版本类型、对应的环境以及配置信息来创建自动部署的任务。",
   "autoDeploy.create.link": `${docServer}/user-guide/deployment-pipeline/auto-deploy/`,
   "autoDeploy.edit.title": '对自动部署任务"{name}"进行修改',
   "autoDeploy.edit.description":
-    "您可在此修改所设置的应用、版本类型、环境以及配置信息。只是重新选择应用或环境后，下方的配置信息将会重置。",
+    "您可在此修改所设置的仓库、版本类型、环境以及配置信息。只是重新选择仓库或环境后，下方的配置信息将会重置。",
   "autoDeploy.edit.link": `${docServer}/user-guide/deployment-pipeline/auto-deploy/`,
 
   // 组件设置
   "elements.title": '项目"{name}"的组件设置',
-  "elements.description": "组件设置页面用于管理项目下所有的组件配置，目前包括了Helm仓库与Docker仓库。您在此创建的组件配置可用于当前项目下所有的应用。",
+  "elements.description": "组件设置页面用于管理项目下所有的组件配置，目前包括了Helm仓库与Docker仓库。您在此创建的组件配置可用于当前项目下所有的仓库。",
   "elements.link": `${docServer}/user-guide/system-configuration/project/elements-settings`,
   "elements.create.title": '项目"{name}"的组件设置',
   "elements.create.description": "您可在此填入相关信息来创建对应的组件配置，且只有测试通过后才能创建成功。",
@@ -404,10 +404,10 @@ const zhCN = {
   cancel: "取消",
   close: "关闭",
   delete: "删除",
-  MicroApp: "微应用",
+  MicroApp: "微仓库",
   MicroAppUI: "Web前端",
   Mobile: "移动",
-  Application: "普通应用",
+  Application: "普通仓库",
   JavaLib: "Java 库",
   create: "创建",
   running: "运行中",
@@ -431,7 +431,7 @@ const zhCN = {
   connect: "已连接",
   disconnect: "未连接",
   project: "本项目",
-  market: "应用市场",
+  market: "仓库市场",
   organization: "本组织",
   public: "全平台",
   filter: "过滤表",
@@ -442,7 +442,7 @@ const zhCN = {
   ok: "确定",
   language: "zh_CN",
   chooseType: "选择类型",
-  chooseApp: "选择应用",
+  chooseApp: "选择仓库",
   notes: "填写内容",
   write: "编辑",
   preview: "预览",
@@ -522,8 +522,8 @@ const zhCN = {
   "ist.view": "查看视图：",
   "ist.instance": "部署实例",
   "ist.singleEnv": "单环境",
-  "ist.singleApp": "单应用",
-  "ist.multiApp": "多应用",
+  "ist.singleApp": "单仓库",
+  "ist.multiApp": "多仓库",
   "ist.detail": "查看实例详情",
   "ist.values": "修改配置信息",
   "ist.del": "删除实例",
@@ -537,12 +537,12 @@ const zhCN = {
   "ist.run": "重启实例",
   "ist.reDeploy": "重新部署",
   "ist.nolog": "没有日志信息。",
-  "ist.noApp": "暂无应用",
+  "ist.noApp": "暂无仓库",
   "ist.runDetial": "运行详情",
   "ist.operation.log": "操作日志",
   "ist.update": "更新实例",
   "ist.lastVer": "最新版本",
-  "ist.noChoose": "请先选择应用和环境",
+  "ist.noChoose": "请先选择仓库和环境",
   "ist.noUpVer": "暂无可升级版本",
   "ist.more": "展开更多",
   "ist.yamlErr": "请先修改yaml格式错误",
@@ -613,7 +613,7 @@ const zhCN = {
   "ist.deploy.volume.config.path": "路径",
   "ist.deploy.health": "健康检查",
   "ist.deploy.health.describe":
-    "周期性向容器发出请求，以检测其健康状态。默认设置下，readiness 和 liveness 使用相同的配置参数。对于应用初始化较长的容器，需要增加就绪检测时间。",
+    "周期性向容器发出请求，以检测其健康状态。默认设置下，readiness 和 liveness 使用相同的配置参数。对于仓库初始化较长的容器，需要增加就绪检测时间。",
   "ist.deploy.health.readiness": "就绪状态检查(readiness)",
   "ist.deploy.health.liveness": "活跃状态检查(liveness)",
   "ist.deploy.health.failureThreshold": "失败阈值",
@@ -655,7 +655,7 @@ const zhCN = {
   "network.column.ip": "外部IP",
   "network.column.port": "端口/目标端口",
   "network.column.targetPort": "目标端口",
-  "network.column.app": "应用",
+  "network.column.app": "仓库",
   "network.column.version": "版本",
   "network.column.instance": "部署实例",
   "network.delete": "删除网络",
@@ -684,9 +684,9 @@ const zhCN = {
   "network.nport.check.repeat": "节点端口号重复",
   "network.tport.check.repeat": "目标端口号重复",
   "network.form.version.null": "请先选择一个版本",
-  "network.form.version.disable": "请先选择应用",
+  "network.form.version.disable": "请先选择仓库",
   "network.form.version.notFount": "未查询到版本",
-  "network.form.version.checked": "该应用下没有多余的可用版本",
+  "network.form.version.checked": "该仓库下没有多余的可用版本",
   "network.form.app.disable": "请先选择环境",
   "network.form.instance.disable": "暂无可用实例",
   "network.btn.add": "添加版本",
@@ -697,7 +697,7 @@ const zhCN = {
   "network.target.type": "目标对象类型",
   "network.target.instance": "选择实例",
   "network.target.param": "填写标签",
-  "network.form.app": "应用名称",
+  "network.form.app": "仓库名称",
   "network.config": "网络配置",
   "network.target.ip": "目标IP",
   "network.target.portName": "端口名称",
@@ -715,31 +715,31 @@ const zhCN = {
   "network.ist.deleted": "实例已删除",
 
   // deploymentApp
-  "deploy.title": "应用部署",
+  "deploy.title": "仓库部署",
   "deploy.detail": "部署详情",
   "deploy.info": "部署信息",
   "deploy.stage": "阶段及日志",
   "deploy.status": "容器状态",
   "deploy.istStatus": "实例状态",
-  "deploy.appName": "应用名称",
+  "deploy.appName": "仓库名称",
   "deploy.instance": "实例名称",
   "deploy.envName": "环境名称",
-  "deploy.app": "应用",
+  "deploy.app": "仓库",
   "deploy.ver": "版本",
   "deploy.env": "环境",
   "deploy.pod": "Pod状态",
   "deploy.cNumber": "容器数量",
-  "deploy.header.title": "应用部署",
-  "deploy.step.one.title": "选择应用及版本",
+  "deploy.header.title": "仓库部署",
+  "deploy.step.one.title": "选择仓库及版本",
   "deploy.step.one.description":
-    "您可以点击“打开应用列表”，选择本项目的应用或来自应用市场的应用，再在此界面选择需要部署的版本。",
-  "deploy.app.add": "打开应用列表",
-  "deploy.step.one.app": "选择应用",
+    "您可以点击“打开仓库列表”，选择本项目的仓库或来自仓库市场的仓库，再在此界面选择需要部署的版本。",
+  "deploy.app.add": "打开仓库列表",
+  "deploy.step.one.app": "选择仓库",
   "deploy.step.one.version.title": "选择版本",
-  "deploy.step.one.version": "应用版本",
+  "deploy.step.one.version": "仓库版本",
   "deploy.step.two.title": "选择环境及修改配置信息",
   "deploy.step.two.description":
-    "请在此选择需要部署的环境并修改相关配置信息，无权限或未连接的环境不可选。平台默认会引用该应用上次在该环境部署的信息。",
+    "请在此选择需要部署的环境并修改相关配置信息，无权限或未连接的环境不可选。平台默认会引用该仓库上次在该环境部署的信息。",
   "deploy.step.two.description_1":
     "该配置信息里的固有字段不可删除，仅允许在此基础上进行修改或新增！",
   "deploy.step.two.env.title": "选择环境",
@@ -756,13 +756,13 @@ const zhCN = {
   "deploy.step.three.mode.replace.label": "选择要替换的实例",
   "deploy.step.three.mode.help": "替换实例会更新该实例的镜像及配置信息",
   "deploy.step.four.title": "确认信息及部署",
-  "deploy.step.four.app": "应用名称",
-  "deploy.step.four.version": "应用版本",
+  "deploy.step.four.app": "仓库名称",
+  "deploy.step.four.version": "仓库版本",
   "deploy.btn.deploy": "部署",
-  "deploy.sidebar.project": "项目应用",
-  "deploy.sidebar.market": "应用市场",
-  "deploy.sidebar.search": "搜索应用",
-  "deploy.ver.tip": "实例中对应的应用版本",
+  "deploy.sidebar.project": "项目仓库",
+  "deploy.sidebar.market": "仓库市场",
+  "deploy.sidebar.search": "搜索仓库",
+  "deploy.ver.tip": "实例中对应的仓库版本",
   "deploy.ist.event": "实例事件",
   "deploy.ist.event.empty": "暂无实例事件",
 
@@ -824,24 +824,24 @@ const zhCN = {
     "若要使用环境分组，请先创建分组；此处只能从已创建的分组中进行选择，从而将此环境放入该分组中。",
 
   // app
-  "app.head": "应用",
-  "app.authority": "应用权限分配",
+  "app.head": "仓库",
+  "app.authority": "仓库权限分配",
   "app.authority.mbr": "已分配权限成员",
   "app.authority.help":
-    "此操作用于为此应用配置特定的开发操作人员。一般默认选择为项目下所有成员，即该项目下的所有成员均能对此应用进行开发操作；若选择项目下特定成员，则只有被勾选的项目成员才有权限对此应用进行开发。",
-  "app.appDetail": "应用详情",
-  "app.authority.label": "设置该应用的开发操作人员",
+    "此操作用于为此仓库配置特定的开发操作人员。一般默认选择为项目下所有成员，即该项目下的所有成员均能对此仓库进行开发操作；若选择项目下特定成员，则只有被勾选的项目成员才有权限对此仓库进行开发。",
+  "app.appDetail": "仓库详情",
+  "app.authority.label": "设置该仓库的开发操作人员",
   "app.mbr.all": "项目下所有成员",
   "app.mbr.part": "项目下特定成员",
   "app.id": "标识",
   "app.name": "名称",
-  "app.checkName": "应用名称不能包含空格",
-  "app.type": "应用类型",
-  "app.chooseType": "选择应用类型",
-  "app.type.normal": "普通应用",
-  "app.type.test": "测试应用",
+  "app.checkName": "仓库名称不能包含空格",
+  "app.type": "仓库类型",
+  "app.chooseType": "选择仓库类型",
+  "app.type.normal": "普通仓库",
+  "app.type.test": "测试仓库",
   "app.chooseType.tip":
-    "测试应用是用于实现自动化测试的载体，不能将此类应用发布至应用市场，同时，也不能将此类应用部署到任何环境；仅支持在开发流水线对测试应用进行开发操作。而普通应用则支持正常的开发、部署与发布操作。  ",
+    "测试仓库是用于实现自动化测试的载体，不能将此类仓库发布至仓库市场，同时，也不能将此类仓库部署到任何环境；仅支持在开发流水线对测试仓库进行开发操作。而普通仓库则支持正常的开发、部署与发布操作。  ",
   "app.url": "仓库地址",
   "app.active": "状态",
   "app.delete.tip": "这将会删除gitlab代码库，请确认是否删除？",
@@ -850,13 +850,13 @@ const zhCN = {
   "app.run": "启用",
   "app.failed": "失败",
   "app.creating": "创建中",
-  "app.synch": "应用同步中",
-  "app.start": "请先启用应用",
-  "app.create": "创建应用",
-  "app.edit": "修改应用",
-  "app.delete": "删除应用",
-  "app.delete.tooltip": "确定要删除该应用吗？",
-  "app.chooseTem": "选择应用模板",
+  "app.synch": "仓库同步中",
+  "app.start": "请先启用仓库",
+  "app.create": "创建仓库",
+  "app.edit": "修改仓库",
+  "app.delete": "删除仓库",
+  "app.delete.tooltip": "确定要删除该仓库吗？",
+  "app.chooseTem": "选择仓库模板",
   "app.image": "镜像",
   "app.env": "发布环境",
   "app.publish": "发布",
@@ -875,7 +875,7 @@ const zhCN = {
   "app.status": "服务状态",
   "app.quality": "代码质量",
   "app.code.tooltip":
-    "应用的自定义编码，Gitlab仓库的地址将会使用应用编码作为仓库地址的一段路径，同时此编码在项目下唯一且不可修改。",
+    "仓库的自定义编码，Gitlab仓库的地址将会使用仓库编码作为仓库地址的一段路径，同时此编码在项目下唯一且不可修改。",
   "app.chooseTem.tip":
     "可选择系统预定义模板或组织自定义的模板。选择模板后，可快速创建对应的初始代码库。若不选择模板，会默认创建一个空库。",
   "app.config": "高级设置",
@@ -884,43 +884,43 @@ const zhCN = {
   "app.form.selectHelm": "选择Helm仓库",
   "app.config.warn": "操作高级设置存在一定风险，若无实质需求，请勿修改默认仓库！",
 
-  // 应用导入
-  "app.import": "导入应用",
+  // 仓库导入
+  "app.import": "导入仓库",
   "app.import.ok": "导入",
-  "app.import.step1": "选择应用导入来源",
-  "app.import.step2": "选择应用模板",
-  "app.import.step3": "应用权限分配",
+  "app.import.step1": "选择仓库导入来源",
+  "app.import.step2": "选择仓库模板",
+  "app.import.step3": "仓库权限分配",
   "app.import.step4": "确认信息",
   "app.import.step1.des":
-    "目前GitHub仅支持从公库导入应用。仓库为空时均不可导入。",
+    "目前GitHub仅支持从公库导入仓库。仓库为空时均不可导入。",
   "app.import.step1-1.des":
-    "导入应用后，仅保留master分支，请确保已将需要的代码合并至master分支。",
+    "导入仓库后，仅保留master分支，请确保已将需要的代码合并至master分支。",
   "app.import.step2.des":
-    "您可在此自定义导入应用的编码与名称，同时选择一个应用模板。",
-  "app.import.step2-1.des": "请选择与导入应用的开发语言相对应的应用模板。",
+    "您可在此自定义导入仓库的编码与名称，同时选择一个仓库模板。",
+  "app.import.step2-1.des": "请选择与导入仓库的开发语言相对应的仓库模板。",
   "app.import.step3.des":
-    "您可在此为此应用配置特定的开发操作人员。一般默认选择为项目下所有成员，即该项目下的所有成员均能对此应用进行开发操作；若选择项目下特定成员，则只有被勾选的项目成员才有权限对此应用进行开发。",
+    "您可在此为此仓库配置特定的开发操作人员。一般默认选择为项目下所有成员，即该项目下的所有成员均能对此仓库进行开发操作；若选择项目下特定成员，则只有被勾选的项目成员才有权限对此仓库进行开发。",
   "app.import.step4.des":
-    "您可在此确认应用发布的信息，如需修改请返回相应步骤。",
+    "您可在此确认仓库发布的信息，如需修改请返回相应步骤。",
   "app.import.github": "GitHub地址",
   "app.import.gitlab": "GitLab地址",
   "app.import.token": "私有Token",
-  "app.import.template": "选择应用模板",
+  "app.import.template": "选择仓库模板",
   "app.import.repo.required": "请输入代码库地址",
   "app.import.token.required": "请输入正确的Token",
-  "app.import.name.required": "请输入应用名称",
-  "app.import.code.required": "请输入应用编码",
-  "app.import.template.required": "请选择应用模板",
-  "app.import.source": "应用来源",
+  "app.import.name.required": "请输入仓库名称",
+  "app.import.code.required": "请输入仓库编码",
+  "app.import.template.required": "请选择仓库模板",
+  "app.import.source": "仓库来源",
   "app.import.url.err": "仓库地址有误",
   "app.import.url.null": "仓库为空不可导入",
   "app.import.url.err1": "仓库地址或私有Token有误",
 
-  // 应用版本
-  "app.version": "应用版本",
+  // 仓库版本
+  "app.version": "仓库版本",
   "app.appVersion": "版本",
   "app.commit": "提交",
-  "app.group": "应用组",
+  "app.group": "仓库组",
   "app.code": "编码",
   "app.createTime": "生成时间",
 
@@ -934,17 +934,17 @@ const zhCN = {
   "environment.description": "环境描述",
 
   // template
-  "template.head": "应用模板",
+  "template.head": "仓库模板",
   "template.name": "名称",
   "template.des": "描述",
-  "template.create": "创建应用模板",
-  "template.editTitle": "修改应用模板",
+  "template.create": "创建仓库模板",
+  "template.editTitle": "修改仓库模板",
   "template.del": "删除模板",
   "template.copy": "复制于",
   "template.url": "地址",
   "template.code": "编码",
   "template.type": "来源",
-  "template.copyFrom": "复制于现有应用模板",
+  "template.copyFrom": "复制于现有仓库模板",
   "template.preDefine": "预定义",
   "template.perDefine": "自定义",
   "template.checkCode": "编码已存在",
@@ -1036,14 +1036,14 @@ const zhCN = {
   "branch.issue.bug": "故障",
   "branch.issue.epic": "史诗",
   "branch.issue.subtask": "子任务",
-  "branch.empty": "该应用仓库为空，暂无分支",
+  "branch.empty": "该仓库仓库为空，暂无分支",
 
   // ciPipeline
   "ciPipeline.head": "持续集成",
   "ciPipeline.status": "状态",
   "ciPipeline.sign": "标识",
-  "ciPipeline.appCode": "应用编码",
-  "ciPipeline.appName": "应用名称",
+  "ciPipeline.appCode": "仓库编码",
+  "ciPipeline.appName": "仓库名称",
   "ciPipeline.commit": "提交",
   "ciPipeline.jobs": "阶段",
   "ciPipeline.time": "时长",
@@ -1051,7 +1051,7 @@ const zhCN = {
   "ciPipeline.sign.tip": "持续集成流水线的标识，以及持续集成流水线创建者",
   "ciPipeline.commit.tip": "最新一次提交的提交编码及提交信息，以及触发的分支",
   "ciPipeline.jobs.tip":
-    "持续集成的阶段是在gitlab-ci文件里定义的。例如，可以分为单元测试和生成镜像两个阶段。单元测试阶段完成单元测试的运行并且对代码质量进行审查，生成镜像阶段通过 docker 把应用生成镜像。",
+    "持续集成的阶段是在gitlab-ci文件里定义的。例如，可以分为单元测试和生成镜像两个阶段。单元测试阶段完成单元测试的运行并且对代码质量进行审查，生成镜像阶段通过 docker 把仓库生成镜像。",
 
   // resource
   "resource.title": "资源",
@@ -1063,7 +1063,7 @@ const zhCN = {
   "container.header.title": "容器",
   "container.status": "状态",
   "container.name": "Pod名称",
-  "container.app": "应用",
+  "container.app": "仓库",
   "container.ip": "Pod IP",
   "container.usable": "可用",
   "container.disable": "不可用",
@@ -1121,7 +1121,7 @@ const zhCN = {
     "为创建的域名选择网络协议，其中普通协议不需要选择域名证书，选择加密协议需要选择该项目下可用的域名证书。",
 
   // appstore
-  "appstore.title": "应用市场",
+  "appstore.title": "仓库市场",
   "appstore.noMD": "# 暂无",
   "appstore.deploy": "部署",
   "appstore.category": "分类",
@@ -1130,17 +1130,17 @@ const zhCN = {
   "appstore.name": "名称",
   "appstore.contributor": "贡献者",
   "appstore.desc": "描述",
-  "appstore.noReleaseApp": "暂无已发布应用",
+  "appstore.noReleaseApp": "暂无已发布仓库",
   "appstore.noVer": "无匹配结果",
-  "appstore.import": "应用导入",
+  "appstore.import": "仓库导入",
   "appstore.importDesTitle": "单击或拖动文件到此区域进行上传",
   "appstore.importDesTip": "上传文件格式为zip，且文件大小不超过1M",
   "appstore.importSucc": "导入成功",
-  "appstore.export": "应用导出",
-  "appstore.search": "搜索应用名称、编码、类型或描述",
+  "appstore.export": "仓库导出",
+  "appstore.search": "搜索仓库名称、编码、类型或描述",
   "appstore.exportSucc": "导出成功",
-  "appstore.exportApp": "导出应用",
-  "appstore.importApp": "导入应用",
+  "appstore.exportApp": "导出仓库",
+  "appstore.importApp": "导入仓库",
   "appstore.confirm": "确认信息",
   "appstore.fileSize": "文件大小不能超过1M",
   "appstore.fileType": "文件格式错误",
@@ -1152,42 +1152,42 @@ const zhCN = {
   "appstore.ChooseFile": "选择文件",
 
   // app-release
-  "release.home.header.title": "应用发布",
-  "release.home.app.publish": "已发布应用",
-  "release.home.app.unpublish": "未发布应用",
+  "release.home.header.title": "仓库发布",
+  "release.home.app.publish": "已发布仓库",
+  "release.home.app.unpublish": "未发布仓库",
   "release.column.level": "发布范围",
   "release.action.version": "版本控制",
-  "release.action.publish": "发布应用",
-  "release.add.step.one.title": "选择应用",
-  "release.add.step.one.description": "您可在此选择需要发布的应用。",
+  "release.action.publish": "发布仓库",
+  "release.add.step.one.title": "选择仓库",
+  "release.add.step.one.description": "您可在此选择需要发布的仓库。",
   "release.add.step.two.title": "选择发布版本",
   "release.add.step.two.description":
     "您可在此点击添加版本按钮，选择添加需要发布的版本。",
   "release.add.step.two.btn.add": "添加版本",
   "release.add.step.three.title": "选择发布范围",
   "release.add.step.three.description":
-    "您可在此选择应用发布的范围。若希望本组织内所有项目均可使用，则选择本组织；若希望全平台下的所有项目均可使用，则选择全平台。",
+    "您可在此选择仓库发布的范围。若希望本组织内所有项目均可使用，则选择本组织；若希望全平台下的所有项目均可使用，则选择全平台。",
   "release.add.step.three.tooltip": "请注意：发布后不可修改发布范围。",
   "release.add.step.four.description":
-    "您可在此上传应用图标，填写贡献者、分类及应用描述，维护应用展示信息。",
-  "release.add.step.four.title": "填写应用信息",
+    "您可在此上传仓库图标，填写贡献者、分类及仓库描述，维护仓库展示信息。",
+  "release.add.step.four.title": "填写仓库信息",
   "release.add.step.four.tooltip":
-    "请注意：平台将会提取发布的应用版本里chart/app文件夹下的README.md文件展示在应用市场的应用详情页，建议请先维护好后再发布。",
-  "release.add.step.four.app.icon": "应用图标",
+    "请注意：平台将会提取发布的仓库版本里chart/app文件夹下的README.md文件展示在仓库市场的仓库详情页，建议请先维护好后再发布。",
+  "release.add.step.four.app.icon": "仓库图标",
   "release.add.step.five.title": "确认信息",
   "release.add.step.five.description":
-    "您可在此确认应用发布的信息，如需修改请返回相应步骤。",
+    "您可在此确认仓库发布的信息，如需修改请返回相应步骤。",
   "release.add.step.five.tooltip":
     "请注意：该版本发布后不可取消发布，且不可修改发布范围。",
   "release.add.step.five.btn.confirm": "发布",
-  "release.edit.header.title": "修改应用信息",
+  "release.edit.header.title": "修改仓库信息",
   "release.editVersion.publishTime": "发布时间",
-  "release.editVersion.header.title": "查看应用版本",
+  "release.editVersion.header.title": "查看仓库版本",
   "release.editVersion.version.publish": "已发布版本",
   "release.editVersion.version.unpublish": "未发布版本",
   "release.editVersion.modal.title": "确认发布版本",
   "release.editVersion.modal.content": "版本发布后不可取消，确定要发布吗?",
-  "release.addVersion.header.title": "添加应用版本",
+  "release.addVersion.header.title": "添加仓库版本",
   "release.addVersion.btn.confirm": "添加",
 
   // yaml file
@@ -1198,7 +1198,7 @@ const zhCN = {
   "editor.mode.changer": "切换编辑器模式",
   "yaml.modify": "当前修改",
   "yaml.error.tooltip":
-    "Values文件yaml格式错误，请在应用代码中修改错误并重新生成正确的应用版本。",
+    "Values文件yaml格式错误，请在仓库代码中修改错误并重新生成正确的仓库版本。",
 
   // merge request
   "merge.head": "合并请求",
@@ -1239,19 +1239,19 @@ const zhCN = {
   "apptag.delete.tooltip": "确定要删除该标记吗？",
   "apptag.checkNameReg":
     "支持x.x.x格式，其中x只能为非负整数；若使用语义化标记，建议格式：x.x.x-alpha.1",
-  "apptag.noRefBranch": "该应用还没有分支，请先创建分支",
+  "apptag.noRefBranch": "该仓库还没有分支，请先创建分支",
   "apptag.tag.empty": "暂无任何标记，您可在此页面基于某一分支创建标记。",
   "apptag.app.empty":
-    "当前项目下无应用，请使用项目所有者角色登录去创建一个应用。",
+    "当前项目下无仓库，请使用项目所有者角色登录去创建一个仓库。",
   "apptag.release.title": "发布日志",
   "apptag.release.empty": "暂无发布日志",
-  "apptag.tip": "此处标记来源可以是该应用下所有的分支",
+  "apptag.tip": "此处标记来源可以是该仓库下所有的分支",
 
   // repository
   "repository.head": "代码仓库",
   "repository.repository": "仓库",
   "repository.url": "仓库地址",
-  "repository.application": "应用名称",
+  "repository.application": "仓库名称",
   "repository.copyUrl": "复制仓库地址",
   "repository.report": "查看报表",
   "repository.quality": "代码质量",
@@ -1260,7 +1260,7 @@ const zhCN = {
   //
   "envoverview.head": "环境总览",
   "envoverview.noEnv": "暂无可用环境",
-  "envoverview.search": "搜索应用或实例名称",
+  "envoverview.search": "搜索仓库或实例名称",
   "envoverview.logs": "日志",
   "envoverview.logs.err": "错误日志",
   "envoverview.logs.info": "错误信息",
@@ -1337,15 +1337,15 @@ const zhCN = {
   "report.submission.des":
     "跟踪项目下团队与个人的代码提交情况。这有助于了解团队的整体效率与个人效率。",
   "report.code-quality.des":
-    "展示项目下所有应用的代码质量详情。这有助于您了解到每个应用的质量情况。",
+    "展示项目下所有仓库的代码质量详情。这有助于您了解到每个仓库的质量情况。",
   "report.deploy-duration.des":
-    "展示该项目下某一环境中各个应用部署时长等部署相关的信息。这将帮助您了解各个应用的部署情况。",
+    "展示该项目下某一环境中各个仓库部署时长等部署相关的信息。这将帮助您了解各个仓库的部署情况。",
   "report.deploy-times.des":
-    "展示了项目下各个环境中各个应用的部署频率。这将帮助您了解团队的部署频次与整体的效率。",
+    "展示了项目下各个环境中各个仓库的部署频率。这将帮助您了解团队的部署频次与整体的效率。",
   "report.build-number.des":
-    "从应用的维度展示某个应用的构建次数，构建成功次数以及构建成功率。这将帮助您快速地了解到该应用的构建情况。",
+    "从仓库的维度展示某个仓库的构建次数，构建成功次数以及构建成功率。这将帮助您快速地了解到该仓库的构建情况。",
   "report.build-duration.des":
-    "从应用的维度展示所选时间段某个应用每一次构建的时长。这将帮助您更直观地了解应用构建的效率。",
+    "从仓库的维度展示所选时间段某个仓库每一次构建的时长。这将帮助您更直观地了解仓库构建的效率。",
   "report.data.today": "今天",
   "report.data.seven": "近7天",
   "report.data.thirty": "近30天",
@@ -1353,7 +1353,7 @@ const zhCN = {
   "report.deploy-duration.long": "部署时长",
   "report.deploy-duration.user": "执行人",
   "report.date": "日期",
-  "report.all-app": "全部应用",
+  "report.all-app": "全部仓库",
   "report.build-number.build": "构建",
   "report.build-number.success": "成功次数",
   "report.build-number.fail": "失败次数",
@@ -1365,10 +1365,10 @@ const zhCN = {
   "report.build-duration.duration": "构建时长",
   "report.build-duration.noversion": "暂未生成版本",
   "report.build-duration.yAxis": "时长（分）",
-  "report.deploy-duration.apps": "每次最多可同时选择5个应用！",
-  "report.no-app": "当前项目下无应用",
+  "report.deploy-duration.apps": "每次最多可同时选择5个仓库！",
+  "report.no-app": "当前项目下无仓库",
   "report.no-env": "当前项目下无可用环境",
-  "report.no-app-des": "请使用项目所有者角色登录去创建一个应用",
+  "report.no-app-des": "请使用项目所有者角色登录去创建一个仓库",
   "report.no-env-des": "请使用项目所有者角色登录去创建一个可用环境",
   "report.commit.history": "提交历史",
   "report.commit.by": "提交于 ",
@@ -1376,7 +1376,7 @@ const zhCN = {
   "report.commit.count": "提交次数：",
   "report.commit.num": "次数      ",
   "report.commit.none": "无提交记录",
-  "report.app.noselect": "请选择应用",
+  "report.app.noselect": "请选择仓库",
   "report.date.more": "报表暂支持最多查看30天，已自动截取开始日期后30天。",
   "report.commits.unknown": "非平台用户提交汇总",
   "report.unknown.user": "非平台用户",
@@ -1408,9 +1408,9 @@ const zhCN = {
     "您目前还没有任何环境的管理权限，无法查看部署流水线相关内容。",
   "depPl.addPermission":
     "若需查看某个环境相关内容，请联系项目所有者进行权限添加。",
-  "empty.owner.noApp": "当前项目下无应用，请创建应用。",
+  "empty.owner.noApp": "当前项目下无仓库，请创建仓库。",
   "empty.member.no-app":
-    "您当前暂无此项目下任何应用的权限，若需查看某个应用下相关内容，请联系项目所有者添加权限。",
+    "您当前暂无此项目下任何仓库的权限，若需查看某个仓库下相关内容，请联系项目所有者添加权限。",
   "depPl.more": "了解更多",
 
   // 集群
@@ -1516,11 +1516,11 @@ const zhCN = {
   "task.name.check.failed": "不能包含空格",
   "task.name.exist": "名称已存在",
   "autoDeploy.create.type.tips":
-    "您可在此输入或选择自动部署的应用版本类型，若想自动部署所选应用的所有版本，则不必填写此栏。",
+    "您可在此输入或选择自动部署的仓库版本类型，若想自动部署所选仓库的所有版本，则不必填写此栏。",
   "autoDeploy.chooseTask": "选择任务",
   "autoDeploy.mode": "选择部署模式",
   "autoDeploy.mode.tip":
-    "若选择新建实例，那么在第一次执行该条自动部署任务时，会在所选环境中新建一个实例，而后续执行该条自动部署任务时，均会默认在此实例上进行升级或更新；若选择替换实例，首先需要满足所选应用在所选环境中存在实例，而选中要替换的目标实例后，后续的自动部署便会直接在此实例上进行升级或更新。",
+    "若选择新建实例，那么在第一次执行该条自动部署任务时，会在所选环境中新建一个实例，而后续执行该条自动部署任务时，均会默认在此实例上进行升级或更新；若选择替换实例，首先需要满足所选仓库在所选环境中存在实例，而选中要替换的目标实例后，后续的自动部署便会直接在此实例上进行升级或更新。",
   "autoDeploy.replace.instance.tips":
     "替换实例会更新该实例的镜像及配置信息，请确认要替换的实例选择无误。",
   "autoDeploy.task.status": "任务状态",
@@ -1561,7 +1561,7 @@ const zhCN = {
   "elements.link.failed": "测试失败",
   "elements.delete": "删除组件配置",
   "elements.delete.enable": "确定删除该组件配置吗？",
-  "elements.delete.disable": "不能删除该组件配置。您仅能删除没有关联应用的自定义组件配置。",
+  "elements.delete.disable": "不能删除该组件配置。您仅能删除没有关联仓库的自定义组件配置。",
 
   // terminal
   "devops.term.close": "连接已关闭",

@@ -94,13 +94,13 @@ class MergeRequestHome extends Component {
 
   linkToMerge = (iid) => {
     const { MergeRequestStore } = this.props;
-    const url = `${MergeRequestStore.getUrl}/merge_requests/${iid}`;
+    const url = `${MergeRequestStore.getUrl.replace('.git', '')}/merge_requests/${iid}`;
     window.open(url);
   };
 
   linkToNewMerge = () => {
     const { MergeRequestStore } = this.props;
-    const url = `${MergeRequestStore.getUrl}/merge_requests/new`;
+    const url = `${MergeRequestStore.getUrl.replace('.git', '')}/merge_requests/new`;
     window.open(url);
   };
 

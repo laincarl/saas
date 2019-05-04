@@ -833,7 +833,7 @@ class EditIssue extends Component {
               issue={issueInfo}
               onOk={() => {
                 this.setState({ createBranchShow: false });
-                this.reloadIssue();
+                this.props.reloadIssue();
               }}
               onCancel={() => this.setState({ createBranchShow: false })}
               visible={createBranchShow}

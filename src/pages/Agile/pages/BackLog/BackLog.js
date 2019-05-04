@@ -118,6 +118,7 @@ class BackLog extends Component {
               issueId={selectedIssue.id}
               key={selectedIssue.id}
               onDelete={this.handleIssueDelete}
+              onUpdate={this.loadIssues}
             />
           )}
           <CreateIssue 

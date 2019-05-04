@@ -40,8 +40,10 @@ class IssueSide extends Component {
   }
 
   render() {
-    const { issueId } = this.props;
-    const { loading, issueInfo, isExpand } = this.state;
+    const { issueId, onUpdate } = this.props;
+    const {
+      loading, issueInfo, isExpand, 
+    } = this.state;
     return (
       <div style={{ height: '100%' }}>
         {
@@ -58,6 +60,7 @@ class IssueSide extends Component {
               }}
               mode="narrow"
               onDelete={this.handleDelete}
+              onUpdate={onUpdate}
             />
           )
         }

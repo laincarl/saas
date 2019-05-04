@@ -46,10 +46,7 @@ class MergeRequestHome extends Component {
     const { MergeRequestStore } = this.props;
     MergeRequestStore.setLoading(true);
     MergeRequestStore.loadMergeRquest(
-      DevPipelineStore.selectedApp,
-      this.state.tabKey,
-      MergeRequestStore.pageInfo.current - 1,
-      MergeRequestStore.pageInfo.pageSize,
+      DevPipelineStore.selectedApp,      
     );
     DevPipelineStore.queryAppData(AppState.currentMenuType.id);
   };
@@ -82,10 +79,7 @@ class MergeRequestHome extends Component {
     }
     MergeRequestStore.setLoading(true);
     MergeRequestStore.loadMergeRquest(
-      DevPipelineStore.selectedApp,
-      keys,
-      pagination.current - 1,
-      pagination.pageSize,
+      DevPipelineStore.selectedApp,     
     );
   };
 
@@ -120,8 +114,8 @@ class MergeRequestHome extends Component {
     DevPipelineStore.setRecentApp(id);
     MergeRequestStore.setAssignee([]);
     MergeRequestStore.setAssigneeCount(0);
-    MergeRequestStore.loadMergeRquest(id, 'opened');
-    MergeRequestStore.loadUrl(projectId, id);
+    MergeRequestStore.loadMergeRquest(id);
+    // MergeRequestStore.loadUrl(projectId, id);
   }
 
   render() {

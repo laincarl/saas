@@ -147,5 +147,5 @@ class TokenManager extends Component {
     );
   }
 }
-const TokenManagerContainer = () => <Permission type={[2]} noAccessChildren={<NoPermission />}><TokenManager /></Permission>;
+const TokenManagerContainer = () => <Permission type={[2, 3]} noAccessChildren={<NoPermission />}><TokenManager /></Permission>;
 export default TokenManagerContainer;

@@ -148,8 +148,8 @@ class DevPipelineStore {
               AppTagStore.queryTagData(0, 10);
               break;
             case 'merge':
-              MergeRequestStore.loadMergeRquest(this.selectedApp);
-              MergeRequestStore.loadUrl(projectId, this.selectedApp);
+              MergeRequestStore.loadMergeRquest(this.selectedApp, result[0]);
+              // MergeRequestStore.loadUrl(projectId, this.selectedApp);
               break;              
             default:
               break;

@@ -1,69 +1,73 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Content } from 'choerodon-front-boot';
-import { Table } from 'choerodon-ui';
+import { withRouter } from 'react-router-dom';
+import { observer, inject } from 'mobx-react';
+import { Content, Page, Header } from 'choerodon-front-boot';
+import { Table, Tooltip, Button } from 'choerodon-ui';
+import { getRepositoryList } from '@/api/DevopsApi';
+import { USER_TYPE } from '@/common/Constant';
 import './PermissionInfo.scss';
-import MouseOverWrapper from 'components/mouseOverWrapper';
 
-const intlPrefix = 'user.permissioninfo';
 
-@injectIntl
+@withRouter
+@inject('AppState')
 @observer
-export default class PermissionInfo extends Component {
-
-
-  getTableColumns() {
-    return [{
-      title: <FormattedMessage id={`${intlPrefix}.table.permission`} />,
-      width: '50%',
-      dataIndex: 'code',
-      key: 'code',
-      className: 'c7n-permission-info-code',
-      render: text => (
-        <MouseOverWrapper text={text} width={0.45}>
-          {text}
-        </MouseOverWrapper>
-      ),
-    }, {
-      title: <FormattedMessage id={`${intlPrefix}.table.description`} />,
-      width: '50%',
-      dataIndex: 'description',
-      key: 'description',
-      className: 'c7n-permission-info-description',
-      render: text => (
-        <MouseOverWrapper text={text} width={0.45}>
-          {text}
-        </MouseOverWrapper>
-      ),
-    }];
+class PermissionInfo extends Component {
+  state = {
+    loading: false,
+    repos: [],
   }
 
-  render() {
+  componentDidMount() {
+    this.setState({
+      loading: true,
+    });
+    getRepositoryList().then((repos) => {
+      this.setState({
+        repos,
+        loading: false,
+      });
+    });
+  }
+
+  handleClick=() => {
+    this.props.history.push('/agile/issue');
+  }
+
+  getTableColumns = () => [{
+    title: '名称',
+    dataIndex: 'name',
+  }, {
+    title: '角色',   
+    dataIndex: 'description',
+    render: () => (USER_TYPE[this.props.AppState.userInfo.type]),
+  }, {
+    title: '',  
+    align: 'right',
+    render: () => (
+      <Tooltip title="跳转到问题管理">
+        <Button icon="exit_to_app" shape="circle" onClick={this.handleClick} />
+      </Tooltip>
+    ),
+  }]
+
+  render() {    
     const {
-      intl,
-      
-      type,
-    } = this.props;
-    // const description = intl.formatMessage({ id: `${type}.permission.description` }, {
-    //   proName: projectName,
-    //   orgName: organizationName,
-    //   roleName: name,
-    // });
-    const link = intl.formatMessage({ id: `${type}.link` });
+      repos, loading,
+    } = this.state;
+
+
     return (
-      <Content
-        className="sidebar-content"
-        code={intlPrefix}
-        // values={{
-        //   roleName: name,
-        //   description,
-        //   link,
-        // }}
-      >
-        {/* <p style={{ fontSize: 18, marginBottom: 8 }}>{total}个已分配权限</p> */}
+      <Page>
+        <Header title="权限信息" />
+        <Content              
+          title={`用户“${this.props.AppState.userInfo.name || ''}”的权限信息`}
+          description="您可以在这里查看您的项目权限信息"       
+        >
         
-      </Content>
+          <Table dataSource={repos} columns={this.getTableColumns()} loading={loading} pagination={false} />
+        </Content>
+      </Page>
     );
   }
 }
+export default PermissionInfo;

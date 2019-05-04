@@ -53,6 +53,10 @@ class MergeRequestStore {
     }
   }
 
+  @action setCurrentApp(currentApp) {
+    this.currentApp = currentApp;
+  }
+
   @computed get getParams() {
     return this.params.slice();
   }
@@ -70,7 +74,7 @@ class MergeRequestStore {
   }
 
   @computed get getUrl() {
-    return this.url;
+    return this.currentApp.url;
   }
 
   @action setUserId(id) {
@@ -122,10 +126,12 @@ class MergeRequestStore {
     return this.assigneeCount;
   }
 
-  loadMergeRquest(appId, key = 'opened', page = 0, size = 10, projectId = AppState.currentMenuType.id) {
+  loadMergeRquest(appId, currentApp) {   
     this.setMerge([]);
     this.setLoading(true);
-    
+    if (currentApp) {
+      this.setCurrentApp(currentApp);
+    }    
     getMergeRequests(appId).then((res) => {
       const response = handleProptError(res);
       if (response) {        
